@@ -1,0 +1,24 @@
+<div class="container my-4">
+  <div class="row justify-content-center">
+    <div *ngFor="let carrera of carreras" class="col-md-6">
+      <div class="card mb-3">
+        <img [src]="carrera.imagen" class="card-img-top" alt="{{ carrera.nombre }}">
+        <div class="card-body">
+          <h2 class="card-title">{{ carrera.nombre }}</h2>
+          <p class="card-text">Fecha del evento: {{ carrera.fecha }}</p>
+          <p class="card-text">Hora del evento: {{ carrera.horario }}</p>
+          <p class="card-text">Cierre de inscripción: {{ carrera.fechaDeCierreDeInscripcion }}</p>
+          <p class="card-text">{{ carrera.localidad }} - {{ carrera.provincia }} - {{ carrera.pais }}</p>
+          <p class="card-text">Tener en cuenta: {{ carrera.detalles }}</p>
+          <p class="card-text">Contactos: {{ carrera.contacto }}</p>
+          <div *ngFor="let distancia of carrera.distancias" class="mt-2">
+            <p>{{ distancia.tipo }} - Valor de la inscripción $ {{ distancia.valor }}</p>
+            <button (click)="inscripcion(carrera.id, distancia.id, distancia.tipo, distancia.valor)" class="btn btn-sm btn-success custom-button">Quiero inscribirme</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+

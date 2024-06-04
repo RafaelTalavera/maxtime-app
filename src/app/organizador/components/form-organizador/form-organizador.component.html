@@ -1,0 +1,101 @@
+<form class="container mt-2 d-flex justify-content-center" (ngSubmit)="onSubmit(organizadorForm)" #organizadorForm="ngForm">
+    <div class="card" style="max-width: 600px; width: 100%;">
+        <div class="card-header">
+            <h5>Crear Organizador</h5>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <input type="text"
+                 class="form-control my-2"  
+                 id="nombre" 
+                 placeholder="Nombre" 
+                 name="nombre" 
+                 [(ngModel)]="organizador.nombre"
+                 #nombre="ngModel"
+                 required
+                 >
+                 <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="text alert-danger">
+                    <div *ngIf="nombre.errors!['required']"> 
+                        El nombre es requerido
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">               
+                <input type="text" 
+                class="form-control my-2" 
+                id="apellido" 
+                placeholder="Apellido" 
+                name="apellido" 
+                [(ngModel)]="organizador.apellido"
+                #apellido="ngModel"
+                required
+                >
+                <div *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)" class="text alert-danger">
+                    <div *ngIf="apellido.errors!['required']"> 
+                        El apellido es requerido
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">                
+                <input type="text" 
+                class="form-control my-2" 
+                id="dni" 
+                placeholder="Dni" 
+                name="dni" 
+                [(ngModel)]="organizador.dni"
+                #dni="ngModel"
+                required
+                >
+                <div *ngIf="dni.invalid && (dni.dirty || dni.touched)" class="text alert-info">
+                    <div *ngIf="dni.errors!['required']"> 
+                        El dni es requerido
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">             
+                <input type="email" 
+                class="form-control my-2" 
+                id="email" 
+                placeholder="Email" 
+                name="email" 
+                [(ngModel)]="organizador.email"
+                #email="ngModel"
+                required
+                >
+                <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text alert-danger">
+                    <div *ngIf="email.errors!['required']"> 
+                        El email es requerido
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" 
+                class="form-control my-2" 
+                id="telefono" 
+                placeholder="Telefono" 
+                name="telefono" 
+                [(ngModel)]="organizador.telefono"
+                #telefono="ngModel" 
+                required
+                >
+                <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" class="text alert-danger">
+                    <div> 
+                        El telefono es requerido
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button
+                [disabled]="!organizadorForm.form.valid"
+                type="submit" 
+                class="btn btn-primary 
+                 my-2 mx-3">{{organizador.id>0? 'editar': 'crear'}}
+                </button>
+                <button type="button" 
+                class="btn btn-success  
+                my-2 mx-3" (click)="clean()">Limpiar
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

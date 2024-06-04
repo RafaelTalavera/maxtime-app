@@ -1,0 +1,71 @@
+
+
+
+  
+    <app-form-corredor (newCorredorEvent)="addCorredor($event)" [corredor]="corredorSelected" [tipo]="tipo" [valor]="valor"></app-form-corredor>
+   
+ 
+
+    <div class="container mt-5"> 
+        <div class="row justify-content-center">
+          <div class="col-md-6 custom-input-container">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Ingrese su DNI" [(ngModel)]="dni">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button" (click)="findCorredores()">Buscar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+      <div class="container mt-5"> 
+    <h2 class="text-center" style="font-size: 18px;">Listado de carreas</h2>
+    @if (corredores.length > 0) {
+    <div style="max-height: 400px; overflow-y: auto;">
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th class="custom-tr">Nombre</th>
+                    <th class="custom-tr">apellido</th>
+                    <th class="custom-tr">dni</th>                                                   
+                    <th class="custom-tr">nacimiento</th>
+                    <th class="custom-tr">genero</th>
+                    <th class="custom-tr">nacionalidad</th>
+                    <th class="custom-tr">provincia</th>
+                    <th class="custom-tr">team</th>
+                    <th class="custom-tr">nombre</th>
+                    <th class="custom-tr">tipo</th>
+                  
+                </tr>
+            </thead>
+            <tbody>
+                @for (corredor of corredores; track $index)
+                {
+                <tr>
+                    <td class="custom-td">{{corredor.nombre}}</td>
+                    <td class="custom-td">{{corredor.apellido}}</td>
+                    <td class="custom-td">{{corredor.dni}}</td>                           
+                    <td class="custom-td">{{corredor.fechaNacimiento}}</td>
+                    <td class="custom-td">{{corredor.genero}}</td>
+                    <td class="custom-td">{{corredor.nacionalidad}}</td>
+                    <td class="custom-td">{{corredor.provincia}}</td>
+                    <td class="custom-td">{{corredor.team}}</td>
+                    <td class="custom-td">{{corredor.carrera.nombre}}</td>
+                    <td class="custom-td">{{corredor.distancia.tipo}}</td>
+          
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    } @else {
+    <div class="alert alert-info">Lo sentimos, no hay información para mostrar</div>
+    }
+
+</div>
+
+
+
+

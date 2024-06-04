@@ -1,0 +1,21 @@
+.custom-tr {
+    font-size: 13px; 
+}
+
+.custom-td {
+    font-size: 12px; 
+    white-space: nowrap; /* Evita el salto de línea */
+    width: auto; /* Ajusta el ancho de la celda al contenido */
+}
+
+
+.custom-h5 {
+    font-size: 14px;
+    text-align: center; /* Para centrar el texto horizontalmente */
+    margin-top: 0; /* Para eliminar cualquier margen superior predeterminado */
+}
+
+.custom-button {
+    font-size: 12px; /* Ajusta este valor según tus necesidades */
+}
+

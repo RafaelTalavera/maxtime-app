@@ -1,0 +1,74 @@
+
+<form class="container mt-2 d-flex justify-content-center" (ngSubmit)="onSubmit(distanciaForm)" #distanciaForm="ngForm">
+    <div class="card card-custom">
+        <div class="card-header ">
+            <h5 class="custom-h5">Crear distancia</h5>
+        </div>
+     
+        <div class="card-body">
+            <div class="form-group">
+                <input type="text"
+                 class="form-control my-2 custom-input"  
+                 id="tipo" 
+                 placeholder="tipo" 
+                 name="tipo" 
+                 [(ngModel)]="distancia.tipo"
+                 #tipo="ngModel"
+                 required
+                 >
+                 <div *ngIf="tipo.invalid && (tipo.dirty || tipo.touched)" class="text alert-danger">
+                    <div *ngIf="tipo.errors!['required']"> 
+                        El nombre de la carrera es requerido
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">               
+                <input type="number" 
+                class="form-control my-2 custom-input" 
+                id="valor" 
+                placeholder="valor" 
+                name="valor" 
+                [(ngModel)]="distancia.valor"
+                #valor="ngModel"
+                required
+                >
+                <div *ngIf="valor.invalid && (valor.dirty || valor.touched)" class="text alert-danger">
+                    <div *ngIf="valor.errors!['required']"> 
+                        La fecha de la carrera es requerida
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">                
+                <input type="text" 
+                class="form-control my-2 custom-input" 
+                id="linkDePago" 
+                placeholder="linkDePago" 
+                name="linkDePago" 
+                [(ngModel)]="distancia.linkDePago"
+                #linkDePago="ngModel"
+                required
+                >
+                <div *ngIf="linkDePago.invalid && (linkDePago.dirty || linkDePago.touched)" class="text alert-info">
+                    <div *ngIf="linkDePago.errors!['required']"> 
+                        La fecha de cierre de inscripcion es requerido
+                    </div>
+                </div>
+            </div>
+           
+            
+            <div class="form-group">
+                <button
+                [disabled]="!distanciaForm.form.valid"
+                type="submit" 
+                class="btn btn-primary 
+                 my-2 mx-3
+                 ">{{distancia.id>0? 'editar': 'crear'}}
+                </button>
+                <button type="button" 
+                class="btn btn-success  
+                my-2 mx-3 " (click)="clean()">Limpiar
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

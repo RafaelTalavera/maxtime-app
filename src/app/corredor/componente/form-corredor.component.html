@@ -1,0 +1,238 @@
+<div class="container-fluid mt-2 d-flex justify-content-center">
+    <form class="card card-custom" (ngSubmit)="onSubmit(corredorForm)" #corredorForm="ngForm">
+      <div class="card-header">
+        <h5 class="custom-h5">Inscripción al evento - {{ tipo }} - Valor: ${{ valor }}</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="custom-label" for="nombre">Nombre</label>
+              <input type="text" class="form-control my-2 custom-input" id="nombre" placeholder="*" name="nombre" [(ngModel)]="corredor.nombre" #nombre="ngModel" required>
+              <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="text alert-danger">
+                <div *ngIf="nombre.errors!['required']">Su nombre es requerido</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="custom-label" for="apellido">Apellido</label>
+              <input type="text" class="form-control my-2 custom-input" id="apellido" placeholder="*" name="apellido" [(ngModel)]="corredor.apellido" #apellido="ngModel" required>
+              <div *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)" class="text alert-danger">
+                <div *ngIf="apellido.errors!['required']">El apellido es un campo obligatorio</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="custom-label" for="dni">DNI</label>
+              <input type="text" class="form-control my-2 custom-input" id="dni" placeholder="*" name="dni" [(ngModel)]="corredor.dni" #dni="ngModel" required>
+              <div *ngIf="dni.invalid && (dni.dirty || dni.touched)" class="text alert-danger">
+                <div *ngIf="dni.errors!['required']">El DNI es un campo obligatorio</div>
+              </div>
+            </div>
+          </div>
+        </div>
+            <div class="row">
+                <div class="col-md-4">
+                <div class="form-group">  
+                    <label class="custom-label" for="fechaNacimiento">Fecha de fechaNacimiento</label>             
+                    <input type="date" 
+                    class="form-control my-2 custom-input" 
+                    id="fechaNacimiento" 
+                    name="fechaNacimiento" 
+                    [(ngModel)]="corredor.fechaNacimiento"
+                    #fechaNacimiento="ngModel"
+                    required
+                    >
+                    <div *ngIf="fechaNacimiento.invalid && (fechaNacimiento.dirty || fechaNacimiento.touched)" class="text alert-danger">
+                        <div *ngIf="fechaNacimiento.errors!['required']"> 
+                            La fecha de la carrera es requerida
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-md-4">
+                <div class="form-group">    
+                    <label class="custom-label" for="genero">Género</label>           
+                    <select 
+                        class="form-control my-2 custom-input" 
+                        id="genero" 
+                        name="genero" 
+                        [(ngModel)]="corredor.genero"
+                        #genero="ngModel"
+                        required
+                    >
+                        <option value="" disabled selected>* Selecciona género</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                    </select>
+                    <div *ngIf="genero.invalid && (genero.dirty || genero.touched)" class="text alert-danger">
+                        <div *ngIf="genero.errors?.['required']"> 
+                            El género es un campo obligatorio
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+                 <div class="col-md-4">
+                <div class="form-group">  
+                    <label class="custom-label" for="nacionalidad">Nacionalidad</label>             
+                    <input type="tex" 
+                    class="form-control my-2 custom-input" 
+                    id="nacionalidad" 
+                    name="nacionalidad" 
+                    [(ngModel)]="corredor.nacionalidad"
+                    #nacionalidad="ngModel"
+                    required
+                    >
+                    <div *ngIf="nacionalidad.invalid && (nacionalidad.dirty || nacionalidad.touched)" class="text alert-danger">
+                        <div *ngIf="nacionalidad.errors!['required']"> 
+                            La nacionalidad es requerida
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+
+            <div class="form-group">  
+                <label class="custom-label" for="provincia">Provincia</label>             
+                <input type="tex" 
+                class="form-control my-2 custom-input" 
+                id="provincia" 
+                name="provincia" 
+                [(ngModel)]="corredor.provincia"
+                #provincia ="ngModel"
+                required
+                >
+                <div *ngIf="provincia.invalid && (provincia.dirty || provincia.touched)" class="text alert-danger">
+                    <div *ngIf="provincia.errors!['required']"> 
+                        La provincia es obligatoria
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="col-md-4">
+            <div class="form-group">  
+                <label class="custom-label" for="localidad">Localidad</label>             
+                <input type="tex" 
+                class="form-control my-2 custom-input" 
+                id="localidad" 
+                name="localidad" 
+                [(ngModel)]="corredor.localidad"
+                #localidad ="ngModel"
+                required
+                >
+                <div *ngIf="localidad.invalid && (localidad.dirty || localidad.touched)" class="text alert-danger">
+                    <div *ngIf="localidad.errors!['required']"> 
+                        La localidad es obligatoria
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+        <div class="col-md-4">
+            <div class="form-group">    
+                <label class="custom-label" for="talle">Talle</label>           
+                <select 
+                    class="form-control my-2 custom-input" 
+                    id="talle" 
+                    name="talle" 
+                    [(ngModel)]="corredor.talle"
+                    #talle="ngModel"
+                    required
+                >
+                    <option value="" disabled selected>* Selecciona talle</option>
+                    <option value="xx">XX</option>
+                    <option value="xl">XL</option>
+                    <option value="m">M</option>
+                    <option value="s">S</option>
+                    
+                </select>
+                <div *ngIf="talle.invalid && (talle.dirty || talle.touched)" class="text alert-danger">
+                    <div *ngIf="talle.errors?.['required']"> 
+                        El talle es un campo obligatorio
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+
+        <div class="form-group">  
+            <label class="custom-label" for="telefono">Teléfono</label>             
+            <input type="tex" 
+            class="form-control my-2 custom-input" 
+            id="telefono" 
+            name="telefono" 
+            [(ngModel)]="corredor.telefono"
+            #telefono ="ngModel"
+            required
+            >
+            <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" class="text alert-danger">
+                <div *ngIf="telefono.errors!['required']"> 
+                    El teléfono es obligatorio
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="form-group">  
+            <label class="custom-label" for="email">Email</label>             
+            <input type="email" 
+            class="form-control my-2 custom-input" 
+            id="email" 
+            name="email" 
+            [(ngModel)]="corredor.email"
+            #email ="ngModel"
+            required
+            >
+            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text alert-danger">
+                <div *ngIf="email.errors!['required']"> 
+                    El email es obligatorio
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="form-group">  
+            <label class="custom-label" for="team">Team</label>             
+            <input type="email" 
+            class="form-control my-2 custom-input" 
+            id="team" 
+            name="team" 
+            [(ngModel)]="corredor.team">           
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+<div class="col-md-4">
+    <div class="form-group ">  
+        <label class="custom-label" for="grupoSanguinio">Grupo Sanguíneo</label>             
+        <input type="grupoSanguinio" 
+        class="form-control my-2 custom-input" 
+        id="grupoSanguinio" 
+        name="grupoSanguinio" 
+        [(ngModel)]="corredor.grupoSanguinio">           
+    </div>
+</div>
+  
+            <div class="form-group">
+                <button [disabled]="!corredorForm.form.valid" type="submit" class="btn btn-success  mt-4 my-4 mx-6">{{corredor.id > 0 ? 'Editar' : 'Enviar inscripción y pagar'}}</button>
+                
+            </div>
+        </div>
+   
+</div>
+</form>
+</div>
