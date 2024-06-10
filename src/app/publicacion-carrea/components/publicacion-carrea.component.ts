@@ -43,14 +43,14 @@ export class CarreraListComponent implements OnInit {
     }
   }
 
-  inscripcion(carreraId: number, distanciaId: number, tipo: string, valor: number): void {
+  inscripcion(carreraId: number, distanciaId: number, tipo: string, linkDePago: string): void {
     // Navegar a la página de inscripción y pasar los datos como parte de la URL
     this.router.navigate(['/inscripcion'], { 
       queryParams: { 
         carreraId: carreraId,
         distanciaId: distanciaId,
         tipo: tipo,
-        valor: valor
+        linkDePago: linkDePago
       }
     });
   }

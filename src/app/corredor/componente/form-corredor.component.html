@@ -226,6 +226,10 @@
         [(ngModel)]="corredor.grupoSanguinio">           
     </div>
 </div>
+
+<div class="col-md-4">
+    <input type="hidden" name="confirmado" [(ngModel)]="corredor.confirmado" [value]="false">
+  </div>
   
             <div class="form-group">
                 <button [disabled]="!corredorForm.form.valid" type="submit" class="btn btn-success  mt-4 my-4 mx-6">{{corredor.id > 0 ? 'Editar' : 'Enviar inscripción y pagar'}}</button>

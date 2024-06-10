@@ -1,10 +1,12 @@
 export class Organizador {
     id!: number;
-    nombre: string = '';
+    username: string = '';
     apellido: string = '';
     dni: string = '';
-    email: string = '';
+    nombre: string = '';
     telefono: string = '';
+    password: string= '';
+    
 
     constructor(init?: Partial<Organizador>) {
         Object.assign(this, init);

@@ -1,0 +1,46 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { LocalStorageService } from '../servicios/local-Storage-Service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+  private apiUrl = 'http://localhost:8080/api/auth/authenticate';
+  private tokenKey = 'jwt_token';
+
+  constructor(private http: HttpClient, private localStorageService: LocalStorageService) { }
+
+  login(username: string, password: string): Observable<any> {
+    const loginData = { username, password };
+
+    return this.http.post<any>(this.apiUrl, loginData).pipe(
+      tap(response => {
+        if (response && response.token) {
+          this.setToken(response.token);
+        }
+      })
+    );
+  }
+
+  private setToken(token: string): void {
+    console.log('Setting token:', token);
+    this.localStorageService.setItem(this.tokenKey, token);
+  }
+
+  getToken(): string | null {
+    const token = this.localStorageService.getItem(this.tokenKey);
+    console.log('Getting token:', token);
+    return token;
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.getToken();
+  }
+
+  logout(): void {
+    this.localStorageService.removeItem(this.tokenKey);
+  }
+}

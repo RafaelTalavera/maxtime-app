@@ -40,7 +40,7 @@ export class CorredorComponent implements OnInit {
       this.carreraId = +params['carreraId'];
       this.distanciaId = +params['distanciaId'];
       this.tipo = params['tipo'];
-      this.valor = +params['valor'];
+      this.linkDePago = params['linkDePago'];
       this.corredorSelected = new Corredor();
 
       console.log('Datos obtenidos del path:');

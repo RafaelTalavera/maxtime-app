@@ -1,0 +1,8 @@
+<div class="carousel">
+  <img *ngFor="let image of images; let i = index"
+       [src]="image"
+       [alt]="'Slide ' + (i + 1)"
+       class="carousel-image"
+       [class.active]="i === currentSlideIndex">
+
+</div>

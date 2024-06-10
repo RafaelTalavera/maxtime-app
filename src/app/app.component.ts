@@ -10,7 +10,7 @@ import { CarreraListComponent } from './publicacion-carrea/components/publicacio
     selector: 'app-root',
     standalone: true,
     templateUrl: './app.component.html',
-    styleUrl: './app.component.css',
+    styleUrls: ['./app.component.css'],
     imports: [
         CommonModule,
         RouterOutlet,
@@ -19,8 +19,6 @@ import { CarreraListComponent } from './publicacion-carrea/components/publicacio
         NavbarComponent,
         NgxMaterialTimepickerModule, 
         CarreraListComponent,
-
-
     ]
 })
 export class AppComponent {

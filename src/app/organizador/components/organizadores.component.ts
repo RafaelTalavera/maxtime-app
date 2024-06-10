@@ -2,32 +2,49 @@ import { Component, OnInit } from '@angular/core';
 import { OrganizadoresService } from '../services/organizadores.service';
 import { Router } from '@angular/router'; 
 import { Organizador } from '../models/organizador';
-import { FormComponent } from './form-organizador/form-organizador.component';
 import Swal from 'sweetalert2';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-
+import { FormComponent } from './form-organizador/form-organizador.component';
 import { FormCarreraComponent } from '../../carrera/components/form-carrera/form-carrera.component';
+import { CommonModule } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { catchError, of } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-organizadores',
   standalone: true,
-  imports: [FormComponent, FormCarreraComponent],
+  imports: [FormComponent, FormCarreraComponent, CommonModule, FormsModule],
   templateUrl: './organizadores.component.html',
   styleUrls: ['./organizadores.component.css'],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+
 })
 export class OrganizadoresComponent implements OnInit {
 
   organizadores: Organizador[] = [];
+  showError: boolean = false;
+  dniBusqueda: string = '';
+  organizadoresFiltrados: Organizador[] = [];
 
   organizadorSelected: Organizador = new Organizador();
 
   constructor(private service: OrganizadoresService, private router: Router) {}
 
   ngOnInit(): void {
-    this.service.findAll().subscribe(organizadores => {
-      this.organizadores = organizadores;
-    });
+    this.service.findAll().pipe(
+      catchError((error) => {
+        console.error('Error fetching organizadores:', error);
+        if (error.status !== 200) {
+          this.showError = true;
+        }
+        return of([]); // Return an empty array or appropriate default value on error
+      })
+    ).subscribe(
+      (organizadores) => {
+        console.log('Organizadores data:', organizadores);
+        this.organizadores = organizadores;
+        this.buscarPorDNI(); // Inicializa la lista filtrada
+      }
+    );
   }
 
   addOrganizador(organizador: Organizador) {
@@ -54,14 +71,8 @@ export class OrganizadoresComponent implements OnInit {
   }
 
   onUpdateOrganizador(organizadorRow: Organizador) {
-    console.log('onUpdateOrganizador function called');
-    console.log('organizadorRow:', organizadorRow);
-  
     this.organizadorSelected = { ...organizadorRow };
-  
-    console.log('organizadorSelected after update:', this.organizadorSelected);
   }
-  
 
   onRemoveOrganizador(id: number): void {
     Swal.fire({
@@ -74,7 +85,6 @@ export class OrganizadoresComponent implements OnInit {
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
-        // El usuario ha confirmado la eliminación
         this.service.remove(id).subscribe(() => {
           this.organizadores = this.organizadores.filter(organizador => organizador.id !== id);
           Swal.fire({
@@ -84,7 +94,6 @@ export class OrganizadoresComponent implements OnInit {
           });
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        // El usuario ha cancelado la eliminación
         Swal.fire({
           icon: 'info',
           title: 'Eliminación cancelada',
@@ -93,7 +102,6 @@ export class OrganizadoresComponent implements OnInit {
       }
     });
   }
-  
 
   asignarCarrera(organizadorId: number | undefined): void {
     if (organizadorId === undefined) {
@@ -101,4 +109,20 @@ export class OrganizadoresComponent implements OnInit {
     }
     this.router.navigate(['/carreras', { organizadorId }]);
   }
+
+  buscarPorDNI(): void {
+    if (this.dniBusqueda.trim() === '') {
+      this.organizadoresFiltrados = this.organizadores;
+    } else {
+      this.organizadoresFiltrados = this.organizadores.filter(organizador =>
+        organizador.dni.toLowerCase().includes(this.dniBusqueda.toLowerCase())
+      );
+    }
+  }
+
+  trackByFn(index: number, item: Organizador): number {
+    return item.id; // O cualquier campo único en tu objeto Organizador
+  }
+  
+  
 }

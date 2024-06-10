@@ -11,10 +11,6 @@
     font-size: 12px; 
 }
 
-.card-custom {
-    max-width: 500px;
-    width: 100%;
-}
 
 .custom-input {
     font-size: 14px; 
@@ -22,7 +18,8 @@
 
 .custom-label {
     font-size: 14px; 
-    font-weight: bold;
+    text-align: center;
+ 
 }
 
 

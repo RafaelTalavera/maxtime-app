@@ -1,0 +1,43 @@
+body {
+  background-color: #00eeff;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.centered {
+  text-align: center;
+  margin-top: 80px;
+}
+
+
+.bold-solid {
+  font-weight: bold;
+  padding-bottom: 25px; /* Ajusta este valor según sea necesario */
+}
+
+.image {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.image img {
+  width: 60%;
+
+}
+
+.contacto {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+h2 {
+  font-weight: bold;
+  margin-top: 40px;
+  text-align: center;
+  color: #004242; /* Azul petróleo */
+}
+
+

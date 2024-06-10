@@ -15,11 +15,13 @@ export class FormComponent {
 
  @Input() organizador: Organizador = {
     id:0,
-    nombre: '',
+    username: '',
     apellido: '',
     dni: '',
-    email: '',
-    telefono: ''
+    nombre: '',
+    telefono: '',
+    password: '',
+   
   };
 
   @Output() newOrganizadorEvent = new EventEmitter();
@@ -35,11 +37,13 @@ export class FormComponent {
   clean(): void{
     this.organizador = {
     id:0,
-    nombre: '',
+    username: '',
     apellido: '',
     dni: '',
-    email: '',
-    telefono: ''
+    nombre: '',
+    telefono: '',
+    password: '',
+   
   };
 }
 }

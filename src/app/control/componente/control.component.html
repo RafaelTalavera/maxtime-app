@@ -1,1 +1,63 @@
-<p>control works!</p>
+<div *ngIf="!showError" class="container my-4 d-flex justify-content-center">
+    <div class="row">
+        <div class="col">
+            <h2 class="text-center">Listado de Organizadores</h2>
+            <!-- Agrega un campo de entrada para buscar por DNI -->
+            <input type="text"class="custom-tr"placeholder="Buscar por DNI" [(ngModel)]="dniBusqueda" (input)="buscarPorDNI()" style="width: 120px;">
+
+
+            @if (corredores.length > 0) {
+            <div style="max-height: 600px; overflow-y: auto;">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th class="custom-tr">Nombre</th>
+                            <th class="custom-tr">Apellido</th>
+                            <th class="custom-tr">Dni</th>
+                            <th class="custom-tr">Nacimiento</th>
+                            <th class="custom-tr">Genero</th>
+                            <th class="custom-tr">Nacionalidad</th>
+                            <th class="custom-tr">Provincia</th>
+                            <th class="custom-tr">Localidad</th>
+                            <th class="custom-tr">Talle</th>
+                            <th class="custom-tr">Telefono</th>
+                            <th class="custom-tr">team</th>
+                            <th class="custom-tr">GS</th>
+                            <th class="custom-tr">Carrera</th>
+                            <th class="custom-tr">Distancia</th>
+                            <th class="custom-tr">confirmado</th>
+                            <th class="custom-tr"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let corredor of corredoresFiltrados; trackBy: trackByFn">
+                            <td class="custom-td">{{corredor.nombre}}</td>
+                            <td class="custom-td">{{corredor.apellido}}</td>
+                            <td class="custom-td">{{corredor.dni}}</td>
+                            <td class="custom-td">{{corredor.fechaNacimiento}}</td>
+                            <td class="custom-td">{{corredor.genero}}</td>
+                            <td class="custom-td">{{corredor.nacionalidad}}</td>
+                            <td class="custom-td">{{corredor.provincia}}</td>
+                            <td class="custom-td">{{corredor.localidad}}</td>
+                            <td class="custom-td">{{corredor.talle}}</td>
+                            <td class="custom-td">{{corredor.telefono}}</td>
+                            <td class="custom-td">{{corredor.team}}</td>
+                            <td class="custom-td">{{corredor.grupoSanguinio}}</td>
+                            <td class="custom-td">{{corredor.carrera.nombre}}</td>
+                            <td class="custom-td">{{corredor.distancia.tipo}}</td>
+                            <td class="custom-td">{{corredor.confirmado ? 'Sí' : 'No'}}</td>
+                            <td class="custom-td">
+                                <button class="btn btn-sm" [ngClass]="corredor.confirmado ? 'btn-danger' : 'btn-success' " (click)="toggleConfirmado(corredor)">
+                                    {{corredor.confirmado ? 'Desconfirmar' : 'Confirmar'}}
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            } @else {
+            <div class="alert alert-info">Lo sentimos, no hay información para mostrar</div>
+            }
+        </div>
+    </div>
+</div>
