@@ -1,0 +1,14 @@
+#footer {
+  
+  color: balck; /* Color de texto blanco */
+  padding: 10px 0; /* Espaciado interno para el contenido del footer */
+  text-align: center; /* Centra el contenido del footer */
+  width: 100%; /* Ocupa todo el ancho disponible */
+ 
+  bottom: 0; /* Coloca el footer al fondo */
+  border-top: 1px solid black; /* Línea negra continua en la parte superior del footer */
+}
+
+#footer p {
+  margin-bottom: 0; /* Elimina el margen inferior del párrafo para un mejor ajuste */
+}

@@ -1,0 +1,39 @@
+
+<body>
+<div *ngIf="carreras.length > 0">
+  <div class="container my-6 content-container">
+    <h2>Próximos eventos</h2>
+    <div class="row justify-content-center">
+      <div *ngFor="let carrera of carreras" class="col-md-6">
+        <div class="card mb-2">
+          <img [src]="carrera.imagen" class="card-img-top fixed-dimension-img" alt="{{ carrera.nombre }}">
+          <div class="card-body" style="line-height: 1.2">
+            <h2 class="card-title anton-sc-regular" style="font-size: 24px;"><i class="fa-solid fa-flag-checkered"></i> {{ carrera.nombre }}</h2>
+            <p class="card-text"><strong style="color: red;"><i class="fa-solid fa-calendar-days"></i> Fecha del evento:</strong> {{ carrera.fecha }}</p>
+            <p class="card-text"><strong style="color: red;"><i class="fa-solid fa-clock"></i> Hora del evento:</strong> {{ formatHora(carrera.horario) }}</p>
+            <p class="card-text"><strong style="color: red;"><i class="fa-sharp fa-solid fa-rectangle-xmark"></i> Cierre de inscripción:</strong> {{ carrera.fechaDeCierreDeInscripcion }}</p>
+            <p class="card-text">
+              <strong style="color: red;">
+                <i class="fas fa-map-marker-alt"></i> Lugar:
+              </strong>
+              {{ carrera.localidad }} - {{ carrera.provincia }} - {{ carrera.pais }}
+            </p>
+            <p class="card-text"><strong style="color: red;"> 
+              <i class="fa-solid fa-medal"></i>
+              Tener en cuenta:</strong> {{ carrera.detalles }}</p>
+            <p class="card-text"><strong style="color: red;"><i class="fa-solid fa-address-book"></i> Contacto:</strong> {{ carrera.contacto }}</p>
+            <div *ngFor="let distancia of carrera.distancias" class="mt-2">
+              <p class="card-text"><strong style="color: red;"> 
+                <i class="fa-solid fa-route"></i>
+                Distancia:</strong> {{ distancia.tipo }} - <strong style="color: red;">
+                  <i class="fa-solid fa-money-bill"></i>
+                  Inscripción:</strong> $ {{ distancia.valor }}</p>
+              <button (click)="inscripcion(carrera.id, distancia.id, distancia.tipo, distancia.linkDePago)" class="btn btn-sm btn-success custom-button">Quiero inscribirme</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>

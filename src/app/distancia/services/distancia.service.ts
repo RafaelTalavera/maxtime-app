@@ -13,8 +13,7 @@ export class DistanciaService {
   constructor(private http: HttpClient) { }
 
   findAll(organizadorId: number, carreraId: number): Observable<Distancia[]> {
-    const url = `http://localhost:8080/api/distancias/organizador/${organizadorId}/carrera/${carreraId}`;
-    console.log('Generated URL:', url);
+    const url = `https://maxtime-v-001-production.up.railway.app/api/distancias/organizador/${organizadorId}/carrera/${carreraId}`;
   
     return this.http.get<Distancia[]>(url).pipe(
       tap(distancias => console.log('Received distancias:', distancias))
@@ -22,22 +21,21 @@ export class DistanciaService {
   }
 
   create(distancia: Distancia): Observable<Distancia> {
-    return this.http.post<Distancia>('http://localhost:8080/api/distancias', distancia);
+    return this.http.post<Distancia>('https://maxtime-v-001-production.up.railway.app/api/distancias', distancia);
   }
 
   updateDistancia(distancia: Distancia): Observable<Distancia> {
-    const url = `http://localhost:8080/api/distancias/${distancia.id}`;
+    const url = `https://maxtime-v-001-production.up.railway.app/api/distancias/${distancia.id}`;
     return this.http.put<Distancia>(url, distancia);
   }
 
   remove(id: number): Observable<void> {
-    const url = `http://localhost:8080/api/distancias/${id}`;
+    const url = `https://maxtime-v-001-production.up.railway.app/api/distancias/${id}`;
     return this.http.delete<void>(url);
   }
 
-  // Add the findById method
   findById(id: number): Observable<Distancia> {
-    const url = `http://localhost:8080/api/distancias/${id}`;
+    const url = `https://maxtime-v-001-production.up.railway.app/api/distancias/${id}`;
     return this.http.get<Distancia>(url).pipe(
       tap(distancia => console.log('Received distancia:', distancia))
     );

@@ -13,3 +13,8 @@
 .separated-content {
     margin-top: 70px; /* Ajusta este valor según sea necesario */
   }
+
+  .custom-h5 {
+    font-size: 15px; 
+    text-align: center; 
+}

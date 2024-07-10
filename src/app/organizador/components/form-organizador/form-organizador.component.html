@@ -39,26 +39,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 form-group">               
-                <input type="text" 
-                class="form-control my-2" 
-                id="dni" 
-                placeholder="dni" 
-                name="dni" 
-                [(ngModel)]="organizador.dni"
-                #dni="ngModel"
-                required
-                style="font-size: 12px;">
-                <div *ngIf="dni.invalid && (dni.dirty || dni.touched)" class="text alert-info">
-                    <div *ngIf="dni.errors!['required']"> 
-                        El dni es requerido
-                    </div>
-                </div>
-            </div>
-        </div>
-         <!-- Segunda fila de inputs -->
-         <div class="row">
-        <div class="col-md-4 form-group">           
+            <div class="col-md-4 form-group">           
                 <input type="text" 
                 class="form-control my-2" 
                 id="nombre" 
@@ -74,6 +55,27 @@
                     </div>
                 </div>
             </div>
+        </div>
+         <!-- Segunda fila de inputs -->
+         <div class="row">
+
+            <div class="col-md-4 form-group">               
+                <input type="text" 
+                class="form-control my-2" 
+                id="dni" 
+                placeholder="DNI" 
+                name="dni" 
+                [(ngModel)]="organizador.dni"
+                #dni="ngModel"
+                required
+                style="font-size: 12px;">
+                <div *ngIf="dni.invalid && (dni.dirty || dni.touched)" class="text alert-info">
+                    <div *ngIf="dni.errors!['required']"> 
+                        El dni es requerido
+                    </div>
+                </div>
+            </div>
+      
             <div class="col-md-4 form-group">
                 <input type="text" 
                 class="form-control my-2" 

@@ -1,11 +1,33 @@
-.custom-tr {
-    font-size: 12px; 
+/* Estilos globales o de la página que contiene el componente */
+body {
+    
+    font-family: 'Roboto', sans-serif; /* Ajusta la fuente según tu diseño */
+  }
+  
+  /* Estilos específicos para el componente de listado de corredores */
+  .custom-h5 {
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .custom-tr,
+  .custom-td {
+    font-size: 12px; /* Ajusta el tamaño de la fuente según sea necesario */
+    text-align: center; /* Centra el contenido horizontalmente */
+    vertical-align: middle; /* Centra el contenido verticalmente */
+
+  }
+  
+  .custom-button {
+    font-size: 10px; /* Ajusta este valor según tus necesidades */
+  }
+  
+  .content-container {
+    margin-top: 90px; /* Ajusta el valor según tus necesidades */
+    margin-bottom: 300px; 
+    width: 100%; /* Ocupará todo el ancho disponible */
+    max-width: 1200px;
 }
 
-.custom-td {
-    font-size: 12px; 
-}
-
-.custom-button {
-    font-size: 12px; /* Ajusta este valor según tus necesidades */
-}
+  

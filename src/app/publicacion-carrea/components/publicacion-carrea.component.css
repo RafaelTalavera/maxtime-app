@@ -1,9 +1,0 @@
-.fixed-dimension-img {
-    width: 100%; /* O el ancho específico que prefieras */
-    height: 200px; /* Ajusta este valor según sea necesario */
-    object-fit: cover; /* Para que la imagen se recorte correctamente si es más grande que el contenedor */
-  }
-  
-  .content-container {
-    margin-top: 300px; /* Ajusta el valor según tus necesidades */
-}

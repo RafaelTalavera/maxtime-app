@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './form-organizador.component.html',
   styleUrl: './form-organizador.component.css'
 })
-export class FormComponent {
+export class FormOrganizadorComponent {
 
  @Input() organizador: Organizador = {
     id:0,

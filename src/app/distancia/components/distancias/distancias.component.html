@@ -2,12 +2,11 @@
 
     <div class="separated-content">
 
-    <div class="row">
         <div class="col">
             <app-form-distancia (newDistanciaEvent)="addDistancia($event)" [distancia]="distanciaSelected"></app-form-distancia>
         </div>
-        <div class="col">
-            <h2 class="text-center" style="font-size: 18px;">Listado de distancia</h2>
+        <div class="col"><div class="col mt-5">
+               <h2 class="text-center" style="font-size: 18px;">Listado de distancia</h2>
             @if (distancias.length > 0) {
             <div style="max-height: 400px; overflow-y: auto;">
                 <table class="table table-hover table-striped">
@@ -15,7 +14,9 @@
                         <tr>
                             <th class="custom-tr">Tipo</th>
                             <th class="custom-tr">valor</th>
-                            <th class="custom-tr">link</th>      
+                            <th class="custom-tr">link</th>  
+                            <th class="custom-tr">Editar</th> 
+                            <th class="custom-tr">Eliminar</th>     
                     
                         </tr>
                     </thead>
@@ -26,8 +27,6 @@
                             <td class="custom-td">{{distancia.tipo}}</td>
                             <td class="custom-td">{{distancia.valor}}</td>
                             <td class="custom-td">{{distancia.linkDePago}}</td>
-                     
-                            <td class="custom-td"></td>
                            
                             <td><button (click)="onUpdateDistancia(distancia)" class="btn btn-sm btn-secondary custom-button">Editar</button></td>
                             <td><button (click)="onRemoveDistancia(distancia.id)" class="btn btn-sm btn-danger custom-button">Eliminar</button></td>
@@ -41,7 +40,7 @@
             }
 
         </div>
-    </div>
+    
 </div>
 </div>
 

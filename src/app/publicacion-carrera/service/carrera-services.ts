@@ -10,7 +10,7 @@ import { PublicacionCarrera } from '../models/publicacion-carrera';
 })
 export class CarreraService {
 
-  private apiUrl = 'http://localhost:8080/api/carreras/activas';
+  private apiUrl = 'https://maxtime-v-001-production.up.railway.app/api/carreras/activas';
 
   constructor(private http: HttpClient) { }
 

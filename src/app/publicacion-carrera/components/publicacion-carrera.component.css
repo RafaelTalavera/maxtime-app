@@ -1,0 +1,43 @@
+.fixed-dimension-img {
+    width: 100%; /* O el ancho específico que prefieras */
+    height: 200px; /* Ajusta este valor según sea necesario */
+    object-fit: cover; /* Para que la imagen se recorte correctamente si es más grande que el contenedor */
+  }
+  
+  .content-container {
+    margin-top: 10px; /* Ajusta el valor según tus necesidades */
+    margin-bottom: 100px; 
+}
+
+.card-text {
+  margin-bottom: 0.8em; /* Ajusta el valor según sea necesario */
+  font-family: 'Roboto', sans-serif; /* Aplica la fuente Roboto */
+  font-size: 14px; /* Ajusta el tamaño del texto según sea necesario */
+  color: #333; /* Opcional: ajusta el color del texto */
+}
+
+.anton-sc-regular {
+  font-family: "Anton", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  margin-top: 100px; /* Ajusta el valor según sea necesario */
+
+}
+
+h2 {
+  font-family: "Anton", sans-serif;
+  font-weight: bold;
+  text-align: center;
+  font-size: 50px;
+  color: black; 
+}
+

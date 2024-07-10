@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Corredor } from '../models/corredor';
 import { CorredorService } from '../service/corredor.service';
-import { FormCorredorComponent } from './form-corredor.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CarreraListComponent } from '../../publicacion-carrea/components/publicacion-carrea.component';
 import { DistanciaService } from '../../distancia/services/distancia.service';
+import { FormCorredorComponent } from './form-corredor.component';
 import { FormsModule } from '@angular/forms';
+import { PublicacionCarreraComponent } from '../../publicacion-carrera/components/publicacion-carrera.component';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-corredor',
@@ -15,7 +16,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './corredor.component.html',
   styleUrls: ['./corredor.component.css'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [FormCorredorComponent, CarreraListComponent, FormsModule],
+  imports: [FormCorredorComponent, PublicacionCarreraComponent, FormsModule, CommonModule],
 })
 export class CorredorComponent implements OnInit {
   corredores: Corredor[] = [];
@@ -43,17 +44,10 @@ export class CorredorComponent implements OnInit {
       this.linkDePago = params['linkDePago'];
       this.corredorSelected = new Corredor();
 
-      console.log('Datos obtenidos del path:');
-      console.log('carreraId:', this.carreraId);
-      console.log('distanciaId:', this.distanciaId);
-      console.log('tipo:', this.tipo);
-      console.log('valor:', this.valor);
-
      this.corredorSelected.carreraId = this.carreraId;
      this.corredorSelected.distanciaId = this.distanciaId;
     });
 
-    // Inicialmente no se llama a findAll aquí
   }
 
   findCorredores(): void {
@@ -66,38 +60,58 @@ export class CorredorComponent implements OnInit {
 
   addCorredor(corredor: Corredor) {
     if (corredor.id > 0) {
-      this.service.updateCorredor(corredor).subscribe(corredorUpdated => {
-        this.corredores = this.corredores.map(corre => corre.id === corredor.id ? corredorUpdated : corre);
-        Swal.fire({
-          icon: 'success',
-          title: 'Corredor Actualizado',
-          text: 'El corredor se ha actualizado con éxito',
-        });
-      });
+      this.service.updateCorredor(corredor).subscribe(
+        corredorUpdated => {
+          this.corredores = this.corredores.map(corre => corre.id === corredor.id ? corredorUpdated : corre);
+          Swal.fire({
+            icon: 'success',
+            title: 'Corredor Actualizado',
+            text: 'El corredor se ha actualizado con éxito',
+          });
+        },
+        error => {
+          console.error('Error updating corredor:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al Actualizar Corredor',
+            text: 'Hubo un problema al actualizar el corredor',
+          });
+        }
+      );
     } else {
-     corredor.carreraId = this.carreraId;
-     corredor.distanciaId = this.distanciaId;
-      this.service.create(corredor).subscribe(corredorNew => {
-        console.log('Nuevo corredor creado:', corredorNew);
-        this.corredores.push(corredorNew);
-        Swal.fire({
-          icon: 'success',
-          title: 'Corredor Creado',
-          text: 'El corredor se ha creado con éxito',
-          showCancelButton: true,
-          confirmButtonText: 'Pagar ahora',
-          cancelButtonText: 'Más tarde',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            window.location.href = this.linkDePago;
-          }
-        });
-      });
+      corredor.carreraId = this.carreraId;
+      corredor.distanciaId = this.distanciaId;
+      this.service.create(corredor).subscribe(
+        corredorNew => {
+         
+          this.corredores.push(corredorNew);
+          Swal.fire({
+            icon: 'success',
+            title: 'Inscripción Creada',
+            text: 'Felicitaciones, usted se inscribió con éxito.',
+            showCancelButton: true,
+            confirmButtonText: 'Pagar ahora',
+            cancelButtonText: 'Más tarde',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = this.linkDePago; 
+            }
+          });
+        },
+        error => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Ya existe un DNI igual al que ingreso',
+            text: 'Verifique si lo ingresó correctamente o comuníquese con el organizador.',
+          });
+        }
+      );
     }
     this.corredorSelected = new Corredor();
     this.corredorSelected.carreraId = this.carreraId;
     this.corredorSelected.distanciaId = this.distanciaId;
   }
+  
 
   onUpdateCorredor(corredorRow: Corredor) {
     this.corredorSelected = { ...corredorRow };
@@ -116,5 +130,9 @@ export class CorredorComponent implements OnInit {
 
   trackByIndex(index: number, corredor: Corredor): number {
     return corredor.id;
+  }
+
+  goToLink(url: string) {
+    window.open(url, '_blank');
   }
 }

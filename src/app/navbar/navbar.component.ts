@@ -1,29 +1,33 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+// navbar.component.ts
+import { Component, OnInit, Inject, PLATFORM_ID, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../login/auth-service';
 import { Router } from '@angular/router';
-
-import jwt_decode from 'jwt-decode';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-navbar',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+  
+  ],
+ 
 })
 export class NavbarComponent implements OnInit {
-  jwt_token!: string | null;
+  jwt_token: string | null = null;
   isAdmin: boolean = false;
 
   constructor(
     private authService: AuthService,
-     private router: Router,
+    private router: Router,
     @Inject(PLATFORM_ID) private platformId: object
-  ) {}
+  ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.jwt_token = localStorage.getItem('jwtToken');
       if (this.jwt_token) {
@@ -31,23 +35,6 @@ export class NavbarComponent implements OnInit {
         this.isAdmin = decodedToken.role === 'ADMIN';
       }
     }
-  }
-
-  onSubmit(form: NgForm) {
-    this.authService.login(form.value.username, form.value.password)
-      .subscribe(
-        (data: any) => {
-          if (isPlatformBrowser(this.platformId)) {
-            localStorage.setItem('jwtToken', data.jwt);
-            this.jwt_token = data.jwt;
-            const decodedToken: any = this.jwt_decode(this.jwt_token!);
-            this.isAdmin = decodedToken.role === 'ADMIN';
-          }
-        },
-        error => {
-          console.error('Error al iniciar sesión:', error);
-        }
-      );
   }
 
   jwt_decode(token: string): any {
@@ -58,6 +45,30 @@ export class NavbarComponent implements OnInit {
     this.authService.logout();
     this.jwt_token = null;
     this.isAdmin = false;
-    this.router.navigate(['/home']); // Navega a la ruta 'home' después de cerrar sesión
+    this.router.navigate(['/home']);
+  }
+
+  isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
+  }
+
+  goToLogin(): void {
+    this.router.navigate(['/login']);
+  }
+
+  goToMenu(): void {
+    this.router.navigate(['/menu']);
+  }
+
+  goToPublicacionCarrera(): void {
+    this.router.navigate(['/publicacion-carreras']);
+  }
+
+  goToNosotros(): void {
+    this.router.navigate(['/nosotros'])
+  }
+
+  goToHome(): void {
+    this.router.navigate(['/home'])
   }
 }

@@ -3,17 +3,17 @@ import { OrganizadoresService } from '../services/organizadores.service';
 import { Router } from '@angular/router'; 
 import { Organizador } from '../models/organizador';
 import Swal from 'sweetalert2';
-import { FormComponent } from './form-organizador/form-organizador.component';
-import { FormCarreraComponent } from '../../carrera/components/form-carrera/form-carrera.component';
-import { CommonModule } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { catchError, of } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FormOrganizadorComponent } from './form-organizador/form-organizador.component';
+import { FormCarreraComponent } from '../../carrera/components/form-carrera/form-carrera.component';
+
 
 @Component({
   selector: 'app-organizadores',
   standalone: true,
-  imports: [FormComponent, FormCarreraComponent, CommonModule, FormsModule],
+  imports: [FormOrganizadorComponent, FormCarreraComponent, CommonModule, FormsModule],
   templateUrl: './organizadores.component.html',
   styleUrls: ['./organizadores.component.css'],
 
@@ -32,17 +32,15 @@ export class OrganizadoresComponent implements OnInit {
   ngOnInit(): void {
     this.service.findAll().pipe(
       catchError((error) => {
-        console.error('Error fetching organizadores:', error);
         if (error.status !== 200) {
           this.showError = true;
         }
-        return of([]); // Return an empty array or appropriate default value on error
+        return of([]); 
       })
     ).subscribe(
-      (organizadores) => {
-        console.log('Organizadores data:', organizadores);
+      (organizadores) => {      
         this.organizadores = organizadores;
-        this.buscarPorDNI(); // Inicializa la lista filtrada
+        this.buscarPorDNI(); 
       }
     );
   }
@@ -121,7 +119,7 @@ export class OrganizadoresComponent implements OnInit {
   }
 
   trackByFn(index: number, item: Organizador): number {
-    return item.id; // O cualquier campo único en tu objeto Organizador
+    return item.id; 
   }
   
   

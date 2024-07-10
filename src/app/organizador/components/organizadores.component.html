@@ -1,4 +1,4 @@
-<div *ngIf="!showError" class="container my-4 d-flex justify-content-center">
+ <div *ngIf="!showError" class="container my-4 d-flex justify-content-center"> -->
 
 
     <div class="separated-content">
@@ -7,8 +7,16 @@
         </div>
         <div class="col mt-5">
             <div class="border rounded p-3">
-              <h5 class="text-center">Listado de Organizadores</h5>
-              <input type="text" class="custom-tr" placeholder="Buscar por DNI" [(ngModel)]="dniBusqueda" (input)="buscarPorDNI()" style="width: 120px;">
+              <h5 class="custom-h5">Listado de Organizadores</h5>
+              <div class="col-md-4 form-group">
+                <input type="text"
+                       class="form-control my-2 custom-tr"
+                       placeholder="Buscar por DNI"
+                       [(ngModel)]="dniBusqueda"
+                       (input)="buscarPorDNI()"
+                       style="width: 120px; font-size: 12px;">
+              </div>
+              
           
               <div *ngIf="organizadoresFiltrados.length > 0" style="max-height: 600px; overflow-y: auto;">
                 <table class="table table-hover table-striped">
@@ -16,7 +24,7 @@
                     <tr>
                       <th class="custom-tr">Nombre</th>
                       <th class="custom-tr">Apellido</th>
-                      <th class="custom-tr">Dni</th>
+                      <th class="custom-tr">DNI</th>
                       <th class="custom-tr">Email</th>
                       <th class="custom-tr">Telefono</th>
                       <th class="custom-tr">Carrera</th>

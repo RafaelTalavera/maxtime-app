@@ -8,7 +8,7 @@ import { LocalStorageService } from '../servicios/local-Storage-Service';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api/auth/authenticate';
+  private apiUrl = 'https://maxtime-v-001-production.up.railway.app/api/auth/authenticate';
   private tokenKey = 'jwt_token';
 
   constructor(private http: HttpClient, private localStorageService: LocalStorageService) { }
@@ -26,13 +26,11 @@ export class AuthService {
   }
 
   private setToken(token: string): void {
-    console.log('Setting token:', token);
     this.localStorageService.setItem(this.tokenKey, token);
   }
 
   getToken(): string | null {
     const token = this.localStorageService.getItem(this.tokenKey);
-    console.log('Getting token:', token);
     return token;
   }
 

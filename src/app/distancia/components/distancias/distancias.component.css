@@ -1,3 +1,15 @@
+.custom-tr {
+  font-size: 14px; 
+}
+
+.custom-td {
+  font-size: 14px; 
+}
+
+.custom-button {
+  font-size: 12px; /* Ajusta este valor según tus necesidades */
+}
+
 .separated-content {
-    margin-top: 70px; /* Ajusta este valor según sea necesario */
-  }
+  margin-top: 70px; /* Ajusta este valor según sea necesario */
+}

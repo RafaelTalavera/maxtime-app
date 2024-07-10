@@ -14,21 +14,20 @@ export class OrganizadoresService {
   constructor(private http: HttpClient) { }
 
   findAll(): Observable<Organizador[]>{
-   return this.http.get<Organizador[]>('http://localhost:8080/api/organizadores');
+   return this.http.get<Organizador[]>('https://maxtime-v-001-production.up.railway.app/api/organizadores');
   }
 
   create (organizador: Organizador): Observable<Organizador>{
-    console.log('Carrera enviada al servidor: este', organizador);
-    return this.http.post<Organizador>('http://localhost:8080/api/organizadores',organizador);
+    return this.http.post<Organizador>('https://maxtime-v-001-production.up.railway.app/api/organizadores',organizador);
   }
 
   updateOrganizador(organizador: Organizador): Observable<Organizador> {
-    const url = 'http://localhost:8080/api/organizadores/' + organizador.id;
+    const url = 'https://maxtime-v-001-production.up.railway.app/api/organizadores/' + organizador.id;
     return this.http.put<Organizador>(url, organizador);
   }
 
   remove(id: number): Observable<void> {
-    const url = 'http://localhost:8080/api/organizadores/' + id;
+    const url = 'https://maxtime-v-001-production.up.railway.app/api/organizadores/' + id;
     return this.http.delete<void>(url);
   }
   

@@ -7,22 +7,33 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/home">Home</a>
+          <a class="nav-link" (click)="goToHome()" style="cursor: pointer;">HOME</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/nosotros">Nosotros</a>
+          <a class="nav-link" (click)="goToNosotros()" style="cursor: pointer;">NOSOTROS</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/publicacion-carreras">Inscripciones</a>
+          <a class="nav-link" (click)="goToPublicacionCarrera()" style="cursor: pointer;">INSCRIPCIONES</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/login">Ingresar</a>
+        <!-- Mostrar cuando el usuario NO está logueado -->
+        <li class="nav-item" *ngIf="!isLoggedIn()">
+          <a class="nav-link" (click)="goToLogin()" style="cursor: pointer;">INGRESAR</a>
+        </li>
+        <!-- Mostrar cuando el usuario está logueado -->
+
+        <!-- Mostrar cuando el usuario está logueado -->
+        <li class="nav-item" *ngIf="isLoggedIn()">
+          <a class="nav-link" (click)="goToMenu()" style="cursor: pointer;">MENÚ</a>
+          
+        </li>
+
+        <li class="nav-item" *ngIf="isLoggedIn()">
+          <button class="nav-link" (click)="logout()"><i class="fa-solid fa-sign-out-alt"></i>
+          </button>
         </li>
       </ul>
-      <button class="nav-link" (click)="logout()">Cerrar sesión</button>
-
     </div>
   </div>
 </nav>

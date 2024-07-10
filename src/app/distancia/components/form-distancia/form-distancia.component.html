@@ -6,11 +6,14 @@
         </div>
      
         <div class="card-body">
+        <div class="row">
+        
             <div class="form-group">
+                <label for="valor" class="custom-label">Detalle de la carrera</label>
                 <input type="text"
                  class="form-control my-2 custom-input"  
                  id="tipo" 
-                 placeholder="tipo" 
+                 placeholder="por ejemplo 24k Adultos  " 
                  name="tipo" 
                  [(ngModel)]="distancia.tipo"
                  #tipo="ngModel"
@@ -22,11 +25,12 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">               
+            <div class="form-group">   
+                <label for="valor" class="custom-label">Valor de la carrera en $</label>            
                 <input type="number" 
                 class="form-control my-2 custom-input" 
                 id="valor" 
-                placeholder="valor" 
+                
                 name="valor" 
                 [(ngModel)]="distancia.valor"
                 #valor="ngModel"
@@ -38,11 +42,14 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">                
+        </div>
+        <div class="row">
+            <div class="form-group">   
+                            
                 <input type="text" 
                 class="form-control my-2 custom-input" 
                 id="linkDePago" 
-                placeholder="linkDePago" 
+                placeholder="Poner el link de pago de mercado Pago" 
                 name="linkDePago" 
                 [(ngModel)]="distancia.linkDePago"
                 #linkDePago="ngModel"
@@ -54,6 +61,7 @@
                     </div>
                 </div>
             </div>
+        </div>
            
             
             <div class="form-group">

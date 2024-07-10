@@ -8,18 +8,32 @@ export class LocalStorageService {
   constructor() { }
 
   getItem(key: string): string | null {
-    const value = localStorage.getItem(key);
-    console.log(`Getting item from localStorage with key: ${key}, value: ${value}`);
-    return value;
+    if (this.isLocalStorageAvailable()) {
+      return localStorage.getItem(key);
+    }
+    return null;
   }
 
   setItem(key: string, value: string): void {
-    console.log(`Setting item in localStorage with key: ${key}, value: ${value}`);
-    localStorage.setItem(key, value);
+    if (this.isLocalStorageAvailable()) {
+      localStorage.setItem(key, value);
+    }
   }
 
   removeItem(key: string): void {
-    console.log(`Removing item from localStorage with key: ${key}`);
-    localStorage.removeItem(key);
+    if (this.isLocalStorageAvailable()) {
+      localStorage.removeItem(key);
+    }
+  }
+
+  private isLocalStorageAvailable(): boolean {
+    try {
+      const testKey = '__test_key__';
+      localStorage.setItem(testKey, testKey);
+      localStorage.removeItem(testKey);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

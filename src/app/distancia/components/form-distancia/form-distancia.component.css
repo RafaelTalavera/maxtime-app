@@ -1,0 +1,20 @@
+.custom-tr {
+    font-size: 12px; 
+}
+
+.custom-td {
+    font-size: 12px; 
+}
+
+.custom-button {
+    font-size: 12px; /* Ajusta este valor según tus necesidades */
+}
+
+.separated-content {
+    margin-top: 70px; /* Ajusta este valor según sea necesario */
+  }
+
+  .custom-label {
+    font-size: 14px; /* Tamaño de letra personalizado */
+    color: #333; /* Color de texto opcional */
+}

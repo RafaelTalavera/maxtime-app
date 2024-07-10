@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule, RouterOutlet } from '@angular/router';
-import { HomeComponent } from "./home/home.component";
-import { NavbarComponent } from "./navbar/navbar.component";
-import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-import { CarreraListComponent } from './publicacion-carrea/components/publicacion-carrea.component';
+import { RouterOutlet } from '@angular/router';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FooterComponent } from './footer/footer.component';
+
 
 @Component({
     selector: 'app-root',
@@ -12,13 +10,7 @@ import { CarreraListComponent } from './publicacion-carrea/components/publicacio
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
     imports: [
-        CommonModule,
-        RouterOutlet,
-        RouterModule,
-        HomeComponent,
-        NavbarComponent,
-        NgxMaterialTimepickerModule, 
-        CarreraListComponent,
+        RouterOutlet, NavbarComponent, FooterComponent
     ]
 })
 export class AppComponent {

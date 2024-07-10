@@ -3,3 +3,8 @@
     text-align: center; /* Para centrar el texto horizontalmente */
  
 }
+
+.content-container {
+    margin-top: 300px; /* Ajusta el valor según tus necesidades */
+    
+}

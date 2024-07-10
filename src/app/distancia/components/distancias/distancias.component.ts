@@ -6,11 +6,11 @@ import Swal from 'sweetalert2';
 import { FormDistanciaComponent } from "../form-distancia/form-distancia.component";
 
 @Component({
-    selector: 'app-distancias',
-    standalone: true,
-    templateUrl: './distancias.component.html',
-    styleUrl: './distancias.component.css',
-    imports: [FormDistanciaComponent]
+  selector: 'app-distancias',
+  standalone: true,
+  templateUrl: './distancias.component.html',
+  styleUrl: './distancias.component.css',
+  imports: [FormDistanciaComponent]
 })
 export class DistanciasComponent implements OnInit{
   
@@ -31,7 +31,7 @@ export class DistanciasComponent implements OnInit{
   
     this.service.findAll(this.organizadorId, this.carreraId).subscribe(distancias => {
      
-      this.distancias = distancias; // Actualización correcta del array
+      this.distancias = distancias; 
     });
   }
 

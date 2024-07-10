@@ -2,6 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Corredor } from '../models/corredor';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-form-corredor',
@@ -14,6 +15,7 @@ export class FormCorredorComponent implements AfterViewInit {
   @Input() corredor: Corredor = new Corredor();
   @Input() tipo!: string;
   @Input() valor!: number;
+  edad: number | null = null;
 
   @Output() newCorredorEvent = new EventEmitter<Corredor>();
 
@@ -26,16 +28,37 @@ export class FormCorredorComponent implements AfterViewInit {
 
   onSubmit(corredorForm: NgForm): void {
     if (corredorForm.valid) {
-      console.log("Form is valid. Emitting newCorredorEvent.");
       this.newCorredorEvent.emit(this.corredor);
     } else {
       console.error("Form is invalid.");
     }
-    corredorForm.reset();
     corredorForm.resetForm();
   }
 
   clean(): void {
     this.corredor = new Corredor();
+  }
+
+  showSuccessAlert(message: string): void {
+    Swal.fire('¡Éxito!', message, 'success');
+  }
+
+  showErrorAlert(message: string): void {
+    Swal.fire('¡Error!', message, 'error');
+  }
+
+  calculateAge(): void {
+    if (this.corredor.fechaNacimiento) {
+      const birthDate = new Date(this.corredor.fechaNacimiento);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      this.edad = age;
+    } else {
+      this.edad = null;
+    }
   }
 }

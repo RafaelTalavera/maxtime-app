@@ -3,7 +3,8 @@
   }
 
   .custom-navbar {
-    background-color: #333; /* Cambia a un tono de negro más claro */
+    background-color: #333; 
+    margin-bottom: 20px;
   }
   
   .navbar-nav .nav-link {
@@ -28,6 +29,11 @@
   
   button.nav-link:hover {
     color: #ddd !important;
+  }
+
+  .custom-navbar .nav-item {
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
   }
   
   
