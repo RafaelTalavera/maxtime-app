@@ -10,11 +10,36 @@
     font-size: 12px; /* Ajusta este valor según tus necesidades */
 }
 
+.custom-h5 {
+    font-size: 16px; /* Ajusta este valor según tus necesidades */
+}
+
 .separated-content {
     margin-top: 70px; /* Ajusta este valor según sea necesario */
   }
 
   .custom-label {
-    font-size: 14px; /* Tamaño de letra personalizado */
-    color: #333; /* Color de texto opcional */
+    font-size: 14px; 
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    color: grey;
+}
+
+.custom-option {
+    background-color: #f9f9f9;
+    color: #333;
+    font-size: 14px;
+    padding: 10px;
+}
+
+.custom-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 14px;
+    color: grey;
+    font-family: 'Roboto', sans-serif;
 }

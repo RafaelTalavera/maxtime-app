@@ -2,6 +2,7 @@ export class Distancia {
     id!: number;
     tipo: string = '';
     valor: number = 0;
+    metodoPago: string = '';
     linkDePago: string = '';
     carreraId!: number;
     organizadorId!: number;

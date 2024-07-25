@@ -9,18 +9,17 @@ import { CommonModule } from '@angular/common';
 import { FormOrganizadorComponent } from './form-organizador/form-organizador.component';
 import { FormCarreraComponent } from '../../carrera/components/form-carrera/form-carrera.component';
 
-
 @Component({
   selector: 'app-organizadores',
   standalone: true,
   imports: [FormOrganizadorComponent, FormCarreraComponent, CommonModule, FormsModule],
   templateUrl: './organizadores.component.html',
   styleUrls: ['./organizadores.component.css'],
-
 })
 export class OrganizadoresComponent implements OnInit {
 
   organizadores: Organizador[] = [];
+  isLoading: boolean = true; 
   showError: boolean = false;
   dniBusqueda: string = '';
   organizadoresFiltrados: Organizador[] = [];
@@ -35,12 +34,14 @@ export class OrganizadoresComponent implements OnInit {
         if (error.status !== 200) {
           this.showError = true;
         }
+        this.isLoading = false; // Detener el spinner en caso de error
         return of([]); 
       })
     ).subscribe(
       (organizadores) => {      
         this.organizadores = organizadores;
-        this.buscarPorDNI(); 
+        this.buscarPorDNI();
+        this.isLoading = false; // Detener el spinner una vez que se cargan los datos
       }
     );
   }
@@ -121,6 +122,4 @@ export class OrganizadoresComponent implements OnInit {
   trackByFn(index: number, item: Organizador): number {
     return item.id; 
   }
-  
-  
 }

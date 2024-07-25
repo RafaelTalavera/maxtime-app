@@ -6,7 +6,6 @@ export class Carrera {
     localidad: string = '';
     provincia: string = '';
     pais: string = '';
-    imagen: string = '';
     detalles: string = '';
     contacto: string = '';
     horario: string = '';

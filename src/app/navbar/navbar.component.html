@@ -3,35 +3,33 @@
     <a class="navbar-brand" href="#">
       <img src="assets/img/logo2.jpg" alt="Maxtime Logo" style="height: 40px;">
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" (click)="toggleNavbar()" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <div class="collapse navbar-collapse" [ngbCollapse]="isNavbarCollapsed" id="navbarNavDropdown">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" (click)="goToHome()" style="cursor: pointer;">HOME</a>
+          <a class="nav-link" (click)="goToHome()" style="cursor: pointer;">INICIO</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" (click)="goToNosotros()" style="cursor: pointer;">NOSOTROS</a>
+          <a class="nav-link" (click)="goToNosotros()" style="cursor: pointer;">SOBRE NOSOTROS</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" (click)="goToPublicacionCarrera()" style="cursor: pointer;">INSCRIPCIONES</a>
+          <a class="nav-link" (click)="goToPublicacionCarrera()" style="cursor: pointer;">EVENTOS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="goToPublicacionCarrera()" style="cursor: pointer;">CLASIFICACIÓN</a>
         </li>
         <!-- Mostrar cuando el usuario NO está logueado -->
         <li class="nav-item" *ngIf="!isLoggedIn()">
           <a class="nav-link" (click)="goToLogin()" style="cursor: pointer;">INGRESAR</a>
         </li>
         <!-- Mostrar cuando el usuario está logueado -->
-
-        <!-- Mostrar cuando el usuario está logueado -->
         <li class="nav-item" *ngIf="isLoggedIn()">
           <a class="nav-link" (click)="goToMenu()" style="cursor: pointer;">MENÚ</a>
-          
         </li>
-
         <li class="nav-item" *ngIf="isLoggedIn()">
-          <button class="nav-link" (click)="logout()"><i class="fa-solid fa-sign-out-alt"></i>
-          </button>
+          <button class="nav-link" (click)="logout()"><i class="fa-solid fa-sign-out-alt"></i></button>
         </li>
       </ul>
     </div>

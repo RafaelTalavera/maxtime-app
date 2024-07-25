@@ -1,28 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { Carrera } from '../models/carrera';
-import { CarreasService } from '../services/carreras.service'; // Asegúrate de que el nombre del servicio esté correctamente escrito
-import { Router, ActivatedRoute } from '@angular/router'; 
+import { CarreasService } from '../services/carreras.service';
+import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { FormCarreraComponent } from "./form-carrera/form-carrera.component";
 import { FormDistanciaComponent } from '../../distancia/components/form-distancia/form-distancia.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-carrera',
   standalone: true,
   templateUrl: './carrera.component.html',
   styleUrls: ['./carrera.component.css'],
-  imports: [FormCarreraComponent, FormDistanciaComponent],
+  imports: [FormCarreraComponent, FormDistanciaComponent, CommonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class CarreraComponent implements OnInit {
 
   organizadorId!: number;
   carreras: Carrera[] = [];
-  carreraSelected: Carrera = new Carrera();
+  isLoading: boolean = true; 
+  carreraSelected: Carrera = this.createEmptyCarrera();
+  noCarreras: boolean = false; 
 
   constructor(
-    private service: CarreasService, // Asegúrate de que el nombre del servicio esté correctamente escrito
+    private service: CarreasService,
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {}
@@ -30,41 +33,80 @@ export class CarreraComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       this.organizadorId = +params['organizadorId'];
-      this.carreraSelected = new Carrera();
       this.carreraSelected.organizadorId = this.organizadorId;
-    });
 
-    this.service.findAll(this.organizadorId).subscribe(carreras => {
-      this.carreras = carreras;
+      // Cargar las carreras
+      this.loadCarreras();
     });
   }
 
-  addCarrera(carrera: Carrera) {
+  loadCarreras(): void {
+    this.isLoading = true;
+    this.service.findAll(this.organizadorId).subscribe(carreras => {
+      this.carreras = carreras;
+      this.noCarreras = this.carreras.length === 0; 
+      this.isLoading = false;
+    }, error => {
+      console.error('Error al cargar carreras:', error);
+      this.isLoading = false;
+    });
+  }
+
+  addCarrera(carrera: Carrera): void {
     if (carrera.id > 0) {
-      this.service.updateCarrera(carrera).subscribe(carreraUpdated => {
-        this.carreras = this.carreras.map(carr => carr.id === carrera.id ? carreraUpdated : carr);
-        Swal.fire({
-          icon: 'success',
-          title: 'Carrera Actualizada',
-          text: 'La carrera se ha actualizado con éxito',
-        });
-      });
+      this.updateCarrera(carrera);
     } else {
-      carrera.organizadorId = this.organizadorId;
-      this.service.create(carrera).subscribe(carreraNew => {
+      this.createCarrera(carrera);
+    }
+    this.resetCarreraSelected();
+  }
+
+  createCarrera(carrera: Carrera): void {
+    carrera.organizadorId = this.organizadorId;
+    this.service.create(carrera).subscribe({
+      next: carreraNew => {
         this.carreras.push(carreraNew);
         Swal.fire({
           icon: 'success',
           title: 'Carrera Creada',
           text: 'La carrera se ha creado con éxito',
         });
-      });
-    }
-    this.carreraSelected = new Carrera();
-    this.carreraSelected.organizadorId = this.organizadorId;
+        this.loadCarreras();
+      },
+      error: error => {
+        console.error('Error al crear carrera:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al Crear',
+          text: 'Hubo un error al crear la carrera. Por favor, intente nuevamente.',
+        });
+      }
+    });
   }
 
-  onUpdateCarrera(carreraRow: Carrera) {
+  updateCarrera(carrera: Carrera): void {
+    this.service.updateCarrera(carrera).subscribe({
+      next: carreraUpdated => {
+        this.carreras = this.carreras.map(carr => carr.id === carrera.id ? carreraUpdated : carr);
+        Swal.fire({
+          icon: 'success',
+          title: 'Carrera Actualizada',
+          text: 'La carrera se ha actualizado con éxito',
+        });
+        this.loadCarreras();
+      },
+      error: error => {
+        console.error('Error al actualizar carrera:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al Actualizar',
+          text: 'Hubo un error al actualizar la carrera. Por favor, intente nuevamente.',
+        });
+      }
+    });
+  }
+
+  onUpdateCarrera(carreraRow: Carrera): void {
     this.carreraSelected = { ...carreraRow };
   }
 
@@ -80,12 +122,31 @@ export class CarreraComponent implements OnInit {
   }
 
   asignarDistancia(carreraId: number | undefined, organizadorId: number | undefined): void {
-    console.log('asignarDistancia called with:', { organizadorId, carreraId });
     if (organizadorId === undefined || carreraId === undefined) {
-      console.log('One or both IDs are undefined. Exiting method.');
       return;
     }
-  
     this.router.navigate(['/distancias', { organizadorId, carreraId }]);
+  }
+
+  private createEmptyCarrera(): Carrera {
+    return {
+      id: 0,
+      nombre: '',
+      fecha: '',
+      fechaDeCierreDeInscripcion: '',
+      localidad: '',
+      provincia: '',
+      pais: '',
+      detalles: '',
+      contacto: '',
+      horario: '',
+      estado: false,
+      organizadorId: 0,
+    };
+  }
+
+  private resetCarreraSelected(): void {
+    this.carreraSelected = this.createEmptyCarrera();
+    this.carreraSelected.organizadorId = this.organizadorId;
   }
 }

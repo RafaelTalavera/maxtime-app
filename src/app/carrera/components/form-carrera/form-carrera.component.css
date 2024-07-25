@@ -19,8 +19,13 @@
 .custom-label {
     font-size: 14px; 
     text-align: center;
- 
+    font-family: 'Roboto', sans-serif;
+    color: grey;
 }
+   
+   
+ 
+
 
 
 

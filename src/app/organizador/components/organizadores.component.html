@@ -1,56 +1,57 @@
- <div *ngIf="!showError" class="container my-4 d-flex justify-content-center"> -->
-
-
-    <div class="separated-content">
-        <div class="col">
-            <app-form (newOrganizadorEvent)="addOrganizador($event)" [organizador]="organizadorSelected"></app-form>   
-        </div>
-        <div class="col mt-5">
-            <div class="border rounded p-3">
-              <h5 class="custom-h5">Listado de Organizadores</h5>
-              <div class="col-md-4 form-group">
-                <input type="text"
-                       class="form-control my-2 custom-tr"
-                       placeholder="Buscar por DNI"
-                       [(ngModel)]="dniBusqueda"
-                       (input)="buscarPorDNI()"
-                       style="width: 120px; font-size: 12px;">
-              </div>
-              
-          
-              <div *ngIf="organizadoresFiltrados.length > 0" style="max-height: 600px; overflow-y: auto;">
-                <table class="table table-hover table-striped">
-                  <thead>
-                    <tr>
-                      <th class="custom-tr">Nombre</th>
-                      <th class="custom-tr">Apellido</th>
-                      <th class="custom-tr">DNI</th>
-                      <th class="custom-tr">Email</th>
-                      <th class="custom-tr">Telefono</th>
-                      <th class="custom-tr">Carrera</th>
-                      <th class="custom-tr">Editar</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let organizador of organizadoresFiltrados; trackBy: trackByFn">
-                      <td class="custom-td">{{organizador.nombre}}</td>
-                      <td class="custom-td">{{organizador.apellido}}</td>
-                      <td class="custom-td">{{organizador.dni}}</td>
-                      <td class="custom-td">{{organizador.username}}</td>
-                      <td class="custom-td">{{organizador.telefono}}</td>
-          
-                      <td class="custom-td">
-                        <button (click)="asignarCarrera(organizador.id)" class="btn btn-sm btn-success custom-button">Asignar</button>
-                      </td>
-                      <td class="custom-td">
-                        <button (click)="onUpdateOrganizador(organizador)" class="btn btn-sm btn-secondary custom-button">Editar</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div *ngIf="organizadoresFiltrados.length === 0" class="alert alert-info">Lo sentimos, no hay información para mostrar</div>
-            </div>
-          </div>
-          
+<div class="container my-4 d-flex justify-content-center">
+  <div class="separated-content">
+    <div *ngIf="isLoading" class="loading-container">
+      <div class="loading-spinner"></div>
+    </div>
+    <div *ngIf="!isLoading && !showError">
+      <div class="col">
+        <app-form (newOrganizadorEvent)="addOrganizador($event)" [organizador]="organizadorSelected"></app-form>
       </div>
+      <div class="col mt-5">
+        <div class="border rounded p-3">
+          <h5 class="custom-h5">Listado de Organizadores</h5>
+          <div class="col-md-4 form-group">
+            <input type="text"
+                   class="form-control my-2 custom-tr"
+                   placeholder="Buscar por DNI"
+                   [(ngModel)]="dniBusqueda"
+                   (input)="buscarPorDNI()"
+                   style="width: 120px; font-size: 12px;">
+          </div>
+          <div *ngIf="organizadoresFiltrados.length > 0" style="max-height: 600px; overflow-y: auto;">
+            <table class="table table-hover table-striped">
+              <thead>
+                <tr>
+                  <th class="custom-tr">Nombre</th>
+                  <th class="custom-tr">Apellido</th>
+                  <th class="custom-tr">DNI</th>
+                  <th class="custom-tr">Email</th>
+                  <th class="custom-tr">Telefono</th>
+                  <th class="custom-tr">Carrera</th>
+                  <th class="custom-tr">Editar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let organizador of organizadoresFiltrados; trackBy: trackByFn">
+                  <td class="custom-td">{{organizador.nombre}}</td>
+                  <td class="custom-td">{{organizador.apellido}}</td>
+                  <td class="custom-td">{{organizador.dni}}</td>
+                  <td class="custom-td">{{organizador.username}}</td>
+                  <td class="custom-td">{{organizador.telefono}}</td>
+                  <td class="custom-td">
+                    <button (click)="asignarCarrera(organizador.id)" class="btn btn-sm btn-success custom-button">Asignar</button>
+                  </td>
+                  <td class="custom-td">
+                    <button (click)="onUpdateOrganizador(organizador)" class="btn btn-sm btn-secondary custom-button">Editar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div *ngIf="organizadoresFiltrados.length === 0" class="alert alert-info">Lo sentimos, no hay información para mostrar</div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="showError" class="alert alert-danger">Ocurrió un error al cargar los organizadores.</div>
+  </div>
+</div>
