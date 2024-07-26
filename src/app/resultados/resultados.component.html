@@ -1,0 +1,39 @@
+<body>
+
+<div class="container mt-3">
+    <form>
+      <div class="form-group">
+        <label for="fileInput">Cargar archivo Excel:</label>
+        <input type="file" id="fileInput" (change)="onFileChange($event)" accept=".xlsx, .xls" class="form-control">
+      </div>
+    </form>
+  
+    <div *ngIf="data.length > 0" class="mt-3">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th *ngFor="let column of columns">{{ column }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of data">
+            <td>{{ row.position }}</td>
+            <td>{{ row.positionBySex }}</td>
+            <td>{{ row.positionByCategory }}</td>
+            <td>{{ row.category }}</td>
+            <td>{{ row.number }}</td>
+            <td>{{ row.dni }}</td>
+            <td>{{ row.name }}</td>
+            <td>{{ row.surname }}</td>
+            <td>{{ row.chip }}</td>
+            <td>{{ row.race }}</td>
+            <td>{{ row.sex }}</td>
+            <td>{{ row.finish }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</body>
+  

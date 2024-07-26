@@ -1,0 +1,26 @@
+.custom-mb {
+    margin-bottom: 100px; /* Ajusta este valor según tus necesidades */
+    padding: 100px
+}
+
+.custom-label {
+    font-size: 14px; 
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    color: grey;
+}
+
+.custom-h3 {
+    color: grey;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px; 
+}
+
+.custom-tr {
+    font-size: 12px; 
+}
+
+.custom-td {
+    font-size: 12px; 
+}
+  

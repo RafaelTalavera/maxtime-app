@@ -1,7 +1,7 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 import { provideRouter } from '@angular/router';
-import { importProvidersFrom } from '@angular/core';
+import { Component, importProvidersFrom } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { HomeComponent } from './app/home/home.component';
@@ -16,6 +16,8 @@ import { ControlComponent } from './app/control/componente/control.component';
 import { NosotrosComponent } from './app/home/nosotros/nosotros.component';
 import { AuthInterceptor } from './app/servicios/authIn-terceptor';
 
+import { ResultsComponent } from './app/upload-results/upload-results.component';
+
 const routes = [
   { path: '', component: HomeComponent },
   { path: 'organizadores', component: OrganizadoresComponent },
@@ -27,7 +29,8 @@ const routes = [
   { path: 'menu', component: MenuComponent },
   { path: 'control', component: ControlComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'nosotros', component: NosotrosComponent }
+  { path: 'nosotros', component: NosotrosComponent },
+  { path: 'carga', component: ResultsComponent}
 ];
 
 bootstrapApplication(AppComponent, {

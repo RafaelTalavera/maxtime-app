@@ -1,14 +1,15 @@
-import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
+
+import { AfterViewInit, Component, EventEmitter, Input, Output } from "@angular/core";
+import { Distancia } from "../../models/distancia";
 import { FormsModule, NgForm } from '@angular/forms';
-import { Distancia } from '../../models/distancia';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-form-distancia',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './form-distancia.component.html',
-  styleUrls: ['./form-distancia.component.css'] // Corrected the styleUrl to styleUrls
+  styleUrls: ['./form-distancia.component.css']
 })
 export class FormDistanciaComponent implements AfterViewInit {
   ngAfterViewInit(): void {}
@@ -23,9 +24,9 @@ export class FormDistanciaComponent implements AfterViewInit {
     organizadorId: 0,
   };
 
-  @Output() newDistanciaEvent = new EventEmitter();
+  @Output() newDistanciaEvent = new EventEmitter<Distancia>(); // Specify the type
 
-  linkDePagoLabel: string = 'Link de Pago'; // Added this property
+  linkDePagoLabel: string = 'Link de Pago';
 
   onSubmit(distanciaForm: NgForm): void {
     if (distanciaForm.valid) {
@@ -45,7 +46,7 @@ export class FormDistanciaComponent implements AfterViewInit {
       carreraId: 0,
       organizadorId: 0,
     };
-    this.linkDePagoLabel = 'Link de Pago'; // Reset label to default
+    this.linkDePagoLabel = 'Link de Pago';
   }
 
   updateLabel(metodoPago: string): void {

@@ -10,6 +10,10 @@ import { MenuComponent } from './menu/menu.component';
 import { ControlComponent } from './control/componente/control.component';
 import { NosotrosComponent } from './home/nosotros/nosotros.component';
 import { PublicacionCarreraComponent } from './publicacion-carrera/components/publicacion-carrera.component';
+import { PruebaComponent } from './prueba/prueba.component';
+
+
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,7 +26,10 @@ const routes: Routes = [
   { path: 'menu', component: MenuComponent },
   { path: 'control', component: ControlComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'nosotros', component: NosotrosComponent }
+  { path: 'prueba', component: PruebaComponent},
+  { path: 'nosotros', component: NosotrosComponent },
+  
+ 
 ];
 
 @NgModule({

@@ -9,7 +9,7 @@ import { FormDistanciaComponent } from "../form-distancia/form-distancia.compone
   selector: 'app-distancias',
   standalone: true,
   templateUrl: './distancias.component.html',
-  styleUrl: './distancias.component.css',
+  styleUrls: ['./distancias.component.css'],
   imports: [FormDistanciaComponent]
 })
 export class DistanciasComponent implements OnInit{

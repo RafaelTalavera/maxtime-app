@@ -79,6 +79,7 @@ export class NavbarComponent implements OnInit {
   goToHome(): void {
     this.router.navigate(['/home'])
   }
+
   
   toggleNavbar() {
     this.isNavbarCollapsed = !this.isNavbarCollapsed;
