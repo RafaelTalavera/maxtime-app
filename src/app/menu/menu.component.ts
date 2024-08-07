@@ -1,28 +1,25 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ResultadosComponent } from "../resultados/resultados.component";
+
 
 @Component({
   selector: 'app-menu',
   standalone: true,
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css',
-  imports: [ResultadosComponent],
+  imports: [],
 })
 export class MenuComponent {
 
   constructor(private router: Router) {}
 
-  redirectToOrganizadores(): void {
-    this.router.navigate(['/organizadores']);
+
+  redirectToMenuOrganizador(): void {
+    this.router.navigate(['/menu-organizador']);
   }
 
-  redirectToControl(): void {
-    this.router.navigate(['/control']);
-  }
-
-  redirectToResultado(): void {
-    this.router.navigate(['/carga']);
+  redirectToMenuAdministrador(): void {
+    this.router.navigate(['/menu-administrador']);
   }
 
 }

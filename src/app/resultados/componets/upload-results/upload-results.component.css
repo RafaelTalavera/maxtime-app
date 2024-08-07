@@ -1,0 +1,31 @@
+.custom-mb {
+    margin-bottom: 100px; /* Ajusta este valor según tus necesidades */
+    padding: 100px;
+    background-color: rgba(255, 255, 255, 0.1);
+    min-height: 75vh;
+}
+
+.custom-label {
+    font-size: 14px; 
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    color: grey;
+}
+
+.custom-h3 {
+    color: blue;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px; 
+    text-align: center;
+}
+
+.custom-tr {
+    font-size: 12px; 
+}
+
+.custom-td {
+    font-size: 12px; 
+}
+
+
+  

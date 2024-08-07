@@ -1,8 +1,7 @@
-
-import { AfterViewInit, Component, EventEmitter, Input, Output } from "@angular/core";
-import { Distancia } from "../../models/distancia";
+import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Distancia } from '../../models/distancia';
 
 @Component({
   selector: 'app-form-distancia',
@@ -14,54 +13,69 @@ import { CommonModule } from '@angular/common';
 export class FormDistanciaComponent implements AfterViewInit {
   ngAfterViewInit(): void {}
 
-  @Input() distancia: Distancia = {
-    id: 0,
-    tipo: '',
-    valor: 0,
-    linkDePago: '', 
-    metodoPago: '',   
-    carreraId: 0,
-    organizadorId: 0,
-  };
+  @Input() distancia: Distancia = new Distancia();
+  @Output() newDistanciaEvent = new EventEmitter<Distancia>();
 
-  @Output() newDistanciaEvent = new EventEmitter<Distancia>(); // Specify the type
-
-  linkDePagoLabel: string = 'Link de Pago';
+  linkDePagoLabels: string[] = [];
 
   onSubmit(distanciaForm: NgForm): void {
     if (distanciaForm.valid) {
-      this.newDistanciaEvent.emit(this.distancia);
+      const jsonToSend = {
+        id: this.distancia.id,
+        tipo: this.distancia.tipo,
+        valor: this.distancia.valor,
+        pagos: this.distancia.pagos.map(metodo => ({
+          metodoPago: metodo.metodoPago,
+          linkDePago: metodo.linkDePago
+        })),
+        carreraId: this.distancia.carreraId,
+        organizadorId: this.distancia.organizadorId
+      };
+
+      console.log('JSON to send:', JSON.stringify(jsonToSend, null, 2));
+      this.newDistanciaEvent.emit(jsonToSend);
+
+      this.clean();
     }
-    distanciaForm.reset();
-    distanciaForm.resetForm();
   }
 
   clean(): void {
-    this.distancia = {
-      id: 0,
-      tipo: '',
-      valor: 0,
-      metodoPago: '',  
-      linkDePago: '',    
-      carreraId: 0,
-      organizadorId: 0,
-    };
-    this.linkDePagoLabel = 'Link de Pago';
+    this.distancia = new Distancia();
+    this.linkDePagoLabels = [];
+    console.log('Formulario limpiado:', this.distancia);
   }
 
-  updateLabel(metodoPago: string): void {
+  updateLabel(metodoPago: string, index: number): void {
     switch (metodoPago) {
       case 'Efectivo':
-        this.linkDePagoLabel = 'Dirección';
+        this.linkDePagoLabels[index] = 'Dirección';
         break;
       case 'Transferencia Bancaria':
-        this.linkDePagoLabel = 'Elija CBU o Alias';
+        this.linkDePagoLabels[index] = 'Elija CBU o Alias';
         break;
       case 'MercadoPago':
-        this.linkDePagoLabel = 'Coloque aquí el link de Mercado Pago';
+        this.linkDePagoLabels[index] = 'Coloque aquí el link de Mercado Pago';
         break;
       default:
-        this.linkDePagoLabel = 'Link de Pago';
+        this.linkDePagoLabels[index] = 'Link de Pago';
+    }
+  }
+
+  addMetodoPago(): void {
+    console.log('Añadiendo método de pago. Estado actual:', this.distancia.pagos);
+
+    // Crear un nuevo objeto para el método de pago para evitar problemas de referencia
+    const nuevoMetodo = { metodoPago: '', linkDePago: '' };
+    this.distancia.pagos = [...this.distancia.pagos, nuevoMetodo];
+    this.linkDePagoLabels = [...this.linkDePagoLabels, 'Link de Pago'];
+
+    console.log('Método de pago añadido. Estado nuevo:', this.distancia.pagos);
+  }
+
+  removeMetodoPago(index: number): void {
+    if (this.distancia.pagos.length > 0) {
+      this.distancia.pagos.splice(index, 1);
+      this.linkDePagoLabels.splice(index, 1);
     }
   }
 }

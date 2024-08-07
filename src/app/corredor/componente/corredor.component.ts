@@ -9,7 +9,6 @@ import { FormsModule } from '@angular/forms';
 import { PublicacionCarreraComponent } from '../../publicacion-carrera/components/publicacion-carrera.component';
 import { CommonModule } from '@angular/common';
 
-
 @Component({
   selector: 'app-corredor',
   standalone: true,
@@ -44,22 +43,49 @@ export class CorredorComponent implements OnInit {
       this.linkDePago = params['linkDePago'];
       this.corredorSelected = new Corredor();
 
-     this.corredorSelected.carreraId = this.carreraId;
-     this.corredorSelected.distanciaId = this.distanciaId;
+      this.corredorSelected.carreraId = this.carreraId;
+      this.corredorSelected.distanciaId = this.distanciaId;
     });
-
   }
 
   findCorredores(): void {
     if (this.dni) {
+      Swal.fire({
+        title: 'Por favor espere',
+        text: 'Buscando corredores...',
+        icon: 'info',
+        showConfirmButton: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
       this.service.findAll(this.dni).subscribe(corredores => {
         this.corredores = corredores;
+        Swal.close(); // Cerrar el mensaje de carga
+      }, error => {
+        Swal.close(); // Cerrar el mensaje de carga
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al Buscar Corredores',
+          text: 'Hubo un problema al buscar los corredores.',
+        });
       });
     }
   }
 
   addCorredor(corredor: Corredor) {
     if (corredor.id > 0) {
+      Swal.fire({
+        title: 'Por favor espere',
+        text: 'Actualizando corredor...',
+        icon: 'info',
+        showConfirmButton: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
       this.service.updateCorredor(corredor).subscribe(
         corredorUpdated => {
           this.corredores = this.corredores.map(corre => corre.id === corredor.id ? corredorUpdated : corre);
@@ -70,7 +96,7 @@ export class CorredorComponent implements OnInit {
           });
         },
         error => {
-          console.error('Error updating corredor:', error);
+          Swal.close(); // Cerrar el mensaje de carga
           Swal.fire({
             icon: 'error',
             title: 'Error al Actualizar Corredor',
@@ -81,14 +107,23 @@ export class CorredorComponent implements OnInit {
     } else {
       corredor.carreraId = this.carreraId;
       corredor.distanciaId = this.distanciaId;
+      Swal.fire({
+        title: 'Por favor espere',
+        text: 'Creando inscripción...',
+        icon: 'info',
+        showConfirmButton: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
       this.service.create(corredor).subscribe(
         corredorNew => {
-         
           this.corredores.push(corredorNew);
           Swal.fire({
             icon: 'success',
-            title: 'Inscripción Creada',
-            text: 'Felicitaciones, usted se inscribió con éxito.',
+            title: 'Felicitaciones, usted se inscribió con éxito.',
+            text: 'Recuerde siempre enviar el comprobate de pago para confirmación.',
             showCancelButton: true,
             confirmButtonText: 'Pagar ahora',
             cancelButtonText: 'Más tarde',
@@ -99,9 +134,10 @@ export class CorredorComponent implements OnInit {
           });
         },
         error => {
+          Swal.close(); // Cerrar el mensaje de carga
           Swal.fire({
             icon: 'error',
-            title: 'Ya existe un DNI igual al que ingreso',
+            title: 'Ya existe un DNI igual al que ingresó',
             text: 'Verifique si lo ingresó correctamente o comuníquese con el organizador.',
           });
         }
@@ -111,19 +147,28 @@ export class CorredorComponent implements OnInit {
     this.corredorSelected.carreraId = this.carreraId;
     this.corredorSelected.distanciaId = this.distanciaId;
   }
-  
 
   onUpdateCorredor(corredorRow: Corredor) {
     this.corredorSelected = { ...corredorRow };
   }
 
   onRemoveCorredor(id: number): void {
+    Swal.fire({
+      title: 'Por favor espere',
+      text: 'Eliminando corredor...',
+      icon: 'info',
+      showConfirmButton: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
+
     this.service.remove(id).subscribe(() => {
       this.corredores = this.corredores.filter(corredor => corredor.id !== id);
       Swal.fire({
         icon: 'success',
-        title: 'Carrera Eliminada',
-        text: 'La carrera se ha eliminado con éxito',
+        title: 'Corredor Eliminado',
+        text: 'El corredor se ha eliminado con éxito',
       });
     });
   }

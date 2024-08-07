@@ -4,87 +4,155 @@ body {
 
 .centered {
   text-align: center;
-  margin-top: 100px;
+  margin-top: 60px;
 }
 
 .eventos {
   text-align: center;
- 
-}
-.contacto {
-  text-align: center;
-  margin-top: 100px;
 }
 
+.contacto {
+  text-align: center;
+ 
+}
 
 .bold-solid {
   font-weight: bold;
   padding-bottom: 25px; /* Ajusta este valor según sea necesario */
 }
 
-.image {
-  margin-top: 20px;
-  text-align: center;
-  margin-bottom: 10px; 
+.carousel {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+
 }
 
-.image img {
-  width: 60%;
-
+.carousel .image {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  
 }
 
-.contacto {
-  justify-content: center;
-  align-items: center;
-  margin-top: 80px;
-  gap: 10px;
-  margin-bottom: 100px; 
+.carousel img {
+  min-width: 100%;
+  height: auto; /* Mantiene la proporción de la imagen */
+  object-fit: cover; /* Cubre el contenedor, recortando si es necesario */
+  height: 500px; /* Fija la altura a 300px o el valor deseado */
+}
+
+@keyframes typing {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  0%, 100% {
+    border-color: transparent;
+  }
+  50% {
+    border-color: blueviolet;
+  }
+}
+
+.permanent-marker-regular {
+  font-family: "Arial", sans-serif;
+  font-weight: 1200;
+  font-style: normal;
+  margin-top: 10px;
+  overflow: hidden; /* Oculta el texto que no ha sido "typed" aún */
+  white-space: nowrap; /* Evita que el texto se vaya a la siguiente línea */
+  animation: typing 2s steps(40, end), blink-caret .75s step-end infinite;
 }
 
 h2 {
-  font-family: "Anton", sans-serif;
+  font-family: "Arial", sans-serif;
+  font-weight: 900;
   text-align: center;
-  font-size: 40px;
-  color: blueviolet; 
+  font-size: 45px;
+  color: rgba(224, 236, 236, 0.993);
 }
 
-h6 {
-  font-family: "Anton", sans-serif;
+@keyframes slide-in {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-in {
+  font-family: "Arial", sans-serif;
   text-align: center;
   font-size: 20px;
-  gap: 40px;
+  font-weight: 500;
+  color: rgb(243, 235, 235);
+  animation: slide-in 1s ease-out forwards;
+  animation-delay: 1.5s; /* Espera a que termine la animación de .permanent-marker-regular */
+  opacity: 0; /* Inicialmente oculto */
+}
+
+.slide-in.second {
+  animation-delay: 2s; /* Anima un segundo después del primer párrafo */
+}
+
+#slogan {
+  background-color: rgba(5, 5, 5, 0.726); /* Fondo blanco más transparente */
+  padding: 5px; /* Espaciado interno para separar el contenido del borde */
+  text-align: center; /* Centrar el texto dentro del div */
+  border-bottom-right-radius: 20px; 
+  border-bottom-left-radius: 20px;
+  border: 3px solid white;
+
+}
+
+.icon-container img {
+  height: auto; /* Mantiene la proporción de las imágenes */
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 
-.permanent-marker-regular {
-  font-family: "Faster One", system-ui;
-  font-weight: 400;
-
-  font-style: normal;
-  margin-top: 10px; 
+.icon-row i {
+  font-size: 40px; /* Ajusta el tamaño de los iconos */
+  margin: 10px; /* Espaciado entre los iconos */
+.icon-row i {
+  font-size: 40px; /* Ajusta el tamaño de los iconos */
+  margin: 10px; /* Espaciado entre los iconos */
+  color: #333; /* Color de los iconos (puedes ajustarlo según tu diseño) */
 }
 
 .icon-row {
   display: flex;
-  justify-content: center; /* Centra los íconos horizontalmente */
-  gap: 30px; /* Ajusta el espacio entre los íconos */
-  margin-top: 30px;
+  justify-content: center;
+  align-items: center;
+  gap: 15px; /* Espaciado entre los iconos */
+}
 }
 
-.icon-container {
-  width: 40px;
-  height: 40px;
-}
-
-.icon-container img {
-  width: 100%;
-  height: 100%;
-}
-
-.app-nosotros {
-  text-align: center;
-  margin-top: 100px;
-  margin-bottom: 40px; /* Ajusta este margen inferior según sea necesario */
+.icon-row {
+  display: flex;
+  justify-content: center;
+  gap: 15px; /* Espaciado entre los iconos */
 }
 
 
+#cuadro {
+  background-color: rgba(75, 59, 165, 0.267); /* Fondo blanco más transparente */
+  padding: 5px; /* Espaciado interno para separar el contenido del borde */
+  text-align: center; /* Centrar el texto dentro del div */
+  border-radius: 20px;
+  border: 3px solid white;
+  font-weight: 450;
+
+}

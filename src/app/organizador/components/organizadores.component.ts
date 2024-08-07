@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { OrganizadoresService } from '../services/organizadores.service';
 import { Router } from '@angular/router'; 
 import { Organizador } from '../models/organizador';
@@ -7,7 +7,8 @@ import { catchError, of } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormOrganizadorComponent } from './form-organizador/form-organizador.component';
-import { FormCarreraComponent } from '../../carrera/components/form-carrera/form-carrera.component';
+import { FormCarreraComponent } from '../../carrera/organizador/components/form-carrera/form-carrera.component';
+import { LoadingService } from '../../servicios/loading.service';
 
 @Component({
   selector: 'app-organizadores',
@@ -16,32 +17,42 @@ import { FormCarreraComponent } from '../../carrera/components/form-carrera/form
   templateUrl: './organizadores.component.html',
   styleUrls: ['./organizadores.component.css'],
 })
-export class OrganizadoresComponent implements OnInit {
+export class OrganizadoresComponent implements OnInit, OnDestroy {
 
   organizadores: Organizador[] = [];
-  isLoading: boolean = true; 
   showError: boolean = false;
   dniBusqueda: string = '';
   organizadoresFiltrados: Organizador[] = [];
-
   organizadorSelected: Organizador = new Organizador();
 
-  constructor(private service: OrganizadoresService, private router: Router) {}
+  constructor(
+    private service: OrganizadoresService, 
+    private router: Router,
+    public loadingService: LoadingService) {}
 
   ngOnInit(): void {
+    this.loadOrganizadores();
+  }
+
+  ngOnDestroy(): void {
+    this.loadingService.stopIconChange();
+  }
+
+  loadOrganizadores(): void {
+    this.loadingService.startIconChange();
     this.service.findAll().pipe(
       catchError((error) => {
         if (error.status !== 200) {
           this.showError = true;
         }
-        this.isLoading = false; // Detener el spinner en caso de error
+        this.loadingService.stopIconChange(); // Detener el spinner en caso de error
         return of([]); 
       })
     ).subscribe(
       (organizadores) => {      
         this.organizadores = organizadores;
         this.buscarPorDNI();
-        this.isLoading = false; // Detener el spinner una vez que se cargan los datos
+        this.loadingService.stopIconChange(); // Detener el spinner una vez que se cargan los datos
       }
     );
   }
@@ -55,6 +66,7 @@ export class OrganizadoresComponent implements OnInit {
           title: 'Organizador Actualizado',
           text: 'El organizador se ha actualizado con éxito',
         });
+        this.loadOrganizadores(); // Recargar la lista de organizadores después de actualizar
       });
     } else {
       this.service.create(organizador).subscribe(organizadorNew => {
@@ -64,6 +76,7 @@ export class OrganizadoresComponent implements OnInit {
           title: 'Organizador Creado',
           text: 'El organizador se ha creado con éxito',
         });
+        this.loadOrganizadores(); // Recargar la lista de organizadores después de crear
       });
     }
     this.organizadorSelected = new Organizador();
@@ -85,12 +98,12 @@ export class OrganizadoresComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.service.remove(id).subscribe(() => {
-          this.organizadores = this.organizadores.filter(organizador => organizador.id !== id);
           Swal.fire({
             icon: 'success',
             title: 'Organizador Eliminado',
             text: 'El organizador se ha eliminado con éxito',
           });
+          this.loadOrganizadores(); // Recargar la lista de organizadores después de eliminar
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire({

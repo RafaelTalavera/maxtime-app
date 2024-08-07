@@ -16,6 +16,7 @@
 
 .separated-content {
     margin-top: 70px; /* Ajusta este valor según sea necesario */
+    
   }
 
   .custom-label {
@@ -36,10 +37,18 @@
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background-color: white;
     border: 1px solid #ccc;
     padding: 10px;
     font-size: 14px;
     color: grey;
     font-family: 'Roboto', sans-serif;
 }
+
+
+.card-custom {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.1);
+  }

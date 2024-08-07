@@ -21,6 +21,7 @@ export class DistanciaService {
   }
 
   create(distancia: Distancia): Observable<Distancia> {
+    console.log('JSON enviado:', JSON.stringify(distancia, null, 2));
     return this.http.post<Distancia>('https://maxtime-v-001-production.up.railway.app/api/distancias', distancia);
   }
 

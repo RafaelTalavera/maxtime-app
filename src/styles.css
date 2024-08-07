@@ -1,0 +1,42 @@
+
+.watermark {
+    position: fixed; /* Usa fixed para que el fondo no se mueva con el scroll */
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: url('/assets/img/image1.jpg');
+    background-repeat: repeat; /* Repite la imagen */
+    background-size: auto; /* Tamaño original de la imagen */
+    opacity: 0.1; /* Ajusta la opacidad para la transparencia */
+    z-index: -1; /* Coloca la imagen detrás del contenido */
+  }
+  
+
+  @keyframes bounce {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+  }
+  
+  .loading-spinner {
+    font-size: 120px;
+    color: #074775;
+    animation: bounce 0.5s linear infinite;
+  }
+  
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+  }
+
+  .content-background {
+    background-color: white; /* Fondo blanco para el div con contenido */
+  }
+  
+  
+  
+
+  

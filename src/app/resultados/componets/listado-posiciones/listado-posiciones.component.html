@@ -1,0 +1,52 @@
+
+<div class="watermark"></div>
+<div class="container my-4 d-flex justify-content-center">
+    <div *ngIf="loadingService.isLoading" class="loading-container">
+        <i class="fas fa-running loading-spinner"></i>
+    </div>
+
+    <div *ngIf="!loadingService.isLoading" class="separated-content">
+        <div class="col mt-5">
+            <div class="border rounded p-3 content-background">
+                <h2 class="text-center" style="font-size: 18px;">Listado de posiciones</h2>
+                <div class="col-md-4 form-group">
+                    <label for="searchDni">Buscar por DNI:</label>
+                    <input type="text" id="searchDni" class="form-control" [(ngModel)]="searchDni" (input)="filterPosiciones()" placeholder="Ingrese DNI">
+                </div>
+                <div *ngIf="filteredPosiciones.length > 0" style="max-height: 400px; overflow-y: auto;">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>General</th>
+                                <th>Categoria</th>
+                                <th>Sexo</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Sexo</th>
+                                <th>DNI</th>
+                                <th>Numero</th>
+                                <th>Tiempo Final</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let posicion of filteredPosiciones">
+                                <td>{{ posicion.posicion }}</td>
+                                <td>{{ posicion.posicionCategoria }}</td>
+                                <td>{{ posicion.posicionSexo }}</td>
+                                <td>{{ posicion.nombre }}</td>
+                                <td>{{ posicion.apellido }}</td>
+                                <td>{{ posicion.sexo }}</td>
+                                <td>{{ posicion.dni }}</td>
+                                <td>{{ posicion.numero}}</td>
+                                <td>{{ posicion.finish }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div *ngIf="filteredPosiciones.length === 0">
+                    <div class="alert alert-info">No hay corredores inscriptos para mostrar</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

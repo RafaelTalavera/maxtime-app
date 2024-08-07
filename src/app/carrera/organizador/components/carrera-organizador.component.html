@@ -1,0 +1,65 @@
+
+<div class="container my-4 d-flex justify-content-center">
+  <div class="watermark"></div>
+    <!-- Spinner de carga -->
+    <div *ngIf="loadingService.isLoading" class="loading-container">
+      <div class="loading-spinner"></div>
+    </div>
+    
+    <div *ngIf="!loadingService.isLoading" class="separated-content">
+      <div class="col">
+        <app-form-carrera (newCarreraEvent)="addCarrera($event)" [carrera]="carreraSelected"></app-form-carrera>
+      </div>
+      <div class="col mt-5">
+        <div class="border rounded p-3 content-background">
+          <h2 class="text-center" style="font-size: 18px;">Listado de eventos</h2>
+          <div *ngIf="carreras.length > 0" style="max-height: 400px; overflow-y: auto;">
+            <table class="table table-hover table-striped">
+              <thead>
+                <tr>
+                  <th class="custom-tr">Nombre del evento</th>
+                  <th class="custom-tr">Fecha</th>
+                  <th class="custom-tr">Cierre</th>
+                  <th class="custom-tr">Localidad</th>
+                  <th class="custom-tr">Provincia</th>
+                  <th class="custom-tr">Pais</th>
+                  <th class="custom-tr">Detalles</th>
+                  <th class="custom-tr">Contacto</th>
+                  <th class="custom-tr">Horario</th>
+                  <th class="custom-tr">Estado</th>
+                  <th class="custom-tr">Link de inscripción</th>
+                  <th class="custom-tr">Editar</th>
+                  <th class="custom-tr">Eliminar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let carrera of carreras">
+                  <td class="custom-td">{{carrera.nombre}}</td>
+                  <td class="custom-td">{{carrera.fecha}}</td>
+                  <td class="custom-td">{{carrera.fechaDeCierreDeInscripcion}}</td>
+                  <td class="custom-td">{{carrera.localidad}}</td>
+                  <td class="custom-td">{{carrera.provincia}}</td>
+                  <td class="custom-td">{{carrera.pais}}</td>
+                  <td class="custom-td">{{carrera.detalles}}</td>
+                  <td class="custom-td">{{carrera.contacto}}</td>
+                  <td class="custom-td">{{carrera.horario}}</td>
+                  <td class="custom-td">{{carrera.estado}}</td>
+                  <td class="custom-td">
+                    <button (click)="asignarDistancia(carrera.id, organizadorId)" class="btn btn-sm btn-success custom-button">Crear link inscripción</button>
+                  </td>
+                  <td>
+                    <button (click)="onUpdateCarrera(carrera)" class="btn btn-sm btn-secondary custom-button">Editar</button>
+                  </td>
+                  <td>
+                    <button (click)="onRemoveCarrera(carrera.id)" class="btn btn-sm btn-danger custom-button">Eliminar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div *ngIf="noCarreras" class="alert alert-info">Lo sentimos, no hay información para mostrar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

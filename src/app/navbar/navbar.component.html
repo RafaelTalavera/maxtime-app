@@ -15,11 +15,12 @@
           <a class="nav-link" (click)="goToNosotros()" style="cursor: pointer;">SOBRE NOSOTROS</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" (click)="goToPublicacionCarrera()" style="cursor: pointer;">EVENTOS</a>
+          <a class="nav-link" (click)="goToPublicacionCarrera()" style="cursor: pointer;">CARRERAS</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/home">Inscripciones</a>
+          <a class="nav-link" (click)="goTotiempos()" style="cursor: pointer;">TIEMPOS</a>
         </li>
+        <li class="nav-item">
         <!-- Mostrar cuando el usuario NO está logueado -->
         <li class="nav-item" *ngIf="!isLoggedIn()">
           <a class="nav-link" (click)="goToLogin()" style="cursor: pointer;">INGRESAR</a>

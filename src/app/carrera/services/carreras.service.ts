@@ -8,8 +8,9 @@ import { catchError, map, Observable, of, tap } from 'rxjs';
 })
 export class CarreasService {
 
-  private apiUrl = 'https://maxtime-v-001-production.up.railway.app/api/carreras/organizador/';
+  private apiUrl  = 'https://maxtime-v-001-production.up.railway.app/api/carreras/organizador/';
   private apiUrl2 = 'https://maxtime-v-001-production.up.railway.app/api/carreras/';
+  private apiUrl3 = 'https://maxtime-v-001-production.up.railway.app/api/carreras/carrera-organizador';
 
   constructor(private http: HttpClient) { }
 
@@ -17,6 +18,18 @@ export class CarreasService {
     const url = `${this.apiUrl}${organizadorId}`;
     console.log('Find all Solicitando carreras para organizador con ID:', organizadorId);
 
+    return this.http.get<Carrera[]>(url).pipe(
+      map(response => response ?? []), // Transforma null a un array vacío
+      tap(response => console.log('Respuesta recibida:', response)),
+      catchError(error => {
+        console.error('Error al cargar carreras:', error);
+        return of([]); // Retorna un array vacío en caso de error
+      })
+    );
+  }
+
+  findAllAdministrador(): Observable<Carrera[]> {
+    const url = 'https://maxtime-v-001-production.up.railway.app/api/carreras';
     return this.http.get<Carrera[]>(url).pipe(
       map(response => response ?? []), // Transforma null a un array vacío
       tap(response => console.log('Respuesta recibida:', response)),
@@ -37,11 +50,29 @@ export class CarreasService {
     );
   }
 
-  updateCarrera(carrera: Carrera): Observable<Carrera> {
-    const url = `${this.apiUrl2}${carrera.id}`;
+  createOrganizador(carrera: Carrera): Observable<Carrera> {
+    return this.http.post<Carrera>(this.apiUrl3, carrera).pipe(
+      tap(response => console.log('Carrera creada con éxito:', response)),
+      catchError(error => {
+        console.error('Error al crear carrera:', error);
+        return of(carrera); // Retorna la carrera original en caso de error
+      })
+    );
+  }
+
+  updateCarrera(carrera: Carrera, file?: File): Observable<Carrera> {
+    const url = `${this.apiUrl2}/${carrera.id}`;
     console.log('Enviando JSON al backend:', JSON.stringify(carrera, null, 2));
 
-    return this.http.put<Carrera>(url, carrera).pipe(
+    // Crear un FormData para enviar los datos como multipart/form-data
+    const formData: FormData = new FormData();
+    formData.append('carrera', new Blob([JSON.stringify(carrera)], { type: 'application/json' }));
+
+    if (file) {
+      formData.append('file', file);
+    }
+
+    return this.http.put<Carrera>(url, formData).pipe(
       tap(response => console.log('Carrera actualizada con éxito:', response)),
       catchError(error => {
         console.error('Error al actualizar carrera:', error);

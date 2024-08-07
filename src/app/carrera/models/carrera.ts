@@ -11,4 +11,5 @@ export class Carrera {
     horario: string = '';
     estado: boolean= false;
     organizadorId: number = 0;
+    
 }

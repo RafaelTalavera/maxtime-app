@@ -2,6 +2,7 @@
 body {
     
     font-family: 'Roboto', sans-serif; /* Ajusta la fuente según tu diseño */
+    
   }
   
   /* Estilos específicos para el componente de listado de corredores */
@@ -29,5 +30,6 @@ body {
     width: 100%; /* Ocupará todo el ancho disponible */
     max-width: 1200px;
 }
+
 
   

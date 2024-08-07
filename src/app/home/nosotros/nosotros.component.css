@@ -1,13 +1,10 @@
-body {
-
-  font-family: Arial, sans-serif;
-  margin: 100;
-}
 
 
 .text-container {
-  text-align: center;
- 
+  text-align: center; /* Centra el texto dentro del contenedor */
+  font-size: 18px;
+  font-family: Arial, sans-serif;
+  
 }
 
 .text-container h2 {
@@ -61,4 +58,15 @@ body {
 .main-container {
   margin-top: 30px; /* Agrega separación de 100px en la parte superior */
   padding: 20px; /* Añade espacio interno para el contenido dentro del contenedor */
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#cuadro {
+  background-color: rgba(75, 59, 165, 0.267); /* Fondo blanco más transparente */
+  padding: 5px; /* Espaciado interno para separar el contenido del borde */
+  text-align: center; /* Centrar el texto dentro del div */
+  border-radius: 20px;
+  border: 3px solid white;
+  font-weight: 450;
+
 }

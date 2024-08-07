@@ -1,63 +1,68 @@
+
+<div class="watermark"></div>
+
 <div class="container my-6 content-container">
   <app-form-corredor (newCorredorEvent)="addCorredor($event)" [corredor]="corredorSelected" [tipo]="tipo" [valor]="valor"></app-form-corredor>
- 
-  <div class="container mt-5"> 
-      <div class="row justify-content-center">
-        <div class="col-md-6 custom-input-container">
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Ingrese su DNI" [(ngModel)]="dni">
-            <div class="input-group-append">
-              <button class="btn btn-primary" type="button" (click)="findCorredores()">Buscar</button>
-            </div>
+  
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 custom-input-container">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Ingrese su DNI" [(ngModel)]="dni">
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="button" (click)="findCorredores()">Buscar</button>
           </div>
         </div>
       </div>
     </div>
-    
-  <div class="container mt-5"> 
-      <h2 class="text-center" style="font-size: 18px;">Listado de carreas</h2>
+  </div>
+  
+  <div class="container mt-5">
+    <div class="border rounded p-3 content-background">
+      <h2 class="text-center" style="font-size: 18px;">Listado de carreras</h2>
       <div *ngIf="corredores.length > 0; else noData">
-          <div style="max-height: 400px; overflow-y: auto;">
-              <table class="table table-hover table-striped">
-                  <thead>
-                      <tr>
-                          <th class="custom-tr">Nombre</th>
-                          <th class="custom-tr">Apellido</th>
-                          <th class="custom-tr">Dni</th>                                                   
-                          <th class="custom-tr">Nacimiento</th>
-                          <th class="custom-tr">Genero</th>
-                          <th class="custom-tr">Nacionalidad</th>
-                          <th class="custom-tr">Provincia</th>
-                          <th class="custom-tr">Team</th>
-                          <th class="custom-tr">Nombre</th>
-                          <th class="custom-tr">Inscipción</th>
-                          <th class="custom-tr">Pagar</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr *ngFor="let corredor of corredores; trackBy: trackByIndex">
-                          <td class="custom-td">{{corredor.nombre}}</td>
-                          <td class="custom-td">{{corredor.apellido}}</td>
-                          <td class="custom-td">{{corredor.dni}}</td>                           
-                          <td class="custom-td">{{corredor.fechaNacimiento}}</td>
-                          <td class="custom-td">{{corredor.genero}}</td>
-                          <td class="custom-td">{{corredor.nacionalidad}}</td>
-                          <td class="custom-td">{{corredor.provincia}}</td>
-                          <td class="custom-td">{{corredor.team}}</td>
-                          <td class="custom-td">{{corredor.carrera.nombre}}</td>
-                          <td class="custom-td">{{corredor.distancia.tipo}}</td>
-                          <td class="custom-td">
-                            <a [href]="corredor.distancia.linkDePago" class="btn btn-success" target="_blank" rel="noopener noreferrer">Pagar</a>
-                        </td>
-                  </tbody>
-              </table>
-          </div>
+        <div style="max-height: 400px; overflow-y: auto;">
+          <table class="table table-hover table-striped">
+            <thead>
+              <tr>
+                <th class="custom-tr">Nombre</th>
+                <th class="custom-tr">Apellido</th>
+                <th class="custom-tr">DNI</th>
+                <th class="custom-tr">Nacimiento</th>
+                <th class="custom-tr">Género</th>
+                <th class="custom-tr">Nacionalidad</th>
+                <th class="custom-tr">Provincia</th>
+                <th class="custom-tr">Team</th>
+                <th class="custom-tr">Carrera</th>
+                <th class="custom-tr">Inscripción</th>
+                <th class="custom-tr">Pagar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let corredor of corredores; trackBy: trackByIndex">
+                <td class="custom-td">{{corredor.nombre}}</td>
+                <td class="custom-td">{{corredor.apellido}}</td>
+                <td class="custom-td">{{corredor.dni}}</td>
+                <td class="custom-td">{{corredor.fechaNacimiento}}</td>
+                <td class="custom-td">{{corredor.genero}}</td>
+                <td class="custom-td">{{corredor.nacionalidad}}</td>
+                <td class="custom-td">{{corredor.provincia}}</td>
+                <td class="custom-td">{{corredor.team}}</td>
+                <td class="custom-td">{{corredor.carrera.nombre}}</td>
+                <td class="custom-td">{{corredor.distancia.tipo}}</td>
+                <td class="custom-td">
+                  <a [href]="corredor.distancia.linkDePago" class="btn btn-success" target="_blank" rel="noopener noreferrer">Pagar</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
       <ng-template #noData>
         <div class="alert alert-info d-flex justify-content-center text-center">
           Digite un número válido de DNI para ver la lista
         </div>
-        
       </ng-template>
+    </div>
   </div>
 </div>

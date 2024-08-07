@@ -1,10 +1,12 @@
-<div class="container login-container">
-    <p>Selecciona tu rol:</p>
-    <div>
-        <button class="btn btn-primary mx-2" (click)="redirectToControl()">Organizador</button>
-        <button class="btn btn-primary mx-2" (click)="redirectToOrganizadores()">Administrador</button>
-        <button class="btn btn-primary mx-2" (click)="redirectToResultado()">Carga de resultados</button>
-        
+
+
+<div class="watermark"></div>
+<div class="container menu-container">
+    <div class="border rounded p-3">
+    <p class="text-center" style="font-size: 18px;">Selecciona tu rol:</p>
+    <div class="text-center">
+        <button class="btn btn-primary mx-2" (click)="redirectToMenuOrganizador()">Menu del Organizador</button>
+        <button class="btn btn-danger mx-2" (click)="redirectToMenuAdministrador()">Menu del administrador</button>
     </div>
 </div>
 

@@ -1,0 +1,47 @@
+<!-- src/app/upload-results/upload-results.component.html -->
+
+<div class="watermark"></div>
+<div class="container mt-3 custom-mb">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="custom-h3">Cargar de resultados</h3>
+    </div>
+    <div class="card-body">
+      <form>
+        <div class="form-group mb-4">
+          <label class="custom-label" for="fileInput">Seleccione el archivo del tipo xlsx:</label>
+          <input type="file" id="fileInput" (change)="onFileChange($event)" accept=".xlsx, .xls" class="form-control">
+        </div>
+        <button class="btn btn-success mt-3" (click)="uploadResults()"><i class="fa-solid fa-stopwatch"></i> Cargar Resultados</button>
+      </form>
+
+      <div *ngIf="data.length > 0" class="mt-5">
+        <table class="table table-striped">
+          <thead>
+            <tr class="custom-tr">
+              <th *ngFor="let column of columns">{{ column }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of data">
+              <td class="custom-td">{{ row.posicion }}</td>
+              <td class="custom-td">{{ row.posicionSexo }}</td>
+              <td class="custom-td">{{ row.posicionCategoria }}</td>
+              <td class="custom-td">{{ row.categoria }}</td>
+              <td class="custom-td">{{ row.numero }}</td>
+              <td class="custom-td">{{ row.dni }}</td>
+              <td class="custom-td">{{ row.nombre }}</td>
+              <td class="custom-td">{{ row.apellido }}</td>
+              <td class="custom-td">{{ row.chip }}</td>
+              <td class="custom-td">{{ row.carreraId }}</td>
+              <td class="custom-td">{{ row.sexo }}</td>
+              <td class="custom-td">{{ row.finish }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+

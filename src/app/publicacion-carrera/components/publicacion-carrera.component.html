@@ -1,36 +1,56 @@
-<body>
-  <div class="container my-6 content-container">
-    <div *ngIf="isLoading" class="loading-container">
-      <div class="loading-spinner"></div>
-    </div>
-    <div *ngIf="!isLoading" class="publications-container">
-      <h2>PRÓXIMOS EVENTOS</h2>
-      <div class="row justify-content-center">
-        <div *ngFor="let carrera of carreras" class="col-md-6">
-          <div class="card mb-2">
-            <img [src]="carrera.imagen" class="card-img-top fixed-dimension-img" alt="{{ carrera.nombre }}">
-            <div class="card-body" style="line-height: 1.2">
-              <h2 style="font-size: 24px;"><i class="fa-solid fa-flag-checkered"></i> {{ carrera.nombre }}</h2>
-              <p class="card-text"><strong style="color: red;"><i class="fa-solid fa-calendar-days"></i> Fecha del evento:</strong> {{ carrera.fecha }}</p>
-              <p class="card-text"><strong style="color: red;"><i class="fa-solid fa-clock"></i> Hora del evento:</strong> {{ formatHora(carrera.horario) }}</p>
-              <p class="card-text"><strong style="color: red;"><i class="fa-sharp fa-solid fa-rectangle-xmark"></i> Cierre de inscripción:</strong> {{ carrera.fechaDeCierreDeInscripcion }}</p>
-              <p class="card-text">
-                <strong style="color: red;">
-                  <i class="fas fa-map-marker-alt"></i> Lugar:
-                </strong>
-                {{ carrera.localidad }} - {{ carrera.provincia }} - {{ carrera.pais }}
-              </p>
-              <p class="card-text"><strong style="color: red;"> 
-                <i class="fa-solid fa-medal"></i>
-                Tener en cuenta:</strong> {{ carrera.detalles }}</p>
-              <p class="card-text"><strong style="color: red;"><i class="fa-solid fa-address-book"></i> Contacto:</strong> {{ carrera.contacto }}</p>
-              <div *ngFor="let distancia of carrera.distancias" class="mt-2">
-                <p class="card-text"><strong style="color: red;"> 
-                  <i class="fa-solid fa-route"></i>
-                  Distancia:</strong> {{ distancia.tipo }} - <strong style="color: red;">
-                    <i class="fa-solid fa-money-bill"></i>
-                    Inscripción:</strong> $ {{ distancia.valor }}</p>
-                <button (click)="inscripcion(carrera.id, distancia.id, distancia.tipo, distancia.linkDePago)" class="btn btn-sm btn-success custom-button">Quiero inscribirme</button>
+<!-- publicacion-carrera.component.html -->
+<div class="watermark"></div>
+<div class="container my-6 content-container">
+  <div *ngIf="loadingService.isLoading" class="loading-container">
+    <i class="loading-spinner"></i>
+  </div>
+  <div *ngIf="!loadingService.isLoading" class="publications-container">
+    <h2>PRÓXIMOS EVENTOS</h2>
+    <div class="row justify-content-center">
+      <div *ngFor="let carrera of carreras" class="col-md-6">
+        <div class="card mb-2">
+          <img [src]="carrera.imagen" class="card-img-top fixed-dimension-img" alt="{{ carrera.nombre }}">
+          <div class="card-body" style="line-height: 1.2">
+            <h2 style="font-size: 24px;">{{ carrera.nombre }}</h2>
+            <div class="row">
+              <div class="col-md-6">
+                <p class="card-text"><strong style="color: rgb(35, 32, 32);"><i class="fa-solid fa-calendar-days"></i> Fecha del evento:</strong> {{ carrera.fecha }}</p>
+              </div>
+              <div class="col-md-6">
+                <p class="card-text"><strong style="color: rgb(35, 32, 32);"><i class="fa-solid fa-clock"></i> Hora del evento:</strong> {{ formatHora(carrera.horario) }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <p class="card-text"><strong style="color: rgb(35, 32, 32);"><i class="fa-sharp fa-solid fa-rectangle-xmark"></i> Cierre de inscripción:</strong> {{ carrera.fechaDeCierreDeInscripcion }}</p>
+              </div>
+              <div class="col-md-6">
+                <p class="card-text">
+                  <strong style="color: rgb(35, 32, 32);">
+                    <i class="fas fa-map-marker-alt"></i> Lugar:
+                  </strong>
+                  {{ carrera.localidad }} - {{ carrera.provincia }} - {{ carrera.pais }}
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <p class="card-text"><strong style="color: rgb(35, 32, 32);"> 
+                  <i class="fa-solid fa-medal"></i>
+                  Tener en cuenta:</strong> {{ carrera.detalles }}</p>
+              </div>
+              <div class="col-md-6">
+                <p class="card-text"><strong style="color: rgb(35, 32, 32);"><i class="fa-solid fa-address-book"></i> Contacto:</strong> {{ carrera.contacto }}</p>
+              </div>
+            </div>
+            <div *ngFor="let distancia of carrera.distancias" class="mt-2">
+              <p class="card-text"><strong style="color: rgb(35, 32, 32);"> 
+                <i class="fa-solid fa-route"></i>
+                Categoria:</strong> {{ distancia.tipo }} - <strong style="color: rgb(35, 32, 32);">
+                  <i class="fa-solid fa-money-bill"></i>
+                  Inscripción:</strong> $ {{ distancia.valor }}</p>
+              <div *ngFor="let pago of distancia.pagos" class="d-inline-block me-2">
+                <button (click)="inscripcion(carrera.id, distancia.id, distancia.tipo, pago.linkDePago)" class="btn btn-sm btn-primary custom-button">Pago con {{ pago.metodoPago }}</button>
               </div>
             </div>
           </div>
@@ -38,4 +58,4 @@
       </div>
     </div>
   </div>
-</body>
+</div>

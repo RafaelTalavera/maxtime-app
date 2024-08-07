@@ -1,11 +1,17 @@
-<body>
-  <div class="container my-6 content-container">
-<div class="container my-4 d-flex justify-content-center">
-  <div class="row" style="color: black; background-color: white;">
+
+
+
+
   
-      <div class="border rounded p-3">
+  <div class="container my-6 content-container">
+   
+<div class="container my-4 d-flex justify-content-center">
+  <div class="watermark"></div>
+  <div class="row">
+  
+    <div class="border rounded p-3 content-background">
         <h5 class="custom-h5">Listado de corredores</h5>
-        <div class="col-md-4 form-group">
+        <div class="col-md-6 form-group">
           <label for="carreraSelect">Seleccione una carrer para continuar:</label>
           <select id="carreraSelect" class="form-control" [(ngModel)]="selectedCarreraId" (change)="onCarreraSelect()">
             <option *ngFor="let carrera of carreras" [value]="carrera.id">{{ carrera.nombre }}</option>
@@ -66,12 +72,10 @@
           </div>
         </div>
         <ng-template #noData>
-          <div class="alert alert-info">Lo sentimos, no hay información para mostrar</div>
+          <div class="alert alert-info">No hay corredores inscriptos para mostrar</div>
         </ng-template>
       </div>
     </div>
   </div>
 </div>
 
-
-</body>

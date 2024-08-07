@@ -1,36 +1,42 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { PublicacionCarrera } from '../models/publicacion-carrera';
 import { CarreraService } from '../service/carrera-services';
 import { Router } from '@angular/router';
 import { FormCorredorComponent } from '../../corredor/componente/form-corredor.component';
 import { CommonModule } from '@angular/common';
+import { LoadingService } from '../../servicios/loading.service';
+
 
 @Component({
   selector: 'app-carrera-publicacion',
   standalone: true,
   templateUrl: './publicacion-carrera.component.html',
   styleUrls: ['./publicacion-carrera.component.css'],
-  imports: [CommonModule, FormCorredorComponent] // Aquí importas CommonModule
+  imports: [CommonModule, FormCorredorComponent]
 })
-export class PublicacionCarreraComponent implements OnInit {
+export class PublicacionCarreraComponent implements OnInit, OnDestroy {
   carreras: PublicacionCarrera[] = [];
-  isLoading: boolean = true;  // Variable para rastrear el estado de carga
-
+  
   tipo: string = ''; 
   valor: number = 0; 
 
   @ViewChild(FormCorredorComponent) formCorredorComponent!: FormCorredorComponent;
 
-  constructor(private carreraService: CarreraService, private router: Router) {}
+  constructor(private carreraService: CarreraService,
+     private router: Router, public loadingService: LoadingService) {}
 
   ngOnInit(): void {
+    this.loadingService.startIconChange();
     this.carreraService.getCarreras().subscribe(data => {
       this.carreras = data;
-      this.isLoading = false;  // Cambiar el estado de carga una vez que los datos se hayan cargado
+      this.loadingService.isLoading = false;  // Cambiar el estado de carga una vez que los datos se hayan cargado
+      this.loadingService.stopIconChange();
     });
   }
 
-  ngAfterViewInit(): void {}
+  ngOnDestroy(): void {
+    this.loadingService.stopIconChange();
+  }
 
   inscripcion(carreraId: number, distanciaId: number, tipo: string, linkDePago: string): void {
     this.router.navigate(['/inscripcion'], { 

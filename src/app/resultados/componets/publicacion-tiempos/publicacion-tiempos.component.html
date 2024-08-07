@@ -1,0 +1,40 @@
+<div class="watermark"></div>
+<div class="container my-4 d-flex justify-content-center">
+    <div *ngIf="loadingService.isLoading" class="loading-container">
+        <i class="fas fa-running loading-spinner"></i>
+    </div>
+
+    <div *ngIf="!loadingService.isLoading" class="separated-content">
+        <div class="col mt-5">
+            <div class="border rounded p-3 content-background">
+                <h2 class="text-center" style="font-size: 18px;">Listado de carreras</h2>
+                <div *ngIf="carreras.length > 0" style="max-height: 400px; overflow-y: auto;">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th class="custom-tr">Nombre de la Carrera</th>
+                                <th class="custom-tr">Fecha</th>
+                                <th class="custom-tr">País</th>
+                                <th class="custom-tr">Provincia</th>
+                                <th class="custom-tr">Localidad</th>
+                                <th class="custom-tr">Resultados</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let carrera of carreras">
+                                <td class="custom-td">{{ carrera.nombre }}</td>
+                                <td class="custom-td">{{ carrera.fecha }}</td>
+                                <td class="custom-td">{{ carrera.pais }}</td>
+                                <td class="custom-td">{{ carrera.provincia }}</td>
+                                <td class="custom-td">{{ carrera.localidad }}</td>
+                                <td class="custom-td">
+                                    <button (click)="verResultado(carrera.id)" class="btn btn-sm btn-success custom-button">Ver posiciones</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,14 +1,16 @@
-<div class="container my-4 d-flex justify-content-center">
+<!-- organizadores.component.html -->
+<div class="watermark"></div>
+<div class="container justify-content-center">
   <div class="separated-content">
-    <div *ngIf="isLoading" class="loading-container">
-      <div class="loading-spinner"></div>
+    <div *ngIf="loadingService.isLoading" class="loading-container">
+      <i class="fas fa-running loading-spinner"></i>
     </div>
-    <div *ngIf="!isLoading && !showError">
+    <div *ngIf="!loadingService.isLoading" class="separated-content">
       <div class="col">
         <app-form (newOrganizadorEvent)="addOrganizador($event)" [organizador]="organizadorSelected"></app-form>
       </div>
       <div class="col mt-5">
-        <div class="border rounded p-3">
+        <div class="border rounded p-3 content-background">
           <h5 class="custom-h5">Listado de Organizadores</h5>
           <div class="col-md-4 form-group">
             <input type="text"
@@ -29,6 +31,7 @@
                   <th class="custom-tr">Telefono</th>
                   <th class="custom-tr">Carrera</th>
                   <th class="custom-tr">Editar</th>
+                  <th class="custom-tr">Eliminar</th>
                 </tr>
               </thead>
               <tbody>
@@ -39,10 +42,13 @@
                   <td class="custom-td">{{organizador.username}}</td>
                   <td class="custom-td">{{organizador.telefono}}</td>
                   <td class="custom-td">
-                    <button (click)="asignarCarrera(organizador.id)" class="btn btn-sm btn-success custom-button">Asignar</button>
+                    <button (click)="asignarCarrera(organizador.id)" class="btn btn-sm btn-success custom-button">Asignar evento</button>
                   </td>
                   <td class="custom-td">
                     <button (click)="onUpdateOrganizador(organizador)" class="btn btn-sm btn-secondary custom-button">Editar</button>
+                  </td>
+                  <td class="custom-td">
+                    <button (click)=" onRemoveOrganizador(organizador.id)" class="btn btn-sm btn-danger custom-button">Eliminar</button>
                   </td>
                 </tr>
               </tbody>
