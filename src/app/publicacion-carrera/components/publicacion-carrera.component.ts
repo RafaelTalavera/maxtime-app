@@ -1,62 +1,109 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { PublicacionCarrera } from '../models/publicacion-carrera';
+
 import { CarreraService } from '../service/carrera-services';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormCorredorComponent } from '../../corredor/componente/form-corredor.component';
 import { CommonModule } from '@angular/common';
 import { LoadingService } from '../../servicios/loading.service';
-
+import { Subscription } from 'rxjs';
+import { Carrera } from '../models/publicacion-carrera';
 
 @Component({
   selector: 'app-carrera-publicacion',
   standalone: true,
   templateUrl: './publicacion-carrera.component.html',
   styleUrls: ['./publicacion-carrera.component.css'],
-  imports: [CommonModule, FormCorredorComponent]
+  imports: [CommonModule]
 })
 export class PublicacionCarreraComponent implements OnInit, OnDestroy {
-  carreras: PublicacionCarrera[] = [];
-  
+  carreras: Carrera[] = [];
   tipo: string = ''; 
   valor: number = 0; 
 
+  private querySub!: Subscription;
+
   @ViewChild(FormCorredorComponent) formCorredorComponent!: FormCorredorComponent;
 
-  constructor(private carreraService: CarreraService,
-     private router: Router, public loadingService: LoadingService) {}
+  constructor(
+    private carreraService: CarreraService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    public loadingService: LoadingService
+  ) {}
 
   ngOnInit(): void {
     this.loadingService.startIconChange();
-    this.carreraService.getCarreras().subscribe(data => {
-      this.carreras = data;
-      this.loadingService.isLoading = false;  // Cambiar el estado de carga una vez que los datos se hayan cargado
-      this.loadingService.stopIconChange();
+    // Suscribirse a los queryParams para obtener el portadaId
+    this.querySub = this.activatedRoute.queryParams.subscribe(params => {
+      const portadaId = +params['portadaId'] || 0;
+      if (portadaId !== 0) {
+        // Llamar al endpoint que filtra carreras por portadaId
+        this.carreraService.getCarrerasByPortada(portadaId).subscribe({
+          next: data => {
+            console.log('Datos obtenidos por portada:', data);
+            this.carreras = data.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+            this.loadingService.stopIconChange();
+          },
+          error: error => {
+            console.error('Error al cargar carreras por portada:', error);
+            this.loadingService.stopIconChange();
+          }
+        });
+      } else {
+        // Si no se recibe portadaId válido, opcionalmente podrías mostrar un mensaje o cargar todas las carreras
+        this.carreraService.getCarreras().subscribe({
+          next: data => {
+            console.log('Datos obtenidos:', data);
+            this.carreras = data.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+            this.loadingService.stopIconChange();
+          },
+          error: error => {
+            console.error('Error al cargar carreras:', error);
+            this.loadingService.stopIconChange();
+          }
+        });
+      }
     });
   }
 
   ngOnDestroy(): void {
     this.loadingService.stopIconChange();
+    if (this.querySub) {
+      this.querySub.unsubscribe();
+    }
   }
 
-  inscripcion(carreraId: number, distanciaId: number, tipo: string, linkDePago: string): void {
+  inscripcion(carreraId: number, distanciaId: number, tipo: string, valor: number, linkDePago: string): void {
+    console.log('Valor enviado a la inscripción:', valor); // ✅ Depuración
+  
     this.router.navigate(['/inscripcion'], { 
       queryParams: { 
         carreraId: carreraId,
         distanciaId: distanciaId,
         tipo: tipo,
+        valor: valor, // ✅ Ahora sí pasará el valor correcto
         linkDePago: linkDePago
       }
     });
   }
+  
 
   formatHora(horario: string): string {
     const hora = parseInt(horario.substring(0, 2), 10);
     const minutos = parseInt(horario.substring(3, 5), 10);
+    return hora >= 12 ? `${hora - 12}:${minutos} pm` : `${hora}:${minutos} am`;
+  }
 
-    if (hora >= 12) {
-      return `${hora - 12}:${minutos} pm`;
+  isVideo(url: string): boolean {
+    return url.endsWith('.mp4') || url.endsWith('.webm') || url.endsWith('.ogg');
+  }
+
+  abrirWhatsApp(contacto: string): void {
+    const telefono = contacto.replace(/\D/g, '');
+    if (telefono) {
+      window.open(`https://wa.me/${telefono}`, '_blank');
     } else {
-      return `${hora}:${minutos} am`;
+      console.error('Número de contacto inválido.');
     }
   }
 }

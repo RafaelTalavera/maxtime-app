@@ -1,0 +1,41 @@
+.custom-h5 {
+    font-size: 20px;
+    text-align: center;
+    color: rgb(248, 248, 248);
+    text-transform: uppercase;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .card-header {
+    background-color: #3b505e;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-custom {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #f0e6e6;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+  
+  .separated-content {
+    width: 100%;
+    max-width: 1300px;
+    padding: 10px;
+  }
+  

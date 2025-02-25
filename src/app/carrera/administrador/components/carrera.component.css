@@ -19,5 +19,25 @@
   }
   
 
+  .custom-h5 {
+    font-size: 20px;
+    text-align: center; /* Para centrar el texto horizontalmente */
+    color: rgb(248, 248, 248);
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    font-family: 'Roboto', sans-serif; /* Cambia la fuente si lo deseas */
+  }
   
-  
+  .card-header {
+    background-color: #3b505e; /* Fondo azul */
+    color: white; /* Texto blanco */
+    padding: 1.5rem; /* Espaciado interno */
+    text-align: center; /* Centrar el contenido */
+    border-top-left-radius: 8px; /* Bordes redondeados superiores */
+    border-top-right-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  }
+  .separated-content {
+    width: 100%; /* Asegura que use todo el espacio disponible */
+    max-width: 1300px; /* Define un límite para el ancho máximo */
+    padding: 10px; /* Espaciado interno */
+  }

@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Posicion } from '../models/posicion';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class PosicionService {
-  private apiUrl = 'https://maxtime-v-001-production.up.railway.app/api/posiciones'; // Ajusta la URL a la de tu backend
+  private apiUrl = `${environment.apiUrl}/api/posiciones`; 
 
   constructor(private http: HttpClient) { }
 

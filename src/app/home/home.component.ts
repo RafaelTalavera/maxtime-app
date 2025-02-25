@@ -2,13 +2,15 @@ import { CommonModule } from '@angular/common';
 import { Component, AfterViewInit } from '@angular/core';
 import { PublicacionCarreraComponent } from '../publicacion-carrera/components/publicacion-carrera.component';
 import { NosotrosComponent } from './nosotros/nosotros.component';
+import { PublicacionTiemposComponent } from "../resultados/componets/publicacion-tiempos/publicacion-tiempos.component";
+import { PortadasComponent } from "../portadas/portadas.component";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   standalone: true,
-  imports: [CommonModule, PublicacionCarreraComponent, NosotrosComponent]
+  imports: [CommonModule, NosotrosComponent, PublicacionTiemposComponent, PortadasComponent]
 })
 export class HomeComponent implements AfterViewInit {
 

@@ -1,0 +1,60 @@
+.content-container {
+
+  margin-bottom: 100px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.custom-container-width {
+  width: 100%;
+  max-width: 1200px;  /* Mantiene el tamaño máximo */
+  margin: 60px auto;  /* 60px de margen vertical y auto para centrar horizontalmente */
+}
+
+
+.custom-h5 {
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  color: #333; /* Color oscuro */
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.custom-h2 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  text-align: center;
+  font-size: 35px;
+  color: rgb(44, 16, 199);
+  padding-top: 25px;
+}
+
+.card-text {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  color: #333;
+  
+}
+
+.text-blue {
+  color: rgb(108, 9, 9);
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+/* Estilos personalizados para las tarjetas */
+.card {
+  margin: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border: none;
+  align-items: center;
+}
+
+.card-body {
+  padding: 1rem;
+  text-align: center;
+}

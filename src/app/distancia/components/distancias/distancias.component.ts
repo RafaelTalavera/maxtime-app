@@ -51,7 +51,9 @@ export class DistanciasComponent implements OnInit {
 
   addDistancia(distancia: Distancia) {
     if (distancia.id > 0) {
+      // Actualización de distancia
       this.service.updateDistancia(distancia).subscribe(distanciaUpdated => {
+        // Reemplazar la distancia actualizada en la lista
         this.distancias = this.distancias.map(dist =>
           dist.id === distancia.id ? distanciaUpdated : dist
         );
@@ -62,10 +64,14 @@ export class DistanciasComponent implements OnInit {
         });
       });
     } else {
+      // Creación de nueva distancia
       distancia.organizadorId = this.organizadorId;
       distancia.carreraId = this.carreraId;
       this.service.create(distancia).subscribe(distanciaNew => {
-        this.distancias.push(distanciaNew);
+        // Agregar solo si no existe ya
+        if (!this.distancias.find(dist => dist.id === distanciaNew.id)) {
+          this.distancias.push(distanciaNew);
+        }
         Swal.fire({
           icon: 'success',
           title: 'Distancia Creada',
@@ -75,6 +81,7 @@ export class DistanciasComponent implements OnInit {
     }
     this.resetDistanciaSelected();
   }
+  
 
   onUpdateDistancia(distanciaRow: Distancia) {
     this.distanciaSelected = { ...distanciaRow };

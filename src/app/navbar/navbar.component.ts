@@ -69,7 +69,7 @@ export class NavbarComponent implements OnInit {
   }
 
   goToPublicacionCarrera(): void {
-    this.router.navigate(['/publicacion-carreras']);
+    this.router.navigate(['/portadas-carreras']);
   }
 
   goToNosotros(): void {

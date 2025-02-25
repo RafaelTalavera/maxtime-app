@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { LocalStorageService } from '../servicios/local-Storage-Service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://maxtime-v-001-production.up.railway.app/api/auth/authenticate';
+  private apiUrl = `${environment.apiUrl}/api/auth/authenticate`;
   private tokenKey = 'jwt_token';
 
   constructor(private http: HttpClient, private localStorageService: LocalStorageService) { }

@@ -3,7 +3,35 @@
   
   }
 
-
+  .custom-button {
+    background-color: #3085d6;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  .custom-button:hover {
+    background-color: #2563eb;
+  }
+  
+  .green-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .green-button:hover {
+    background-color: #388e3c;
+  }
+  
   
 
   

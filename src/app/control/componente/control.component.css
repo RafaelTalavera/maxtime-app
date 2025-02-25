@@ -31,5 +31,35 @@ body {
     max-width: 1200px;
 }
 
+.table-button {
+  font-size: 12px; /* Tamaño de fuente consistente */
+  width: 100px; /* Ancho uniforme para todos los botones */
+  height: 30px; /* Altura uniforme para todos los botones */
+  text-align: center; /* Centrar texto dentro del botón */
+  padding: 5px; /* Espaciado interno */
+  margin: 2px; /* Espaciado externo entre botones */
+  white-space: nowrap; /* Evita que el texto se corte en varias líneas */
+}
+
+/* En tu archivo CSS global */
+.swal-custom-popup {
+  width: 800px !important;
+  max-width: 90%; /* Limita el tamaño máximo al 90% del ancho de la pantalla */
+  height: auto; /* Ajusta automáticamente el alto */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 15px; /* Bordes redondeados */
+  font-size: 14px; /* Tamaño del texto */
+  background-color: #f9f9f9; /* Color de fondo personalizado */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para mejor visibilidad */
+}
+
+.swal-custom-title {
+  font-size: 10px; /* Ajusta el tamaño del texto */
+  font-weight: bold; /* Si necesitas el texto en negrita */
+  color: #333; /* Color del texto */
+  margin-bottom: 20px; /* Separación del contenido debajo del título */
+  text-align: center; /* Centrar el título */
+}
+
 
   

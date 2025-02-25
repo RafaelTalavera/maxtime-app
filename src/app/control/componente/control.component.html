@@ -12,11 +12,13 @@
     <div class="border rounded p-3 content-background">
         <h5 class="custom-h5">Listado de corredores</h5>
         <div class="col-md-6 form-group">
-          <label for="carreraSelect">Seleccione una carrer para continuar:</label>
+          <label for="carreraSelect">Seleccione una carrera para continuar:</label>
           <select id="carreraSelect" class="form-control" [(ngModel)]="selectedCarreraId" (change)="onCarreraSelect()">
             <option *ngFor="let carrera of carreras" [value]="carrera.id">{{ carrera.nombre }}</option>
           </select>
         </div>
+        
+        
         <div class="col-md-4 form-group">
           <input type="text" class="form-control my-2 custom-tr" placeholder="Buscar por DNI" [(ngModel)]="dniBusqueda" (input)="buscarPorDNI()" style="width: 120px; font-size: 12px;">
         </div>
@@ -41,31 +43,59 @@
                   <th class="custom-tr">Carrera</th>
                   <th class="custom-tr">Distancia</th>
                   <th class="custom-tr">Confirmado</th>
+                  <th class="custom-tr">Descuento</th>
                   <th class="custom-tr"></th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let corredor of corredoresFiltrados; trackBy: trackByFn">
-                  <td class="custom-td">{{corredor.nombre}}</td>
-                  <td class="custom-td">{{corredor.apellido}}</td>
-                  <td class="custom-td">{{corredor.dni}}</td>
-                  <td class="custom-td">{{corredor.fechaNacimiento}}</td>
-                  <td class="custom-td">{{corredor.genero}}</td>
-                  <td class="custom-td">{{corredor.nacionalidad}}</td>
-                  <td class="custom-td">{{corredor.provincia}}</td>
-                  <td class="custom-td">{{corredor.localidad}}</td>
-                  <td class="custom-td">{{corredor.talle}}</td>
-                  <td class="custom-td">{{corredor.telefono}}</td>
-                  <td class="custom-td">{{corredor.team}}</td>
-                  <td class="custom-td">{{corredor.grupoSanguinio}}</td>
-                  <td class="custom-td">{{corredor.carrera.nombre}}</td>
-                  <td class="custom-td">{{corredor.distancia.tipo}}</td>
-                  <td class="custom-td">{{corredor.confirmado ? 'Sí' : 'No'}}</td>
+                  <td class="custom-td">{{ corredor.nombre }}</td>
+                  <td class="custom-td">{{ corredor.apellido }}</td>
+                  <td class="custom-td">{{ corredor.dni }}</td>
+                  <td class="custom-td">{{ corredor.fechaNacimiento | date: 'dd/MM/yyyy' }}</td>
+                  <td class="custom-td">{{ corredor.genero }}</td>
+                  <td class="custom-td">{{ corredor.nacionalidad }}</td>
+                  <td class="custom-td">{{ corredor.provincia }}</td>
+                  <td class="custom-td">{{ corredor.localidad }}</td>
+                  <td class="custom-td">{{ corredor.talle }}</td>
+                  <td class="custom-td">{{ corredor.telefono }}</td>
+                  <td class="custom-td">{{ corredor.team }}</td>
+                  <td class="custom-td">{{ corredor.grupoSanguinio }}</td>
+                  <td class="custom-td">{{ corredor.carrera.nombre }}</td>
+                  <td class="custom-td">{{ corredor.distancia.tipo }}</td>
+                  <td class="custom-td">{{ corredor.confirmado ? 'Sí' : 'No' }}</td>
+                  <td class="custom-td">{{ corredor.codigoDescuento }}</td>
                   <td class="custom-td">
-                    <button class="btn btn-sm" [ngClass]="corredor.confirmado ? 'btn-danger' : 'btn-success'" (click)="toggleConfirmado(corredor)">
-                      {{corredor.confirmado ? 'Desconfirmar' : 'Confirmar'}}
-                    </button>
+                    <td class="custom-td">
+                      <button
+                          class="btn btn-warning table-button"
+                          (click)="editarDni(corredor)"
+                      >
+                          Editar DNI
+                      </button>
+                      <button
+                          class="btn btn-primary table-button"
+                          (click)="editarCorredor(corredor)"
+                      >
+                          Editar Datos
+                      </button>
+                      <button
+                          class="btn table-button"
+                          [ngClass]="corredor.confirmado ? 'btn-danger' : 'btn-success'"
+                          (click)="toggleConfirmado(corredor)"
+                      >
+                          {{ corredor.confirmado ? 'Desconfirmar' : 'Confirmar' }}
+                      </button>
+                      <button
+                          class="btn btn-danger table-button"
+                          (click)="eliminarCorredor(corredor.id)"
+                      >
+                          Eliminar
+                      </button>
                   </td>
+                  
+                
+                
                 </tr>
               </tbody>
             </table>

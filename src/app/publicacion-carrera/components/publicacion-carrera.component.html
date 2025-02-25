@@ -1,56 +1,121 @@
-<!-- publicacion-carrera.component.html -->
 <div class="watermark"></div>
-<div class="container my-6 content-container">
+<div class="container my-6 content-container custom-container-width">
   <div *ngIf="loadingService.isLoading" class="loading-container">
     <i class="loading-spinner"></i>
   </div>
   <div *ngIf="!loadingService.isLoading" class="publications-container">
-    <h2>PRÓXIMOS EVENTOS</h2>
+   
     <div class="row justify-content-center">
-      <div *ngFor="let carrera of carreras" class="col-md-6">
+      <div *ngFor="let carrera of carreras" class="col-12">
         <div class="card mb-2">
-          <img [src]="carrera.imagen" class="card-img-top fixed-dimension-img" alt="{{ carrera.nombre }}">
+          <h2 style="font-size: 24px;"><strong>{{ carrera.nombre }}</strong></h2>
+
+          <div 
+            *ngIf="carrera.imagenes && carrera.imagenes.length > 0"
+            [ngClass]="{'d-flex justify-content-center align-items-center': carrera.imagenes.length === 1, 'd-flex flex-row align-items-center justify-content-start': carrera.imagenes.length > 1}"
+          >
+            <ng-container *ngFor="let media of carrera.imagenes">
+              <ng-container *ngIf="isVideo(media); else showImage">
+                <video 
+                  [ngClass]="{'fixed-dimension-img': carrera.imagenes.length > 1, 'd-flex flex-row align-items-center justify-content-start': carrera.imagenes.length === 1}" 
+                  controls
+                >
+                  <source [src]="media" type="video/mp4">
+                  Tu navegador no soporta la reproducción de video.
+                </video>
+              </ng-container>
+              <ng-template #showImage>
+                <img 
+                  [src]="media" 
+                  [ngClass]="{'fixed-dimension-img': carrera.imagenes.length > 1, 'centered-media': carrera.imagenes.length === 1}" 
+                  alt="{{ carrera.nombre }}"
+                >
+              </ng-template>
+            </ng-container>
+          </div>
           <div class="card-body" style="line-height: 1.2">
-            <h2 style="font-size: 24px;">{{ carrera.nombre }}</h2>
             <div class="row">
-              <div class="col-md-6">
-                <p class="card-text"><strong style="color: rgb(35, 32, 32);"><i class="fa-solid fa-calendar-days"></i> Fecha del evento:</strong> {{ carrera.fecha }}</p>
-              </div>
-              <div class="col-md-6">
-                <p class="card-text"><strong style="color: rgb(35, 32, 32);"><i class="fa-solid fa-clock"></i> Hora del evento:</strong> {{ formatHora(carrera.horario) }}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <p class="card-text"><strong style="color: rgb(35, 32, 32);"><i class="fa-sharp fa-solid fa-rectangle-xmark"></i> Cierre de inscripción:</strong> {{ carrera.fechaDeCierreDeInscripcion }}</p>
-              </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <p class="card-text">
-                  <strong style="color: rgb(35, 32, 32);">
-                    <i class="fas fa-map-marker-alt"></i> Lugar:
-                  </strong>
-                  {{ carrera.localidad }} - {{ carrera.provincia }} - {{ carrera.pais }}
+                  <span class="text-blue">
+                    <i class="fa-solid fa-calendar-days"></i> Fecha del evento:
+                  </span>
+                  {{ carrera.fecha | date: 'dd/MM/yyyy' }}
+                </p>
+              </div>
+              <div class="col-md-4">
+                <p class="card-text">
+                  <span class="text-blue">
+                    <i class="fa-solid fa-clock"></i> Hora del evento:
+                  </span>
+                  {{ carrera.horario }}
+                </p>
+              </div>
+              <div class="col-md-4">
+                <p class="card-text">
+                  <span class="text-blue">
+                    <i class="fa-sharp fa-solid fa-rectangle-xmark"></i> Cierre de inscripción:
+                  </span>
+                  {{ carrera.fechaDeCierreDeInscripcion | date: 'dd/MM/yyyy' }}
                 </p>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6">
-                <p class="card-text"><strong style="color: rgb(35, 32, 32);"> 
-                  <i class="fa-solid fa-medal"></i>
-                  Tener en cuenta:</strong> {{ carrera.detalles }}</p>
+              <div class="col-md-4">
+                <p class="card-text">
+                  <span class="text-blue">
+                    <i class="fas fa-map-marker-alt"></i> Lugar:
+                  </span>
+                  {{ carrera.localidad }} - {{ carrera.provincia }}
+                </p>
               </div>
-              <div class="col-md-6">
-                <p class="card-text"><strong style="color: rgb(35, 32, 32);"><i class="fa-solid fa-address-book"></i> Contacto:</strong> {{ carrera.contacto }}</p>
+             
+              <div class="col-md-4">
+                <p class="card-text">
+                  <span class="text-blue">
+                    <i class="fa-solid fa-medal"></i> Detalles:
+                  </span>
+                  {{ carrera.detalles }}
+                </p>
+              </div>
+
+              <div class="col-md-4">
+                <p class="card-text">
+                  <span class="text-blue">
+                    <i class="fa-solid fa-address-book"></i> Contacto:
+                  </span>
+                  <a href="javascript:void(0)" (click)="abrirWhatsApp(carrera.contacto)">
+                    {{ carrera.contacto }}
+                  </a>
+                </p>
               </div>
             </div>
-            <div *ngFor="let distancia of carrera.distancias" class="mt-2">
-              <p class="card-text"><strong style="color: rgb(35, 32, 32);"> 
-                <i class="fa-solid fa-route"></i>
-                Categoria:</strong> {{ distancia.tipo }} - <strong style="color: rgb(35, 32, 32);">
-                  <i class="fa-solid fa-money-bill"></i>
-                  Inscripción:</strong> $ {{ distancia.valor }}</p>
-              <div *ngFor="let pago of distancia.pagos" class="d-inline-block me-2">
-                <button (click)="inscripcion(carrera.id, distancia.id, distancia.tipo, pago.linkDePago)" class="btn btn-sm btn-primary custom-button">Pago con {{ pago.metodoPago }}</button>
+            
+            <div *ngIf="carrera.pausa === true" class="alert alert-warning">
+              Las inscripciones están suspendidas.
+            </div>
+            <div *ngIf="carrera.cierre === true" class="alert alert-danger">
+              Inscripciones cerradas.
+            </div>
+            
+            <div *ngFor="let distancia of carrera.distancias || []" class="mt-2">
+              <p class="card-text">
+                <span class="text-blue">
+                  <i class="fa-solid fa-route"></i> Distancia:
+                </span>
+                {{ distancia.tipo }} - <strong style="color: rgb(35, 32, 32);">
+                  <i class="fa-solid fa-money-bill"></i> Inscripción:
+                </strong> $ {{ distancia.valor }}
+              </p>
+              <div *ngFor="let pago of distancia.pagos || []" class="d-inline-block me-2">
+                <button 
+                *ngIf="pago.linkDePago" 
+                (click)="inscripcion(carrera.id, distancia.id, distancia.tipo, distancia.valor, pago.linkDePago)"
+                class="btn btn-sm btn-primary custom-button"
+                [disabled]="carrera.pausa || carrera.cierre">
+                Pago con {{ pago.metodoPago }}
+              </button>
+              
               </div>
             </div>
           </div>

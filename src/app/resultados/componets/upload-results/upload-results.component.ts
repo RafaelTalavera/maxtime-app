@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import * as XLSX from 'xlsx';
 import { HttpClient } from '@angular/common/http';
-
 import Swal from 'sweetalert2';
 import { PosicionService } from '../../services/posicion.service';
+import { Router } from '@angular/router';
 
 interface ResultRow {
   posicion: number;
@@ -19,6 +19,7 @@ interface ResultRow {
   carreraId: string;
   sexo: string;
   finish: string;
+  distancia: string;
 }
 
 @Component({
@@ -42,11 +43,11 @@ export class ResultsComponent {
     'Chip',
     'Carrera',
     'Sexo',
-    'Finish'
+    'Finish',
+    'Distancia'
   ];
 
-  constructor(private posicionService: PosicionService) { }
-
+  constructor(private posicionService: PosicionService, private router: Router) {}
   onFileChange(event: any): void {
     const file = event.target.files[0];
     if (file) {
@@ -56,7 +57,7 @@ export class ResultsComponent {
         const workbook = XLSX.read(data, { type: 'array' });
         const worksheet = workbook.Sheets[workbook.SheetNames[0]];
         const jsonData: any[][] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-        // Remove header row
+       
         jsonData.shift();
         this.data = jsonData.map((row: any[]): ResultRow => ({
           posicion: row[0],
@@ -70,7 +71,8 @@ export class ResultsComponent {
           chip: row[8],
           carreraId: row[9],
           sexo: row[10],
-          finish: row[11]
+          finish: row[11],
+          distancia:row[12]
         }));
       };
       reader.readAsArrayBuffer(file);
@@ -80,31 +82,37 @@ export class ResultsComponent {
   uploadResults(): void {
     Swal.fire({
       title: 'Cargando',
-      text: 'Espero mientras la información es ingresada al back end',
+      text: 'Espere mientras la información es ingresada al backend',
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
       }
     });
-
+  
     this.posicionService.createPosiciones(this.data).subscribe(
       response => {
+        Swal.close();  
         Swal.fire({
           icon: 'success',
           title: 'Cargado con éxito',
           text: 'Resultados cargados exitosamente'
         }).then(() => {
-          // Refrescar la página después de cerrar la alerta
-          location.reload();
+          this.resetComponentState();  
         });
       },
       error => {
+        Swal.close();  
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: 'Fallo el paso al back end'
+          text: 'Falló el paso al backend'
         });
       }
     );
+  } 
+  
+  resetComponentState(): void {
+    this.data = [];  
+   
   }
 }

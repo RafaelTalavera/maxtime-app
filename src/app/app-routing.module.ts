@@ -6,7 +6,7 @@ import { OrganizadoresComponent } from './organizador/components/organizadores.c
 import { DistanciasComponent } from './distancia/components/distancias/distancias.component';
 import { CorredorComponent } from './corredor/componente/corredor.component';
 import { LoginComponent } from './login/login.component';
-import { MenuComponent } from './menu/menu.component';
+import { MenuComponent } from './menu/central/menu.component';
 import { ControlComponent } from './control/componente/control.component';
 import { NosotrosComponent } from './home/nosotros/nosotros.component';
 import { PublicacionCarreraComponent } from './publicacion-carrera/components/publicacion-carrera.component';
@@ -20,6 +20,14 @@ import { MenuOrganizadorComponent } from './menu/menu-organizador/menu-organizad
 import { CarreraOrganizadorComponent } from './carrera/organizador/components/carrera-organizador.component';
 import { CarreraComponent } from './carrera/administrador/components/carrera.component';
 import { ListadoCarrerasComponent } from './carrera/administrador/menu-administrador/listado-carreras/listado-carreras.component';
+import { ListOrganizadoresComponent } from './menu/menu-admin-organizadores/list-organizadores.component';
+import { ListCarrerasOrganizadorComponent } from './menu/menu-organizador/list-carreras-organizador/list-carreras-organizador.component';
+import { LitPauseCarreraComponent } from './menu/menu-organizador/lit-pause-carrera/lit-pause-carrera.component';
+import { LitStopCarreraComponent } from './menu/menu-organizador/lit-stop-carrera/lit-stop-carrera.component';
+import { CrudPortadasComponent } from './portadas/crud-portadas/crud-portadas.component';
+import { PortadasComponent } from './portadas/portadas.component';
+import { DescuentosComponent } from './descuento/descuentos.component';
+import { ListaCarrerasComponent } from './descuento/lista-carreras.component';
 
 
 export const routes: Routes = [
@@ -40,7 +48,16 @@ export const routes: Routes = [
   { path: 'publicacion-tiempos', component: PublicacionTiemposComponent },
   { path: 'posiciones/:carreraId', component: ListadoPosicionesComponent },
   { path: 'menu-organizador', component: MenuOrganizadorComponent},
-  { path: 'carrera-organizador', component: CarreraOrganizadorComponent} 
+  { path: 'list-organizadores', component: ListOrganizadoresComponent },
+  { path: 'carrera-organizador', component: CarreraOrganizadorComponent},
+  { path: 'lista-carrera-organizador', component: ListCarrerasOrganizadorComponent },
+  { path: 'lista-carrera-pausa', component: LitPauseCarreraComponent},
+  { path: 'lista-carrera-stop', component: LitStopCarreraComponent},
+  { path: 'portada', component: CrudPortadasComponent},
+  { path: 'portadas-carreras', component:PortadasComponent },
+  { path: 'descuentos', component: DescuentosComponent},
+  { path: 'lista-carreras-descuentos', component: ListaCarrerasComponent}
+   
 ];
 
 @NgModule({

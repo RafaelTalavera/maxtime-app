@@ -11,12 +11,16 @@ import { LoadingService } from '../../../servicios/loading.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './listado-posiciones.component.html',
-  styleUrls: ['./listado-posiciones.component.css'] // Asegúrate de que 'styleUrls' esté en plural
+  styleUrls: ['./listado-posiciones.component.css']
 })
 export class ListadoPosicionesComponent implements OnInit, OnDestroy {
   posiciones: Posicion[] = [];
   filteredPosiciones: Posicion[] = [];
   searchDni: string = '';
+  uniqueDistances: string[] = [];
+  selectedDistance: string = '';
+  uniqueSexes: string[] = [];
+  selectedSex: string = '';
 
   constructor(
     private posicionService: PosicionService,
@@ -41,18 +45,30 @@ export class ListadoPosicionesComponent implements OnInit, OnDestroy {
       next: (data: Posicion[]) => {
         this.posiciones = data;
         this.filteredPosiciones = data;
-        this.loadingService.stopIconChange(); // Detener el spinner cuando los datos se hayan cargado
+        this.uniqueDistances = [...new Set(data.map(posicion => posicion.distancia))]; // Distancias únicas
+        this.uniqueSexes = [...new Set(data.map(posicion => posicion.sexo))]; // Sexos únicos
+        this.loadingService.stopIconChange(); 
       },
       error: (error) => {
         console.error('Error al cargar posiciones:', error);
-        this.loadingService.stopIconChange(); // Asegurarse de detener el spinner en caso de error
+        this.loadingService.stopIconChange();
       }
     });
   }
 
   filterPosiciones(): void {
-    this.filteredPosiciones = this.posiciones.filter(posicion => 
-      posicion.dni.toString().includes(this.searchDni)
+    this.filteredPosiciones = this.posiciones.filter(posicion =>
+      posicion.dni.toString().includes(this.searchDni) &&
+      (this.selectedDistance === '' || posicion.distancia === this.selectedDistance) &&
+      (this.selectedSex === '' || posicion.sexo === this.selectedSex)
     );
+  }
+
+  filterByDistance(): void {
+    this.filterPosiciones(); // Aplica el filtro combinado
+  }
+
+  filterBySex(): void {
+    this.filterPosiciones(); // Aplica el filtro combinado
   }
 }

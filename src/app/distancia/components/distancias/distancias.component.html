@@ -2,9 +2,11 @@
 <div class="container mb-4 d-flex justify-content-center">
   <div class="row">
     <div class="col">
-      <div class="card">
-      
+
           <app-form-distancia (newDistanciaEvent)="addDistancia($event)" [distancia]="distanciaSelected"></app-form-distancia>
+         
+          <div class="card ">
+
           <table class="table table-hover mt-3">
             <thead>
               <tr>

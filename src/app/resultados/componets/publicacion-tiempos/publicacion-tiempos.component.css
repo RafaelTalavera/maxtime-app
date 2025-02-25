@@ -1,21 +1,58 @@
-
 .custom-tr {
     font-size: 14px;
+    text-align: center; /* Alinea el contenido del encabezado al centro */
 }
 
 .custom-td {
     font-size: 13px;
+    text-align: center; /* Alinea el contenido de las celdas al centro */
 }
 
 .custom-button {
     font-size: 12px; /* Ajusta este valor según tus necesidades */
-}
-
-.separated-content {
-    margin-top: 70px; /* Ajusta este valor según sea necesario */
-    height: 75vh;
+    text-align: center; /* Asegura que los botones también estén centrados */
 }
 
 .content-background {
     background-color: white; /* Fondo blanco para el div con contenido */
+}
+
+@keyframes neon-flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+      text-shadow: 
+        0 0 6px #0000ff, /* Azul oscuro */
+        0 0 12px #0000ff, 
+        0 0 24px #800080, /* Púrpura intenso */
+        0 0 36px #800080, 
+        0 0 48px #800080;
+    }
+    20%, 24%, 55% {
+      text-shadow: 
+        0 0 3px #0000ff, /* Azul oscuro */
+        0 0 8px #0000ff, 
+        0 0 16px #800080; /* Púrpura intenso */
+    }
+  }
+  
+  .neon-text {
+    font-family: Arial, sans-serif; /* Fuente estándar y legible */
+    font-size: 3rem; /* Tamaño grande */
+    text-align: center;
+    color: #ffffff; /* Texto blanco para máximo contraste */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 400; /* Grosor estándar */
+    animation: neon-flicker 1.5s infinite alternate; /* Animación suave */
+    text-shadow: 
+      0 0 6px #0000ff, /* Azul oscuro */
+      0 0 12px #0000ff, 
+      0 0 24px #800080, /* Púrpura intenso */
+      0 0 36px #800080;
+    margin-bottom: 5px; /* Espacio moderado debajo del cartel */
+    padding: 15px; /* Ajusta el espacio interno del cartel */
+}
+
+.separated-content {
+    margin-top: 10px; /* Espacio moderado encima de la tabla */
+    height: 80vh; /* Mantén la altura fija si es necesario */
 }

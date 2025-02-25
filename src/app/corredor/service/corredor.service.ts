@@ -2,34 +2,34 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Corredor } from '../models/corredor';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CorredorService {
+  private readonly BASE_URL = `${environment.apiUrl}/api/corredores`;
 
-private corredores: Corredor [] = []
+  constructor(private http: HttpClient) {}
 
- constructor(private http: HttpClient) { }
+  findAll(dni: string): Observable<Corredor[]> {
+    const url = `${this.BASE_URL}/carrera/inscripto/${dni}`;
+    return this.http.get<Corredor[]>(url);
+  }
 
- findAll( dni: string): Observable<Corredor[]> {
-  const url = 'https://maxtime-v-001-production.up.railway.app/api/corredores/carrera/inscripto/' + dni;
-  return this.http.get<Corredor[]>(url).pipe();
-}
+  create(corredor: Corredor): Observable<Corredor> {
+    console.log('Enviando solicitud POST a:', this.BASE_URL);
+    console.log('Cuerpo de la solicitud:', corredor);
+    return this.http.post<Corredor>(this.BASE_URL, corredor);
+  }
 
-create (corredor: Corredor): Observable<Corredor>{
-  return this.http.post<Corredor>('https://maxtime-v-001-production.up.railway.app/api/corredores' , corredor);
-}
+  update(corredor: Corredor): Observable<Corredor> {
+    const url = `${this.BASE_URL}/${corredor.id}`;
+    return this.http.put<Corredor>(url, corredor);
+  }
 
-updateCorredor(corredor: Corredor): Observable<Corredor>{
-  const url = 'https://maxtime-v-001-production.up.railway.app/api/corredores/' + corredor.id;
-  return this.http.put<Corredor>(url,corredor);
-}
-
-remove (id: number): Observable<void>{
-  const url = 'https://maxtime-v-001-production.up.railway.app/api/corredores/' + id;
-  return this.http.delete<void>(url);
-}
-
-
+  delete(id: number): Observable<void> {
+    const url = `${this.BASE_URL}/${id}`;
+    return this.http.delete<void>(url);
+  }
 }

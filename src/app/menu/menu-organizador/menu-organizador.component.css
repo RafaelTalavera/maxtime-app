@@ -2,15 +2,59 @@
   margin-top: 10rem;
   display: flex;
   flex-direction: column;
-  min-height: 70vh; /* Hace que el contenedor ocupe toda la altura de la pantalla */
-  background-color: rgba(255, 255, 255, 0); /* Fondo completamente transparente */
-  border: none; /* Sin borde */
-  padding: 0; /* Sin relleno */
-  box-shadow: none; /* Sin sombra */
+  min-height: 70vh;
+  align-items: center;
 }
 
 .border.rounded.p-3 {
-  border-radius: .375rem; /* Opcional: radio del borde redondeado */
-  padding: 1rem; /* Opcional: relleno interno */
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.9); /* Fondo con opacidad */
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  border-radius: 1rem; /* Bordes más redondeados */
+  text-align: center;
+}
+
+.menu-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.menu-buttons {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los botones se ajusten en varias líneas */
+  justify-content: center;
+  gap: 1rem; /* Espaciado entre botones */
+}
+
+.menu-btn {
+  background-color: #2379d5; /* Azul primario */
+  color: #fff;
+  border: none;
+  border-radius: 10px; /* Redondeo reducido */
+  padding: 0.6rem 1.2rem; /* Reducción del tamaño de padding */
+  font-size: 0.8rem; /* Reducción del tamaño de fuente */
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Transición suave para hover */
+  display: flex;
+  align-items: center;
+  gap: 0.4rem; /* Espacio entre icono y texto reducido */
+}
+
+
+.menu-btn:hover {
+  background-color: #0056b3; /* Azul más oscuro al pasar el cursor */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Efecto de sombra al hover */
+  transform: translateY(-2px); /* Efecto de elevación */
+}
+
+.menu-btn:active {
+  transform: translateY(0); /* Vuelve al estado normal al hacer clic */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra más suave */
+}
+
+.menu-btn i {
+  font-size: 1rem; /* Reducción del tamaño del icono */
 }

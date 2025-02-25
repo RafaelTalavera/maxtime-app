@@ -41,7 +41,7 @@ body {
   min-width: 100%;
   height: auto; /* Mantiene la proporción de la imagen */
   object-fit: cover; /* Cubre el contenedor, recortando si es necesario */
-  height: 500px; /* Fija la altura a 300px o el valor deseado */
+  height: 480px; /* Fija la altura a 300px o el valor deseado */
 }
 
 @keyframes typing {
@@ -76,7 +76,7 @@ h2 {
   font-family: "Arial", sans-serif;
   font-weight: 900;
   text-align: center;
-  font-size: 45px;
+  font-size: 30px;
   color: rgba(224, 236, 236, 0.993);
 }
 
@@ -94,7 +94,7 @@ h2 {
 .slide-in {
   font-family: "Arial", sans-serif;
   text-align: center;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 500;
   color: rgb(243, 235, 235);
   animation: slide-in 1s ease-out forwards;
@@ -106,16 +106,23 @@ h2 {
   animation-delay: 2s; /* Anima un segundo después del primer párrafo */
 }
 
-#slogan {
-  background-color: rgba(5, 5, 5, 0.726); /* Fondo blanco más transparente */
-  padding: 5px; /* Espaciado interno para separar el contenido del borde */
-  text-align: center; /* Centrar el texto dentro del div */
-  border-bottom-right-radius: 20px; 
-  border-bottom-left-radius: 20px;
-  border: 3px solid white;
-
+.slide-in {
+  margin-bottom: 5px; /* Reduce el margen inferior del primer párrafo */
 }
 
+.slide-in.second {
+  margin-top: 5px; /* Reduce el margen superior del segundo párrafo */
+}
+
+
+/* Slogan */
+#slogan {
+  background-color: rgba(0, 0, 0, 0.83);
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
+  border: 3px solid white;
+}
 .icon-container img {
   height: auto; /* Mantiene la proporción de las imágenes */
   margin-top: 20px;
@@ -154,5 +161,54 @@ h2 {
   border-radius: 20px;
   border: 3px solid white;
   font-weight: 450;
-
+  height: auto; /* Permite que el alto se adapte automáticamente al contenido */
+  overflow: visible; /* Asegura que no se recorte el contenido si es mayor */
 }
+
+#cuadro2 {
+  background-color: rgba(75, 59, 165, 0.267); /* Fondo blanco más transparente */
+  padding: 1px; /* Espaciado interno para separar el contenido del borde */
+  text-align: center; /* Centrar el texto dentro del div */
+  border-radius: 20px;
+  border: 3px solid white;
+  font-weight: 450;
+  overflow: visible; /* Asegura que no se recorte el contenido si es mayor */
+  height: 60vh;
+  
+}
+
+@keyframes neon-flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    text-shadow: 
+      0 0 6px #0000ff, /* Azul oscuro */
+      0 0 12px #0000ff, 
+      0 0 24px #800080, /* Púrpura intenso */
+      0 0 36px #800080, 
+      0 0 48px #800080;
+  }
+  20%, 24%, 55% {
+    text-shadow: 
+      0 0 3px #0000ff, /* Azul oscuro */
+      0 0 8px #0000ff, 
+      0 0 16px #800080; /* Púrpura intenso */
+  }
+}
+
+.neon-text {
+  font-family: Arial, sans-serif; /* Fuente estándar y legible */
+  font-size: 3rem; /* Tamaño grande */
+  text-align: center;
+  color: #ffffff; /* Texto blanco para máximo contraste */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 400; /* Grosor estándar */
+  animation: neon-flicker 1.5s infinite alternate; /* Animación suave */
+  text-shadow: 
+    0 0 6px #0000ff, /* Azul oscuro */
+    0 0 12px #0000ff, 
+    0 0 24px #800080, /* Púrpura intenso */
+    0 0 36px #800080;
+}
+
+
+

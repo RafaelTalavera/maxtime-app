@@ -2,8 +2,17 @@
 <div class="watermark"></div>
 
 <div class="container my-6 content-container">
-  <app-form-corredor (newCorredorEvent)="addCorredor($event)" [corredor]="corredorSelected" [tipo]="tipo" [valor]="valor"></app-form-corredor>
-  
+  <app-form-corredor
+  [corredor]="corredorSelected"
+  [tipo]="tipo"
+  [valor]="valor"
+  [carreraId]="carreraId"
+  [distanciaId]="distanciaId"
+  [linkDePago]="linkDePago"
+  [metodoPago]="metodoPago">
+</app-form-corredor>
+
+
   <div class="container mt-5">
     <div class="row justify-content-center">
       <div class="col-md-6 custom-input-container">
@@ -51,7 +60,7 @@
                 <td class="custom-td">{{corredor.carrera.nombre}}</td>
                 <td class="custom-td">{{corredor.distancia.tipo}}</td>
                 <td class="custom-td">
-                  <a [href]="corredor.distancia.linkDePago" class="btn btn-success" target="_blank" rel="noopener noreferrer">Pagar</a>
+                  <button class="btn btn-success" (click)="pagarCorredor(corredor)">Pagar</button>
                 </td>
               </tr>
             </tbody>

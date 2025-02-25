@@ -33,16 +33,21 @@ export class ControlComponent implements OnInit{
 
   ngOnInit(): void {
     this.service.getCarreras().pipe(
-      catchError((error) => {      
+      catchError((error) => {
         this.showError = true;
-        return of([]); 
+        return of([]);
       })
     ).subscribe(
       (carreras) => {
         this.carreras = carreras;
+        if (this.carreras.length > 0) {
+          this.selectedCarreraId = this.carreras[0].id; // Asigna el primer valor por defecto
+          this.onCarreraSelect(); // Llama a la función para cargar datos de la carrera seleccionada
+        }
       }
     );
   }
+  
 
   onCarreraSelect(): void {
     if (this.selectedCarreraId !== null) {
@@ -126,4 +131,189 @@ export class ControlComponent implements OnInit{
     const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
     XLSX.writeFile(workbook, fileName);
   }
+  eliminarCorredor(corredorId: number): void {
+    Swal.fire({
+        title: '¿Está seguro?',
+        text: '¿Está seguro de que desea eliminar este corredor?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            this.service.deleteCorredor(corredorId).subscribe(
+                () => {
+                    // Refresca la lista después de eliminar
+                    this.onCarreraSelect();
+
+                    // Muestra un mensaje de éxito
+                    Swal.fire(
+                        '¡Eliminado!',
+                        'El corredor ha sido eliminado correctamente.',
+                        'success'
+                    );
+                },
+                (error) => {
+                    console.error('Error al eliminar el corredor:', error);
+
+                    // Muestra un mensaje de error
+                    Swal.fire(
+                        'Error',
+                        'No se pudo eliminar el corredor. Intente nuevamente.',
+                        'error'
+                    );
+                }
+            );
+        }
+    });
+}
+
+editarCorredor(corredor: Corredor): void {
+  Swal.fire({
+    title: '<span style="font-size: 24px; font-weight: bold; color: #333;">Editar Corredor</span>',
+    html: `
+      <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+        <div style="display: flex; gap: 10px; justify-content: space-between;">
+          <div style="flex: 1;">
+              <label for="nombre" style="font-size: 12px;">Nombre</label>
+              <input id="nombre" class="swal2-input" value="${corredor.nombre}" placeholder="Ingrese el nombre" style="font-size: 12px;">
+          </div>
+          <div style="flex: 1;">
+              <label for="apellido" style="font-size: 12px;">Apellido</label>
+              <input id="apellido" class="swal2-input" value="${corredor.apellido}" placeholder="Ingrese el apellido" style="font-size: 12px;">
+          </div>
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: space-between;">
+          <div style="flex: 1;">
+              <label for="fechaNacimiento" style="font-size: 12px;">Fecha de Nacimiento</label>
+              <input id="fechaNacimiento" type="date" class="swal2-input" value="${corredor.fechaNacimiento}" style="font-size: 12px;">
+          </div>
+          <div style="flex: 1;">
+              <label for="genero" style="font-size: 12px;">Género</label>
+              <input id="genero" class="swal2-input" value="${corredor.genero}" placeholder="Ingrese el género" style="font-size: 12px;">
+          </div>
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: space-between;">
+          <div style="flex: 1;">
+              <label for="nacionalidad" style="font-size: 12px;">Nacionalidad</label>
+              <input id="nacionalidad" class="swal2-input" value="${corredor.nacionalidad}" placeholder="Ingrese la nacionalidad" style="font-size: 12px;">
+          </div>
+          <div style="flex: 1;">
+              <label for="provincia" style="font-size: 12px;">Provincia</label>
+              <input id="provincia" class="swal2-input" value="${corredor.provincia}" placeholder="Ingrese la provincia" style="font-size: 12px;">
+          </div>
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: space-between;">
+          <div style="flex: 1;">
+              <label for="localidad" style="font-size: 12px;">Localidad</label>
+              <input id="localidad" class="swal2-input" value="${corredor.localidad}" placeholder="Ingrese la localidad" style="font-size: 12px;">
+          </div>
+          <div style="flex: 1;">
+              <label for="talle" style="font-size: 12px;">Talle</label>
+              <input id="talle" class="swal2-input" value="${corredor.talle}" placeholder="Ingrese el talle" style="font-size: 12px;">
+          </div>
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: space-between;">
+          <div style="flex: 1;">
+              <label for="telefono" style="font-size: 12px;">Teléfono</label>
+              <input id="telefono" class="swal2-input" value="${corredor.telefono}" placeholder="Ingrese el teléfono" style="font-size: 12px;">
+          </div>
+          <div style="flex: 1;">
+              <label for="team" style="font-size: 12px;">Equipo</label>
+              <input id="team" class="swal2-input" value="${corredor.team}" placeholder="Ingrese el equipo" style="font-size: 12px;">
+          </div>
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: space-between;">
+          <div style="flex: 1;">
+              <label for="grupoSanguinio" style="font-size: 12px;">Grupo Sanguíneo</label>
+              <input id="grupoSanguinio" class="swal2-input" value="${corredor.grupoSanguinio}" placeholder="Ingrese el grupo sanguíneo" style="font-size: 12px;">
+          </div>
+        </div>
+      </div>
+    `,
+    customClass: {
+      popup: 'swal-custom-popup'
+    },
+    showCancelButton: true,
+    confirmButtonText: 'Guardar',
+    cancelButtonText: 'Cancelar',
+    preConfirm: () => {
+      const nombre = (document.getElementById('nombre') as HTMLInputElement).value;
+      const apellido = (document.getElementById('apellido') as HTMLInputElement).value;
+      const fechaNacimiento = (document.getElementById('fechaNacimiento') as HTMLInputElement).value;
+      const genero = (document.getElementById('genero') as HTMLInputElement).value;
+      const nacionalidad = (document.getElementById('nacionalidad') as HTMLInputElement).value;
+      const provincia = (document.getElementById('provincia') as HTMLInputElement).value;
+      const localidad = (document.getElementById('localidad') as HTMLInputElement).value;
+      const talle = (document.getElementById('talle') as HTMLInputElement).value;
+      const telefono = (document.getElementById('telefono') as HTMLInputElement).value;
+      const team = (document.getElementById('team') as HTMLInputElement).value;
+      const grupoSanguinio = (document.getElementById('grupoSanguinio') as HTMLInputElement).value;
+
+      if (!nombre || !apellido || !fechaNacimiento || !genero || !nacionalidad || !provincia || !localidad || !talle || !telefono || !team || !grupoSanguinio) {
+        Swal.showValidationMessage('Todos los campos son obligatorios');
+        return null;
+      }
+
+      return { nombre, apellido, fechaNacimiento, genero, nacionalidad, provincia, localidad, talle, telefono, team, grupoSanguinio };
+    }
+  }).then((result) => {
+    if (result.isConfirmed && result.value) {
+      const updatedCorredor: Corredor = {
+        ...corredor,
+        ...result.value
+      };
+
+      this.service.updateCorredor(corredor.id, updatedCorredor).subscribe(
+        (response) => {
+          Swal.fire('Éxito', 'El corredor fue actualizado correctamente', 'success');
+          this.onCarreraSelect();
+        },
+        (error) => {
+          Swal.fire('Error', 'No se pudo actualizar el corredor', 'error');
+        }
+      );
+    }
+  });
+}
+
+
+
+
+editarDni(corredor: Corredor): void {
+  Swal.fire({
+      title: 'Editar DNI',
+      input: 'text',
+      inputValue: corredor.dni,
+      showCancelButton: true,
+      confirmButtonText: 'Guardar',
+      cancelButtonText: 'Cancelar',
+      inputValidator: (value) => {
+          if (!value) {
+              return 'El DNI es obligatorio';
+          }
+          if (!/^\d+$/.test(value)) {
+              return 'El DNI debe contener solo números';
+          }
+          return null;
+      }
+  }).then((result) => {
+      if (result.isConfirmed && result.value) {
+          const nuevoDni = result.value;
+
+          this.service.updateDni(corredor.id, nuevoDni).subscribe(
+              (response) => {
+                  Swal.fire('Éxito', 'El DNI fue actualizado correctamente', 'success');
+                  this.onCarreraSelect(); // Refresca la lista
+              },
+              (error) => {
+                  Swal.fire('Error', 'No se pudo actualizar el DNI', 'error');
+              }
+          );
+      }
+  });
+}
+
 }

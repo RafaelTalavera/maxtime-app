@@ -1,0 +1,33 @@
+<div class="watermark"></div>
+
+<div class="body-container">
+  <div class="container mt-6">
+    <h2 class="titulo-carreras">Mis Carreras</h2>
+    <div *ngIf="carreras.length > 0; else sinCarreras">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let c of carreras">
+            <td>{{ c.id }}</td>
+            <td>{{ c.nombre }}</td>
+            <td>
+              <button class="btn btn-primary" (click)="crearDescuento(c)">
+                Crear descuento
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #sinCarreras>
+      <p>No hay carreras disponibles.</p>
+    </ng-template>
+  </div>
+</div>

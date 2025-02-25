@@ -1,0 +1,61 @@
+<div class="container my-4 d-flex justify-content-center">
+  <div class="watermark"></div>
+  <div class="separated-content">
+    <div class="row">
+      <!-- Formulario de Portada -->
+      <div class="col-md-6">
+        <app-form-portada (newPortadaEvent)="addPortada($event)" [portada]="portadaSelected"></app-form-portada>
+      </div>
+      <!-- Listado de Portadas -->
+      <div class="col-md-6 mt-5">
+        <div class="border rounded p-3 content-background">
+          <h2 class="text-center" style="font-size: 18px;">Listado de Portadas</h2>
+          <div *ngIf="portadas.length > 0" style="max-height: 400px; overflow-y: auto;">
+            <table class="table table-hover table-striped">
+              <thead>
+                <tr>
+                  <th class="custom-tr">Título</th>
+                  <th class="custom-tr">Fecha</th>
+                  <th class="custom-tr">Descripción</th>
+                  <th class="custom-tr">Lugar</th>
+                  <th class="custom-tr">Estado</th>
+                  <th class="custom-tr">Editar</th>
+                  <th class="custom-tr">Eliminar</th>
+                  <th class="custom-tr">Crear Carrera</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let portada of portadas">
+                  <td class="custom-td">{{ portada.titulo }}</td>
+                  <td class="custom-td">{{ portada.fecha | date: 'dd-MM-yyyy' }}</td>
+                  <td class="custom-td">{{ portada.descripcion }}</td>
+                  <td class="custom-td">{{ portada.lugar }}</td>
+                  <td class="custom-td">{{ portada.estado }}</td>
+
+                  <td>
+                    <button (click)="onUpdatePortada(portada)" class="btn btn-sm btn-secondary custom-button">
+                      Editar
+                    </button>
+                  </td>
+                  <td>
+                    <button (click)="onRemovePortada(portada.id)" class="btn btn-sm btn-danger custom-button">
+                      Eliminar
+                    </button>
+                  </td>
+                  <td>
+                    <button (click)="crearCarrera(portada)" class="btn btn-sm btn-info custom-button">
+                      Crear Carrera
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div *ngIf="noPortadas" class="alert alert-info">
+            Lo sentimos, no hay información para mostrar
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

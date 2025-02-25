@@ -1,0 +1,35 @@
+.custom-tr {
+  font-size: 15px;
+  text-align: center;
+}
+
+.custom-td {
+  font-size: 15px;
+  text-align: center;
+}
+
+.custom-button {
+  font-size: 15px;
+  /* Ajusta este valor según tus necesidades */
+}
+
+.separated-content {
+  margin-top: 70px;
+  /* Ajusta este valor según sea necesario */
+}
+
+.custom-h5 {
+  font-size: 20px;
+  text-align: center;
+}
+
+.custom-h6 {
+  font-size: 15px;
+  text-align: center;
+  color: blueviolet;
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.1);
+  height: 82vh;
+}

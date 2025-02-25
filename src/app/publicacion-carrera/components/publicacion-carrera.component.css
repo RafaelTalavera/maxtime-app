@@ -1,21 +1,28 @@
-.fixed-dimension-img {
-  width: 100%; /* O el ancho específico que prefieras */
-  height: 200px; /* Ajusta este valor según sea necesario */
-  object-fit: cover; /* Para que la imagen se recorte correctamente si es más grande que el contenedor */
+/* ======== ESTILOS GENERALES ======== */
+body {
+
+  font-family: Arial, sans-serif;
 }
 
-.content-container {
-  margin-top: 10px; /* Ajusta el valor según tus necesidades */
-  margin-bottom: 100px;
-  background-color: rgba(255, 255, 255, 0.1);
-  
+.container {
+  padding-top: 70px;  /* Ajusta el valor según sea necesario */
+}
+
+/* ======== TIPOGRAFÍA ======== */
+h2 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  text-align: center;
+  font-size: 35px;
+  color: rgb(44, 16, 199);
+  padding-top: 25px;
 }
 
 .card-text {
-  margin-bottom: 0.8em; /* Ajusta el valor según sea necesario */
-  font-family: 'Roboto', sans-serif; /* Aplica la fuente Roboto */
-  font-size: 14px; /* Ajusta el tamaño del texto según sea necesario */
-  color: #333; /* Opcional: ajusta el color del texto */
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 0.8em;
 }
 
 .anton-sc-regular {
@@ -24,30 +31,50 @@
   font-style: normal;
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
+.text-blue {
+  color: rgb(108, 9, 9);
 }
 
-.container {
-  margin-top: 100px; /* Ajusta el valor según sea necesario */
+/* ======== IMÁGENES ======== */
+.fixed-dimension-img {
+  width: 50%; /* O el ancho específico que prefieras */
+  display: block;
+  margin: auto;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
-h2 {
-  font-family: 'Roboto', sans-serif; /* Aplica la fuente Roboto */
-  font-weight: bold;
+.centered-media {
+  display: block;
+  margin: 0 auto;
+  width: 80%;
+  max-width: 500px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* ======== CONTENEDORES ======== */
+.content-container {
+  margin-top: 10px;
+  margin-bottom: 100px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.custom-container-width {
+  max-width: 900px;
+  margin: 0 auto; /* Para centrar */
+}
+
+.card-body {
+  padding: 1rem;
   text-align: center;
-  font-size: 35px;
-  color: rgb(44, 16, 199);
 }
 
 .custom-card-width {
-  width: 100%; 
+  width: 100%;
 }
 
+/* ======== BOTONES ======== */
 .custom-button {
   margin-bottom: 10px;
-
 }
-
-

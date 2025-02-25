@@ -1,0 +1,80 @@
+<form class="container-fluid mt-4" (ngSubmit)="onSubmit(portadaForm)" #portadaForm="ngForm">
+    <div class="card card-custom">
+      <div class="card-header">
+        <h5 class="custom-h5">Crear publicación de Portada</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <!-- Título -->
+          <div class="col-md-6 form-group">
+            <label class="custom-label" for="titulo">Título</label>
+            <input type="text" class="form-control my-2 custom-input" id="titulo" name="titulo" [(ngModel)]="portada.titulo" #titulo="ngModel" required>
+            <div *ngIf="titulo.invalid && (titulo.dirty || titulo.touched)" class="text alert-danger">
+              <div *ngIf="titulo.errors?.['required']">El título es requerido</div>
+            </div>
+          </div>
+          <div class="col-md-6 form-group">
+            <label class="custom-label" for="titulo">Lugar</label>
+            <input type="text" class="form-control my-2 custom-input" id="lugar" name="lugar" [(ngModel)]="portada.lugar" #lugar="ngModel" required>
+            <div *ngIf="lugar.invalid && (lugar.dirty || lugar.touched)" class="text alert-danger">
+              <div *ngIf="lugar.errors?.['required']">El Lugar es requerido</div>
+            </div>
+          </div>
+          <!-- Fecha -->
+          <div class="col-md-6 form-group">
+            <label class="custom-label" for="fecha">Fecha</label>
+            <input type="date" class="form-control my-2 custom-input" id="fecha" name="fecha" [(ngModel)]="portada.fecha" #fecha="ngModel" required>
+            <div *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)" class="text alert-danger">
+              <div *ngIf="fecha.errors?.['required']">La fecha es requerida</div>
+            </div>
+          </div>
+        </div>
+        <!-- Descripción -->
+        <div class="row">
+          <div class="col-md-12 form-group">
+            <label class="custom-label" for="descripcion">Descripción</label>
+            <textarea class="form-control my-2 custom-input" id="descripcion" name="descripcion" [(ngModel)]="portada.descripcion" #descripcion="ngModel" required></textarea>
+            <div *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)" class="text alert-danger">
+              <div *ngIf="descripcion.errors?.['required']">La descripción es requerida</div>
+            </div>
+          </div>
+        </div>
+        <!-- Estado -->
+   
+          <!-- Campo Estado -->
+          <div class="col-md-5 form-group d-flex align-items-center mb-4">
+            <label class="custom-label me-2" for="estado">¿Publicar el evento?</label>
+            <div class="form-check form-switch">
+              <input 
+                class="form-check-input" 
+                type="checkbox" 
+                id="estado" 
+                name="estado" 
+                [(ngModel)]="portada.estado" 
+                #estado="ngModel">
+              <label 
+                class="form-check-label ms-2" 
+                for="estado" 
+                [ngClass]="{'text-success': portada.estado, 'text-danger': !portada.estado}">
+                {{ portada.estado ? 'Publicado' : 'No publicado' }}
+              </label>
+            </div>
+          </div>
+        <!-- Imagen -->
+        <div class="row">
+          <div class="col-md-12 form-group">
+            <label class="custom-label" for="imagen">Adjuntar Imagen</label>
+            <input type="file" class="form-control my-2 custom-input" id="imagen" name="imagen" (change)="onFileSelected($event)" accept="image/*">
+          </div>
+        </div>
+        <!-- Botones -->
+        <div class="text-center">
+          <button [disabled]="!portadaForm.form.valid" type="submit" class="btn btn-primary my-2 mx-3">
+            {{ (portada.id?? 0) > 0 ? 'Editar' : 'Crear' }}
+          </button>
+          <button type="button" class="btn btn-success my-2 mx-3" (click)="clean()">Limpiar</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  

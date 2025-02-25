@@ -6,102 +6,182 @@
     <div class="card-body">
       <!-- Primera fila de inputs -->
       <div class="row">
-        <div class="col-md-3 form-group">
+        <div class="col-md-5 form-group">
           <label class="custom-label" for="nombre">Nombre del evento</label>
           <input type="text" class="form-control my-2 custom-input" id="nombre" name="nombre" [(ngModel)]="carrera.nombre" #nombre="ngModel" required style="font-size: 12px;">
           <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="text alert-danger" style="font-size: 12px;">
-            <div *ngIf="nombre.errors!['required']">El nombre de la carrera es requerido</div>
+            <div *ngIf="nombre.errors?.['required']">El nombre de la carrera es requerido</div>
           </div>
         </div>
-        <div class="col-md-3 form-group">
+        <div class="col-md-2 form-group">
           <label class="custom-label" for="fecha">Fecha del evento</label>
           <input type="date" class="form-control my-2 custom-input" id="fecha" name="fecha" [(ngModel)]="carrera.fecha" #fecha="ngModel" required style="font-size: 12px;">
           <div *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)" class="text alert-danger" style="font-size: 12px;">
-            <div *ngIf="fecha.errors!['required']">La fecha de la carrera es requerida</div>
+            <div *ngIf="fecha.errors?.['required']">La fecha de la carrera es requerida</div>
           </div>
         </div>
-        <div class="col-md-3 form-group">
-          <label class="custom-label" for="cierre">Cierre de inscripción</label>
+        <div class="col-md-2 form-group">
+          <label class="custom-label" for="fechaDeCierreDeInscripcion">Cierre inscripción</label>
           <input type="date" class="form-control my-2 custom-input" id="fechaDeCierreDeInscripcion" name="fechaDeCierreDeInscripcion" [(ngModel)]="carrera.fechaDeCierreDeInscripcion" #fechaDeCierreDeInscripcion="ngModel" required style="font-size: 12px;">
           <div *ngIf="fechaDeCierreDeInscripcion.invalid && (fechaDeCierreDeInscripcion.dirty || fechaDeCierreDeInscripcion.touched)" class="text alert-danger" style="font-size: 12px;">
-            <div *ngIf="fechaDeCierreDeInscripcion.errors!['required']">La fecha de cierre de inscripción es requerida</div>
+            <div *ngIf="fechaDeCierreDeInscripcion.errors?.['required']">La fecha de cierre de inscripción es requerida</div>
           </div>
         </div>
         <div class="col-md-3 form-group">
           <label class="custom-label" for="localidad">Localidad donde se realiza</label>
           <input type="text" class="form-control my-2 custom-input" id="localidad" name="localidad" [(ngModel)]="carrera.localidad" #localidad="ngModel" required style="font-size: 12px;">
           <div *ngIf="localidad.invalid && (localidad.dirty || localidad.touched)" class="text alert-danger" style="font-size: 12px;">
-            <div *ngIf="localidad.errors!['required']">La localidad de la carrera es requerida</div>
+            <div *ngIf="localidad.errors?.['required']">La localidad de la carrera es requerida</div>
           </div>
         </div>
       </div>
+
       <!-- Segunda fila de inputs -->
       <div class="row">
         <div class="col-md-3 form-group">
           <label class="custom-label" for="provincia">Provincia donde se realiza</label>
           <input type="text" class="form-control my-2 custom-input" id="provincia" name="provincia" [(ngModel)]="carrera.provincia" #provincia="ngModel" required style="font-size: 12px;">
           <div *ngIf="provincia.invalid && (provincia.dirty || provincia.touched)" class="text alert-danger" style="font-size: 12px;">
-            <div>La provincia de la carrera es requerida</div>
+            <div *ngIf="provincia.errors?.['required']">La provincia de la carrera es requerida</div>
           </div>
         </div>
         <div class="col-md-3 form-group">
           <label class="custom-label" for="pais">País donde se realiza</label>
           <input type="text" class="form-control my-2 custom-input" id="pais" name="pais" [(ngModel)]="carrera.pais" #pais="ngModel" required style="font-size: 12px;">
           <div *ngIf="pais.invalid && (pais.dirty || pais.touched)" class="text alert-danger" style="font-size: 12px;">
-            <div>El país de la carrera es requerido</div>
+            <div *ngIf="pais.errors?.['required']">El país de la carrera es requerido</div>
           </div>
         </div>
-
-        <div class="col-md-3 form-group">
-          <label class="custom-label" for="contacto">Contacto que saldra publicado</label>
+        <div class="col-md-4 form-group">
+          <label class="custom-label" for="contacto">Numero de Whatsapp para contacto</label>
           <input type="text" class="form-control my-2 custom-input" id="contacto" name="contacto" [(ngModel)]="carrera.contacto" #contacto="ngModel" required style="font-size: 12px;">
           <div *ngIf="contacto.invalid && (contacto.dirty || contacto.touched)" class="text alert-danger" style="font-size: 12px;">
-            <div>El contacto de la carrera es requerido</div>
+            <div *ngIf="contacto.errors?.['required']">El contacto de la carrera es requerido</div>
           </div>
         </div>
-        <div class="col-md-3 form-group">
+        <div class="col-md-2 form-group">
           <label class="custom-label" for="horario">Horario del evento</label>
           <input type="time" class="form-control my-2 custom-input" id="horario" name="horario" [(ngModel)]="carrera.horario" #horario="ngModel" required style="font-size: 12px;">
           <div *ngIf="horario.invalid && (horario.dirty || horario.touched)" class="text alert-danger" style="font-size: 12px;">
             <div *ngIf="horario.errors?.['required']">El horario de la carrera es requerido</div>
           </div>
         </div>
-        <!-- Campo detalles ocupa el ancho completo -->
-        <div class="col-md-12 form-group">
-          <label class="custom-label" for="detalles">Detalles importantes del Evento (Es importante tener en cuenta que la información escrita aquí aparecera en la publicación).</label>
-          <input type="text" class="form-control my-2 custom-input" id="detalles" name="detalles" [(ngModel)]="carrera.detalles" #detalles="ngModel" required style="font-size: 12px;">
-          <div *ngIf="detalles.invalid && (detalles.dirty || detalles.touched)" class="text alert-danger" style="font-size: 12px;">
-            <div>Los detalles de la carrera son requeridos</div>
-          </div>
-        </div>
-
       </div>
-      <!-- Tercera fila de inputs -->
+
+      <!-- Campo detalles -->
       <div class="row">
-
-        <div class="col-md-3 form-group">
-          <label class="custom-label" for="estado">Elija si quiere que salga la publicación</label>
-          <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="estado" name="estado" [(ngModel)]="carrera.estado" #estado="ngModel">
-            <label class="form-check-label" for="estado">{{ carrera.estado ? 'Sí' : 'No' }}</label>
+        <div class="col-md-12 form-group">
+          <label class="custom-label" for="detalles">Detalles importantes del evento</label>
+          <textarea
+            class="form-control my-2 custom-input"
+            id="detalles"
+            name="detalles"
+            [(ngModel)]="carrera.detalles"
+            #detalles="ngModel"
+            required
+            style="font-size: 12px; resize: none; overflow: hidden;"
+            (input)="adjustTextArea($event)"
+          ></textarea>
+          <div
+            *ngIf="detalles.invalid && (detalles.dirty || detalles.touched)"
+            class="text alert-danger"
+            style="font-size: 12px;"
+          >
+            <div *ngIf="detalles.errors?.['required']">Los detalles de la carrera son requeridos</div>
           </div>
-          <div *ngIf="estado.invalid && (estado.dirty || estado.touched)" class="text alert-danger" style="font-size: 12px;">
-            <div>El estado de la carrera es requerido</div>
-          </div>
-        </div>
-        <div class="col-md-3 form-group">
-          <label class="custom-label" for="imagen">Adjunte la Imagen de la publicación</label>
-          <input type="file" class="form-control my-2 custom-input" id="imagen" name="imagen" (change)="onFileSelected($event)" required style="font-size: 12px;">
         </div>
       </div>
+      
+<div class="row">
+  <!-- Campo Estado -->
+  <div class="col-md-5 form-group d-flex align-items-center mb-4">
+    <label class="custom-label me-2" for="estado">¿Publicar el evento?</label>
+    <div class="form-check form-switch">
+      <input 
+        class="form-check-input" 
+        type="checkbox" 
+        id="estado" 
+        name="estado" 
+        [(ngModel)]="carrera.estado" 
+        #estado="ngModel">
+      <label 
+        class="form-check-label ms-2" 
+        for="estado" 
+        [ngClass]="{'text-success': carrera.estado, 'text-danger': !carrera.estado}">
+        {{ carrera.estado ? 'Publicado' : 'No publicado' }}
+      </label>
+    </div>
+  </div>
+
+  <!-- Campo Imágenes -->
+  <div class="row">
+    <!-- Imagen 1 -->
+    <div class="col-md-6 form-group">
+      <label class="custom-label" for="imagen1">Adjuntar Imagen 1</label>
+      <input 
+        type="file" 
+        class="form-control my-2 custom-input" 
+        id="imagen1" 
+        name="imagen1" 
+        (change)="onFileSelected($event, 1)" 
+        accept="image/*">
+      <small class="form-text text-muted">Selecciona la primera imagen del evento.</small>
+      <div *ngIf="imagen1Error" class="text alert-danger" style="font-size: 12px;">
+        Solo se permite una imagen en este campo menor a 13 mb.
+      </div>
+    </div>
+  
+    <!-- Imagen 2 -->
+    <div class="col-md-6 form-group">
+      <label class="custom-label" for="imagen2">Adjuntar Imagen 2</label>
+      <input 
+        type="file" 
+        class="form-control my-2 custom-input" 
+        id="imagen2" 
+        name="imagen2" 
+        (change)="onFileSelected($event, 2)" 
+        accept="image/*">
+      <small class="form-text text-muted">Selecciona la segunda imagen del evento.</small>
+      <div *ngIf="imagen2Error" class="text alert-danger" style="font-size: 12px;">
+        Solo se permite una imagen en este campo menor a 13 mb.
+      </div>
+    </div>
+  </div>
+  
+
+</div>
+
+ <!-- Sección para agregar talles de remeras -->
+ <div class="row mb-4">
+  <div class="col-md-12 form-group">
+    <label class="custom-label">Agregar talles de remeras</label>
+    <div class="d-flex mb-2">
+      <input
+        type="text"
+        class="form-control me-2"
+        placeholder="Ej: S, M, L, XL"
+        [(ngModel)]="nuevoTalle"
+        name="nuevoTalle"
+        #talleInput="ngModel"
+      />
+      <button type="button" class="btn btn-success" (click)="agregarTalle()">Agregar</button>
+    </div>
+    <ul class="list-group">
+      <li *ngFor="let talle of carrera.talles; let i = index" class="list-group-item d-flex justify-content-between">
+        {{ talle }}
+        <button type="button" class="btn btn-danger btn-sm" (click)="eliminarTalle(i)">Eliminar</button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+      <!-- Botones -->
       <div class="text-center">
-        <label class="custom-label">&nbsp;</label>
-        <div>
-          <button [disabled]="!carreraForm.form.valid" type="submit" class="btn btn-primary my-2 mx-3" style="font-size: 12px;">
-            {{carrera.id > 0 ? 'Editar' : 'Crear'}}
-          </button>
-          <button type="button" class="btn btn-success my-2 mx-3" (click)="clean()" style="font-size: 12px;">Limpiar</button>
-        </div>
+        <button [disabled]="!carreraForm.form.valid" type="submit" class="btn btn-primary my-2 mx-3" style="font-size: 12px;">
+          {{ (carrera.id ?? 0) > 0 ? 'Editar' : 'Crear' }}
+        </button>
+        
+        <button type="button" class="btn btn-success my-2 mx-3" (click)="clean()" style="font-size: 12px;">Limpiar</button>
       </div>
     </div>
   </div>

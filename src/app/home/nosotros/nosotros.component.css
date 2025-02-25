@@ -22,26 +22,54 @@
   max-width: 1200px;
 }
 
-.gallery-container {
-  width: 90%;
-  margin: 0 auto;
-}
-
 .gallery {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-  justify-items: center;
+  grid-template-columns: repeat(5, 1fr); /* Mantiene la distribución de 5 columnas */
+  gap: 10px; /* Espaciado entre imágenes */
+  justify-items: center; /* Centra las imágenes dentro de sus celdas */
   margin: 20px 0;
 }
 
 .gallery img {
-  width: 100%;
-  height: auto;
-  border: 2px solid white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  object-fit: cover;
+  width: 100%; /* Ocupa todo el ancho del contenedor */
+  max-width: 200px; /* Tamaño máximo para evitar imágenes demasiado grandes */
+  height: 180px; /* Mantiene el tamaño anterior */
+  border: 2px solid white; /* Borde blanco */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Sombra ligera */
+  object-fit: cover; /* Mantiene proporción y recorta si es necesario */
+  border-radius: 10px; /* Bordes redondeados */
+  transition: transform 0.3s ease; /* Animación suave en hover */
 }
+
+.gallery img:hover {
+  transform: scale(1.05); /* Efecto de zoom al pasar el cursor */
+}
+
+/* Media Queries para dispositivos más pequeños */
+@media (max-width: 1200px) {
+  .gallery {
+    grid-template-columns: repeat(4, 1fr); /* Cambia a 4 columnas en pantallas medianas */
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery {
+    grid-template-columns: repeat(3, 1fr); /* Cambia a 3 columnas en tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr); /* Cambia a 2 columnas en móviles */
+  }
+
+  .gallery img {
+    max-width: 150px; /* Reduce el tamaño máximo de las imágenes */
+    height: 140px; /* Ajusta la altura para mantener proporción */
+  }
+}
+
+
 
 .centered-justify {
   text-align: justify;
@@ -70,3 +98,16 @@
   font-weight: 450;
 
 }
+
+.info-box {
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con transparencia */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  max-width: 1200px; /* Ancho máximo para el contenido */
+  margin: 20px auto; /* Centra horizontalmente y añade separación vertical */
+  border: 2px solid rgba(255, 255, 255, 0.5); /* Borde blanco translúcido */
+  text-align: justify; /* Justifica el texto */
+  text-align-last: center; /* Centra la última línea del texto */
+}
+

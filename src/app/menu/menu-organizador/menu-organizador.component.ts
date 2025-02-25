@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ResultsComponent } from '../../resultados/componets/upload-results/upload-results.component';
+
 
 
 @Component({
   selector: 'app-menu-administrador',
   standalone: true,
-  imports: [ResultsComponent],
+  imports: [],
   templateUrl: './menu-organizador.component.html',
   styleUrl: './menu-organizador.component.css'
 })
@@ -24,10 +24,28 @@ export class MenuOrganizadorComponent {
     this.router.navigate(['/carrera-organizador']);
   }
 
+  redirectToCargarPortada(): void {
+    this.router.navigate(['/portada']);
+  }
+
   redirectToListaCarreras(): void {
     this.router.navigate(['/listado-carreras']);
   }
 
+  redirectToListaDistancia(): void {
+    this.router.navigate(['/lista-carrera-organizador']);
+  }
+  
+redirectToPause(): void {
+  this.router.navigate(['/lista-carrera-pausa'])
+}
 
+redirectToStop(): void {
+  this.router.navigate(['/lista-carrera-stop'])
+}
+
+redirectDescuentos():void {
+  this.router.navigate(['/lista-carreras-descuentos'])
+}
 
 }

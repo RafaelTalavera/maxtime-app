@@ -4,15 +4,19 @@
 <div class="container mt-3 custom-mb">
   <div class="card">
     <div class="card-header">
-      <h3 class="custom-h3">Cargar de resultados</h3>
+      <h3 class="custom-h3">Cargar Resultados</h3>
     </div>
     <div class="card-body">
+      <!-- Removido ngSubmit para evitar errores -->
       <form>
         <div class="form-group mb-4">
           <label class="custom-label" for="fileInput">Seleccione el archivo del tipo xlsx:</label>
           <input type="file" id="fileInput" (change)="onFileChange($event)" accept=".xlsx, .xls" class="form-control">
         </div>
-        <button class="btn btn-success mt-3" (click)="uploadResults()"><i class="fa-solid fa-stopwatch"></i> Cargar Resultados</button>
+        <!-- Cambiado a tipo button -->
+        <button type="button" class="btn btn-success mt-3" (click)="uploadResults()">
+          <i class="fa-solid fa-stopwatch"></i> Cargar Resultados
+        </button>
       </form>
 
       <div *ngIf="data.length > 0" class="mt-5">
@@ -36,12 +40,11 @@
               <td class="custom-td">{{ row.carreraId }}</td>
               <td class="custom-td">{{ row.sexo }}</td>
               <td class="custom-td">{{ row.finish }}</td>
+              <td class="custom-td">{{ row.distancia}}</td>
             </tr>
           </tbody>
         </table>
       </div>
-
     </div>
   </div>
 </div>
-

@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://api.tu-dominio.com'
+    apiUrl: 'https://maxtime-v-001-production.up.railway.app'
   };
   

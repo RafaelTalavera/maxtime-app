@@ -1,11 +1,11 @@
 export class Posicion {
 
     id!: number;
-    posicion!: number;
-    posicionSexo!: number;
-    posicionCategoria!: number;
+    posicion!: string;
+    posicionSexo!: string;
+    posicionCategoria!: string;
     categoria!: string;
-    numero!: number;
+    numero!: string;
     dni!: string;
     nombre!: string;
     apellido!: string;
@@ -13,6 +13,5 @@ export class Posicion {
     sexo!: string;
     finish!: string;
     carreraId!: number;
-
-
+    distancia!: string;
 }

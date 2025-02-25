@@ -7,13 +7,12 @@ import { catchError, of } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormOrganizadorComponent } from './form-organizador/form-organizador.component';
-import { FormCarreraComponent } from '../../carrera/organizador/components/form-carrera/form-carrera.component';
 import { LoadingService } from '../../servicios/loading.service';
 
 @Component({
   selector: 'app-organizadores',
   standalone: true,
-  imports: [FormOrganizadorComponent, FormCarreraComponent, CommonModule, FormsModule],
+  imports: [FormOrganizadorComponent, CommonModule, FormsModule],
   templateUrl: './organizadores.component.html',
   styleUrls: ['./organizadores.component.css'],
 })

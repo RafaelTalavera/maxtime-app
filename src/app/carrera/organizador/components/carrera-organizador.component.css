@@ -1,30 +1,60 @@
 .custom-tr {
-    font-size: 12px; 
+  font-size: 12px; 
 }
 
 .custom-td {
-    font-size: 12px; 
+  font-size: 12px; 
 }
 
 .custom-button {
-    font-size: 12px; /* Ajusta este valor según tus necesidades */
+  font-size: 12px; /* Ajusta este valor según tus necesidades */
 }
 
 .separated-content {
-    margin-top: 50px; /* Ajusta este valor según sea necesario */
-  }
+  margin-top: 50px; /* Ajusta este valor según sea necesario */
+}
 
-  .loading-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-
-  .container {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
+.container {
+  background-color: rgba(255, 255, 255, 0.1);
+}
 
 
-  
-  
+.custom-h5 {
+  font-size: 20px;
+  text-align: center; /* Para centrar el texto horizontalmente */
+  color: rgb(248, 248, 248);
+  text-transform: uppercase; /* Convierte el texto a mayúsculas */
+  font-family: 'Roboto', sans-serif; /* Cambia la fuente si lo deseas */
+}
+
+.card-header {
+  background-color: #3b505e; /* Fondo azul */
+  color: white; /* Texto blanco */
+  padding: 1.5rem; /* Espaciado interno */
+  text-align: center; /* Centrar el contenido */
+  border-top-left-radius: 8px; /* Bordes redondeados superiores */
+  border-top-right-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.card-custom {
+  width: 80%; /* Ajusta el porcentaje según lo que necesites */
+  max-width: 1200px; /* Ancho máximo permitido */
+  margin: 0 auto; /* Centra horizontalmente */
+  background-color: #f0e6e6;
+  padding: 20px; /* Espaciado interno */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  border-radius: 8px; /* Bordes redondeados */
+}
+.container {
+  display: flex;
+  justify-content: center; /* Centra el contenido horizontalmente */
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.separated-content {
+  width: 100%; /* Asegura que use todo el espacio disponible */
+  max-width: 1300px; /* Define un límite para el ancho máximo */
+  padding: 10px; /* Espaciado interno */
+}

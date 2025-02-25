@@ -8,7 +8,7 @@
     background: url('/assets/img/image1.jpg');
     background-repeat: repeat; /* Repite la imagen */
     background-size: auto; /* Tamaño original de la imagen */
-    opacity: 0.1; /* Ajusta la opacidad para la transparencia */
+    opacity: 0.1; 
     z-index: -1; /* Coloca la imagen detrás del contenido */
   }
   
@@ -35,6 +35,35 @@
   .content-background {
     background-color: white; /* Fondo blanco para el div con contenido */
   }
+
+  /* Imágenes responsivas */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Contenedores flexibles */
+.container {
+  width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+/* Ajuste general para texto */
+body {
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Media queries globales */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 8px;
+  }
+}
+
   
   
   

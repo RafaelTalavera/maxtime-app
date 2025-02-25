@@ -1,0 +1,85 @@
+<div class="page-container">
+    <div class="content">
+      <div class="watermark"></div>
+      <div class="container-fluid mt-4 d-flex justify-content-center separacion-navbar">
+        <div class="card card-custom w-90">
+          <div class="card-header">
+            <h5 class="custom-h5">Gestión de Códigos de Descuento</h5>
+          </div>
+          <div class="card-body">
+            <form (ngSubmit)="guardarCodigo()">
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="porcentajeDescuento" class="custom-label">Porcentaje</label>
+                  <input type="number" step="0.1" id="porcentajeDescuento" class="form-control my-2 custom-input"
+                    [(ngModel)]="selectedCodigo.porcentajeDescuento" name="porcentajeDescuento" required />
+                </div>
+                <div class="col-md-6">
+                  <label for="usosDisponibles" class="custom-label">Usos Disponibles</label>
+                  <input type="number" id="usosDisponibles" class="form-control my-2 custom-input"
+                    [(ngModel)]="selectedCodigo.usosDisponibles" name="usosDisponibles" required />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 d-flex align-items-end">
+                  <label class="me-2 custom-label">Activo</label>
+                  <input type="checkbox" [(ngModel)]="selectedCodigo.activo" name="activo" />
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mt-3">
+                <button type="submit" class="btn btn-success me-2">
+                  {{ modoEdicion ? 'Actualizar' : 'Crear' }}
+                </button>
+                <button type="button" class="btn btn-secondary" (click)="cancelarEdicion()" *ngIf="modoEdicion">
+                  Cancelar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Tabla para listar los códigos -->
+      <div class="container-fluid mt-4 d-flex justify-content-center">
+        <table class="table table-striped table-bordered w-75">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Código</th>
+              <th>Descuento</th>
+              <th>Usos Disponibles</th>
+              <th>Veces Usado</th>
+              <th>Carrera ID</th>
+              <th>Organizador ID</th>
+              <th>Activo</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of codigos">
+              <td>{{ c.id }}</td>
+              <td>{{ c.codigo }}</td>
+              <td>{{ c.porcentajeDescuento }}%</td>
+              <td>{{ c.usosDisponibles }}</td>
+              <td>{{ c.vecesUsuado }}</td>
+              <td>{{ c.carreraId }}</td>
+              <td>{{ c.organizadorId }}</td>
+              <td>{{ c.activo ? 'Sí' : 'No' }}</td>
+              <td>
+                <button class="btn btn-info btn-sm me-2" (click)="toggleActivo(c)">
+                  {{ c.activo ? 'Desactivar' : 'Activar' }}
+                </button>
+                <button class="btn btn-warning btn-sm me-2" (click)="editarCodigo(c)">
+                  Editar
+                </button>
+                <button class="btn btn-danger btn-sm me-2" (click)="eliminarCodigo(c.id)">
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

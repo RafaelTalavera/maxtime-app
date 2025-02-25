@@ -1,7 +1,8 @@
-<form class="container mt-2 d-flex justify-content-center" (ngSubmit)="onSubmit(distanciaForm)" #distanciaForm="ngForm">
-  <div class="card card-custom mt-3">
+<form class="container mt-4 d-flex justify-content-center" (ngSubmit)="onSubmit(distanciaForm)" #distanciaForm="ngForm">
+  <div class="card card-custom">
     <div class="card-header">
-      <h5 class="custom-h5">Crear link de inscripción al evento</h5>
+      <h5 class="custom-h5">En esta pantalla crearas el link con la información de pago</h5>
+      <h2 class="text-center" style="font-size: 14px;"> En el campo 'Detalle', es importante que ingreses la información de la categoría, como por ejemplo: 10K con premiación. Podés elegir varios métodos de pago por categoría.</h2>
     </div>
 
     <div class="border rounded p-3 content-background">
@@ -56,6 +57,7 @@
         <option class="custom-option" value="" disabled selected>Seleccione un método de pago</option>
         <option class="custom-option" value="MercadoPago">MercadoPago</option>
         <option class="custom-option" value="Transferencia Bancaria">Transferencia Bancaria</option>
+        <option class="custom-option" value="Pix">PIX</option>
         <option class="custom-option" value="Efectivo">Efectivo</option>
       </select>
       <div *ngIf="metodoPago.invalid && (metodoPago.dirty || metodoPago.touched)" class="text alert-info">

@@ -10,45 +10,46 @@
     font-size: 12px; /* Ajusta este valor según tus necesidades */
 }
 
-.custom-h5 {
-    font-size: 16px; /* Ajusta este valor según tus necesidades */
-}
-
 .separated-content {
-    margin-top: 70px; /* Ajusta este valor según sea necesario */
-    
+    margin-top: 50px; /* Ajusta este valor según sea necesario */
   }
 
-  .custom-label {
-    font-size: 14px; 
+  .container {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .custom-h5 {
+    font-size: 16px;
+    text-align: center; /* Para centrar el texto horizontalmente */
+    color: rgb(248, 248, 248);
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    font-family: 'Roboto', sans-serif; /* Cambia la fuente si lo deseas */
+  }
+  
+  .card-header {
+    background-color: #3b505e;
+    color: white;
+    padding: 1.5rem;
     text-align: center;
-    font-family: 'Roboto', sans-serif;
-    color: grey;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 1600px; /* Aumenta el tamaño del card */
+    margin: 0 auto; /* Centra horizontalmente si es necesario */
 }
 
-.custom-option {
-    background-color: #f9f9f9;
-    color: #333;
-    font-size: 14px;
-    padding: 10px;
+  .separated-content {
+    width: 100%; /* Ocupa todo el espacio disponible */
+    max-width: 1600px; /* Aumenta el ancho máximo del card */
+    padding: 10px; /* Espaciado interno */
 }
-
-.custom-select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    border: 1px solid #ccc;
-    padding: 10px;
-    font-size: 14px;
-    color: grey;
-    font-family: 'Roboto', sans-serif;
-}
-
 
 .card-custom {
-    background-color: rgba(255, 255, 255, 0.1);
+  width: 95%; /* Ajusta el ancho */
+  max-width: 1400px; /* Limita el tamaño máximo */
+  margin: 0 auto; /* Centra horizontalmente */
+  background-color: #ffffff; /* Color de fondo */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+  padding: 1.5rem; /* Espaciado interno */
 }
-
-.container {
-    background-color: rgba(255, 255, 255, 0.1);
-  }

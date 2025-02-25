@@ -1,13 +1,21 @@
-#footer {
-  color: white; /* Color de texto blanco */
-  padding: 10px 0; /* Espaciado interno para el contenido del footer */
-  text-align: center; /* Centra el contenido del footer */
-  width: 100%; /* Ocupa todo el ancho disponible */
-  bottom: 0; /* Coloca el footer al fondo */
-  border-top: 1px solid black; /* Línea negra continua en la parte superior del footer */
-  background-color: black;
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Altura mínima del cuerpo */
+  margin: 0; /* Elimina márgenes */
 }
 
-#footer p {
-  margin-bottom: 0; /* Elimina el margen inferior del párrafo para un mejor ajuste */
+.container {
+  flex: 1; /* Ocupa todo el espacio disponible entre el header y el footer */
+  background-color: black;
+  overflow-y: auto; /* Agrega scroll si es necesario */
+}
+
+#footer {
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+  width: 100%;
+  border-top: 1px solid black;
+  background-color: black;
 }

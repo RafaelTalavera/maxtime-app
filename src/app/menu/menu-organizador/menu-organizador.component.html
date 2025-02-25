@@ -1,18 +1,28 @@
-
 <div class="watermark"></div>
 <div class="container menu-container">
-    <div class="border rounded p-3">
-    <p class="text-center" style="font-size: 18px;">Selecciona que deseas hacer:</p>
-    <div class="text-center">
-        <button class="btn btn-success mx-2" (click)="redirectToControl()"><i class="fa-solid fa-list"></i> Ver inscriptos</button>
+  <div class="border rounded p-3">
+    <p class="text-center menu-title">Selecciona qué deseas hacer:</p>
+    <div class="text-center menu-buttons">
+      <button class="menu-btn" (click)="redirectToControl()">
+        <i class="fa-solid fa-user"></i> Ver inscriptos
+      </button>
 
-        <button class="btn btn-success mx-2" (click)="redirectToCargarCarreraOrganizador()"> <i class="fa-solid fa-user"></i> Cargar Carrera</button>
-        
-        <button class="btn btn-success mx-2" (click)="redirectToListaCarreras()"> <i class="fa-solid fa-flag-checkered"></i> Ver Lista de eventos</button>
-        
-    
+      <button class="menu-btn" (click)="redirectToCargarPortada()">
+        <i class="fa-solid fa-medal"></i> Cargar Carreras
+      </button>
+
+      <button class="menu-btn" (click)="redirectToPause()">
+        <i class="fa-solid fa-pause"></i> Pausar inscripciones
+      </button>
+
+      <button class="menu-btn" (click)="redirectToStop()">
+        <i class="fa-solid fa-stop"></i> Cerrar inscripciones
+      </button>
+
+      <button class="menu-btn" (click)="redirectDescuentos()">
+        <i class="fa-solid fa-dollar-sign"></i> Crear códigos de descuento
+      </button>
+
     </div>
-    </div>
+  </div>
 </div>
-
-

@@ -13,11 +13,13 @@ export class Corredor {
     email!: string;
     team!: string;
     grupoSanguinio!: string;
+    codigoDescuento!: string;
     confirmado!: boolean;
     carreraId!: number;
     distanciaId!: number; 
     carrera!: Carrera;
     distancia!: Distancia; 
+
 }
 
 export class Carrera {

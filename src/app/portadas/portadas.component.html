@@ -1,0 +1,53 @@
+<div class="watermark"></div>
+<div class="container my-6 content-container custom-container-width">
+  <div *ngIf="loadingService.isLoading" class="loading-container">
+    <i class="loading-spinner"></i>
+  </div>
+  <div *ngIf="!loadingService.isLoading" class="publications-container">
+    <div class="row justify-content-center">
+      <div *ngFor="let portada of activePortadas" class="col-sm-6 col-md-6 mb-4">
+        <div class="card h-100">
+          <h2 class="custom-h2" style="font-size: 28px;">{{ portada.titulo }}</h2>
+          <!-- Visualización de imágenes -->
+          <div *ngIf="portada.imagenes && portada.imagenes.length > 0"
+               [ngClass]="{'d-flex justify-content-center align-items-center': portada.imagenes.length === 1, 'd-flex flex-row align-items-center justify-content-start': portada.imagenes.length > 1}">
+            <ng-container *ngFor="let media of portada.imagenes">
+              <ng-container *ngIf="isVideo(media); else showImage">
+                <video class="img-fluid" controls>
+                  <source [src]="media" type="video/mp4">
+                  Tu navegador no soporta la reproducción de video.
+                </video>
+              </ng-container>
+              <ng-template #showImage>
+                <img [src]="media" class="img-fluid" style="display: block; margin: 0 auto;" alt="{{ portada.titulo }}">
+              </ng-template>
+            </ng-container>
+          </div>
+          <div class="card-body">
+            <p class="card-text">{{ portada.descripcion }}</p>
+            <p class="card-text">
+              <span class="text-blue">
+                <i class="fa-solid fa-calendar-days"></i> Fecha:
+              </span>
+              {{ portada.fecha | date: 'dd/MM/yyyy' }}
+            </p>
+
+            <p class="card-text">
+              <span class="text-blue">
+                <i class="fas fa-map-marker-alt"></i> Lugar:
+              </span>
+              {{ portada.lugar }}
+            </p>
+            <!-- Botón para ingresar al evento -->
+            <button class="btn btn-primary" (click)="ingresarEvento(portada)">
+              Ingresa al evento
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="activePortadas.length === 0" class="alert alert-info">
+        No hay portadas activas para mostrar.
+      </div>
+    </div>
+  </div>
+</div>
