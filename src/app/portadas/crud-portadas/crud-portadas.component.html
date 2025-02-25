@@ -2,12 +2,12 @@
   <div class="watermark"></div>
   <div class="separated-content">
     <div class="row">
-      <!-- Formulario de Portada -->
-      <div class="col-md-6">
+      <!-- Formulario de Portada (Arriba) -->
+      <div class="col-12">
         <app-form-portada (newPortadaEvent)="addPortada($event)" [portada]="portadaSelected"></app-form-portada>
       </div>
-      <!-- Listado de Portadas -->
-      <div class="col-md-6 mt-5">
+      <!-- Listado de Portadas (Abajo) -->
+      <div class="col-12 mt-4">
         <div class="border rounded p-3 content-background">
           <h2 class="text-center" style="font-size: 18px;">Listado de Portadas</h2>
           <div *ngIf="portadas.length > 0" style="max-height: 400px; overflow-y: auto;">
@@ -31,7 +31,6 @@
                   <td class="custom-td">{{ portada.descripcion }}</td>
                   <td class="custom-td">{{ portada.lugar }}</td>
                   <td class="custom-td">{{ portada.estado }}</td>
-
                   <td>
                     <button (click)="onUpdatePortada(portada)" class="btn btn-sm btn-secondary custom-button">
                       Editar

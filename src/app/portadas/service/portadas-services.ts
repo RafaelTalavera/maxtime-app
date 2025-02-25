@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Portada } from '../models/portada';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, map, Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { LocalStorageService } from '../../servicios/local-Storage-Service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,17 +11,23 @@ import { environment } from '../../../environments/environment';
 export class PortadasService {
   private apiUrl = `${environment.apiUrl}/api/portadas`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private localStorageService: LocalStorageService) {}
 
-  getPortadas(): Observable<Portada[]> {
-    return this.http.get<Portada[]>(this.apiUrl).pipe(
-      map(data => data.map(item => new Portada(item)))
+  // 🔹 Obtener portadas del usuario autenticado con el mismo método que ControlService
+  getPortadasByUsuario(): Observable<Portada[]> {
+    return this.http.get<Portada[]>(`${this.apiUrl}/usuario`, {
+      headers: this.getHeaders(),
+    }).pipe(
+      map(data => data.map(item => new Portada(item))),
+      catchError(error => {
+        console.error('Error al obtener las portadas del usuario:', error);
+        return of([]);
+      })
     );
   }
 
   getPortadaById(id: number): Observable<Portada> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.get<Portada>(url).pipe(
+    return this.http.get<Portada>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() }).pipe(
       map(data => new Portada(data))
     );
   }
@@ -31,7 +38,7 @@ export class PortadasService {
     if (file) {
       formData.append('file', file);
     }
-    return this.http.post<Portada>(this.apiUrl, formData).pipe(
+    return this.http.post<Portada>(this.apiUrl, formData, { headers: this.getHeaders() }).pipe(
       map(data => new Portada(data))
     );
   }
@@ -43,24 +50,30 @@ export class PortadasService {
     if (file) {
       formData.append('file', file);
     }
-    return this.http.put<Portada>(url, formData).pipe(
+    return this.http.put<Portada>(url, formData, { headers: this.getHeaders() }).pipe(
       map(data => new Portada(data))
     );
   }
 
   deletePortada(id: number): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.delete(url);
+    return this.http.delete(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
   }
 
   getActivePortadas(): Observable<Portada[]> {
-    const url = `${this.apiUrl}/activas`;
-    return this.http.get<Portada[]>(url).pipe(
+    return this.http.get<Portada[]>(`${this.apiUrl}/activas`, { headers: this.getHeaders() }).pipe(
       map(response => response ?? []),
       catchError(error => {
         console.error('Error al cargar portadas activas:', error);
         return of([]);
       })
     );
+  }
+
+  // 🔹 Método para obtener el JWT de LocalStorage
+  private getHeaders(): HttpHeaders {
+    const token = this.localStorageService.getItem('jwtToken');
+    return token
+      ? new HttpHeaders({ Authorization: `Bearer ${token}` })
+      : new HttpHeaders();
   }
 }

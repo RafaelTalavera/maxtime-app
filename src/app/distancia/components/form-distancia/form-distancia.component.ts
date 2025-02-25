@@ -2,6 +2,8 @@ import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Distancia } from '../../models/distancia';
+import { LoadingService } from '../../../servicios/loading.service';
+
 
 @Component({
   selector: 'app-form-distancia',
@@ -18,8 +20,12 @@ export class FormDistanciaComponent implements AfterViewInit {
 
   linkDePagoLabels: string[] = [];
 
+  constructor(public loadingService: LoadingService) {} // Inyección del servicio de carga
+
   onSubmit(distanciaForm: NgForm): void {
     if (distanciaForm.valid) {
+      this.loadingService.startIconChange(); // Activar la animación de carga
+
       const jsonToSend = {
         id: this.distancia.id,
         tipo: this.distancia.tipo,
@@ -33,9 +39,13 @@ export class FormDistanciaComponent implements AfterViewInit {
       };
 
       console.log('JSON to send:', JSON.stringify(jsonToSend, null, 2));
-      this.newDistanciaEvent.emit(jsonToSend);
 
-      this.clean();
+      // Simulación de respuesta del servidor con retraso
+      setTimeout(() => {
+        this.newDistanciaEvent.emit(jsonToSend);
+        this.loadingService.stopIconChange(); // Detener la animación de carga
+        this.clean();
+      }, 3000); // Simulación de 3 segundos
     }
   }
 
@@ -64,7 +74,6 @@ export class FormDistanciaComponent implements AfterViewInit {
   addMetodoPago(): void {
     console.log('Añadiendo método de pago. Estado actual:', this.distancia.pagos);
 
-    // Crear un nuevo objeto para el método de pago para evitar problemas de referencia
     const nuevoMetodo = { metodoPago: '', linkDePago: '' };
     this.distancia.pagos = [...this.distancia.pagos, nuevoMetodo];
     this.linkDePagoLabels = [...this.linkDePagoLabels, 'Link de Pago'];

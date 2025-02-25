@@ -30,7 +30,7 @@ export class CrudPortadasComponent implements OnInit {
   }
 
   loadPortadas(): void {
-    this.service.getPortadas().subscribe({
+    this.service.getPortadasByUsuario().subscribe({
       next: (data) => {
         this.portadas = data;
         console.log('Portadas cargadas:', this.portadas);
@@ -47,7 +47,6 @@ export class CrudPortadasComponent implements OnInit {
     });
   }
 
-  // Recibe el objeto { portada, file } emitido por el formulario
   addPortada(data: { portada: Portada, file: File | null }): void {
     if (data.portada.id && data.portada.id > 0) {
       this.updatePortada(data.portada, data.file);
