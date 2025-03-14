@@ -159,23 +159,25 @@ export class FormCarreraComponent {
     this.selectedFiles = [];
   }
 
-  private createEmptyCarrera(): Carrera {
-    return {
-      id: 0,
-      nombre: '',
-      fecha: '',
-      fechaDeCierreDeInscripcion: '',
-      localidad: '',
-      provincia: '',
-      pais: '',
-      detalles: '',
-      contacto: '',
-      horario: '',
-      estado: false,
-      organizadorId: 0,
-      talles: []
-    };
-  }
+private createEmptyCarrera(): Carrera {
+  return {
+    id: 0,
+    nombre: '',
+    fecha: '',
+    fechaDeCierreDeInscripcion: '',
+    localidad: '',
+    provincia: '',
+    pais: '',
+    detalles: '',
+    contacto: '',
+    horario: '',
+    estado: false,
+    organizadorId: 0,
+    talles: [],
+    categorias: []  // Agregado para cumplir con el tipo Carrera
+  };
+}
+
 
   adjustTextArea(event: Event): void {
     const textarea = event.target as HTMLTextAreaElement;

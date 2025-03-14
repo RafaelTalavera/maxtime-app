@@ -176,5 +176,16 @@ export class CarreasService {
     );
   }
   
+  getCategoriasByCarreraId(carreraId: number): Observable<string[]> {
+    const url = `${environment.apiUrl}/api/carreras/${carreraId}/categorias`;
+    console.log("Solicitando categorías para carreraId:", carreraId, "URL:", url);
+    return this.http.get<string[]>(url).pipe(
+      tap(response => console.log("Respuesta recibida de categorías:", response)),
+      catchError(error => {
+        console.error("Error al obtener categorías:", error);
+        return of([]); // Retorna un array vacío en caso de error
+      })
+    );
+  }
   
 }

@@ -1,3 +1,5 @@
+import { Categoria } from './categoria'; // Ajustá la ruta según corresponda
+
 export class Carrera {
   id?: number;
   nombre: string = '';
@@ -15,4 +17,5 @@ export class Carrera {
   cierre?: boolean = false;
   talles: string[] = [];
   portadaId?: number;
+  categorias: Categoria[] = [];  // Agregado para almacenar las categorías
 }

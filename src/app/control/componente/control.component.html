@@ -44,6 +44,8 @@
                   <th class="custom-tr">Distancia</th>
                   <th class="custom-tr">Confirmado</th>
                   <th class="custom-tr">Descuento</th>
+                  <th class="custom-tr">Categoria</th>
+
                   <th class="custom-tr"></th>
                 </tr>
               </thead>
@@ -65,6 +67,8 @@
                   <td class="custom-td">{{ corredor.distancia.tipo }}</td>
                   <td class="custom-td">{{ corredor.confirmado ? 'Sí' : 'No' }}</td>
                   <td class="custom-td">{{ corredor.codigoDescuento }}</td>
+                  <td class="custom-td">{{ corredor.categoria }}</td>
+
                   <td class="custom-td">
                     <td class="custom-td">
                       <button

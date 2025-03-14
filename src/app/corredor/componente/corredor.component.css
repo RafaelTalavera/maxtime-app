@@ -32,6 +32,9 @@
     background-color: #388e3c;
   }
   
+  .swal2-container {
+    z-index: 9999 !important;
+  }
   
 
   

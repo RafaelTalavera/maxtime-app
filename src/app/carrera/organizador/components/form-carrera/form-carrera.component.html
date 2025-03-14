@@ -35,7 +35,7 @@
           </div>
         </div>
       </div>
-
+      
       <!-- Segunda fila de inputs -->
       <div class="row">
         <div class="col-md-3 form-group">
@@ -53,7 +53,7 @@
           </div>
         </div>
         <div class="col-md-4 form-group">
-          <label class="custom-label" for="contacto">Numero de Whatsapp para contacto</label>
+          <label class="custom-label" for="contacto">Número de Whatsapp para contacto</label>
           <input type="text" class="form-control my-2 custom-input" id="contacto" name="contacto" [(ngModel)]="carrera.contacto" #contacto="ngModel" required style="font-size: 12px;">
           <div *ngIf="contacto.invalid && (contacto.dirty || contacto.touched)" class="text alert-danger" style="font-size: 12px;">
             <div *ngIf="contacto.errors?.['required']">El contacto de la carrera es requerido</div>
@@ -67,7 +67,7 @@
           </div>
         </div>
       </div>
-
+      
       <!-- Campo detalles -->
       <div class="row">
         <div class="col-md-12 form-group">
@@ -82,107 +82,136 @@
             style="font-size: 12px; resize: none; overflow: hidden;"
             (input)="adjustTextArea($event)"
           ></textarea>
-          <div
-            *ngIf="detalles.invalid && (detalles.dirty || detalles.touched)"
-            class="text alert-danger"
-            style="font-size: 12px;"
-          >
+          <div *ngIf="detalles.invalid && (detalles.dirty || detalles.touched)" class="text alert-danger" style="font-size: 12px;">
             <div *ngIf="detalles.errors?.['required']">Los detalles de la carrera son requeridos</div>
           </div>
         </div>
       </div>
       
-      <!-- Campo estado y carga de imágenes -->
-<!-- Campo estado y carga de imágenes -->
-<div class="row">
-  <!-- Campo Estado -->
-  <div class="col-md-5 form-group d-flex align-items-center mb-4">
-    <label class="custom-label me-2" for="estado">¿Publicar el evento?</label>
-    <div class="form-check form-switch">
-      <input 
-        class="form-check-input" 
-        type="checkbox" 
-        id="estado" 
-        name="estado" 
-        [(ngModel)]="carrera.estado" 
-        #estado="ngModel">
-      <label 
-        class="form-check-label ms-2" 
-        for="estado" 
-        [ngClass]="{'text-success': carrera.estado, 'text-danger': !carrera.estado}">
-        {{ carrera.estado ? 'Publicado' : 'No publicado' }}
-      </label>
-    </div>
-  </div>
-
-  <!-- Campo Imágenes -->
-  <div class="row">
-    <!-- Imagen 1 -->
-    <div class="col-md-6 form-group">
-      <label class="custom-label" for="imagen1">Adjuntar Imagen 1</label>
-      <input 
-        type="file" 
-        class="form-control my-2 custom-input" 
-        id="imagen1" 
-        name="imagen1" 
-        (change)="onFileSelected($event, 1)" 
-        accept="image/*">
-      <small class="form-text text-muted">Selecciona la primera imagen del evento.</small>
-      <div *ngIf="imagen1Error" class="text alert-danger" style="font-size: 12px;">
-        Solo se permite una imagen en este campo menor a 13 mb.
+      <!-- Campo Estado y Carga de imágenes -->
+      <div class="row">
+        <!-- Campo Estado -->
+        <div class="col-md-5 form-group d-flex align-items-center mb-4">
+          <label class="custom-label me-2" for="estado">¿Publicar el evento?</label>
+          <div class="form-check form-switch">
+            <input 
+              class="form-check-input" 
+              type="checkbox" 
+              id="estado" 
+              name="estado" 
+              [(ngModel)]="carrera.estado" 
+              #estado="ngModel">
+            <label 
+              class="form-check-label ms-2" 
+              for="estado" 
+              [ngClass]="{'text-success': carrera.estado, 'text-danger': !carrera.estado}">
+              {{ carrera.estado ? 'Publicado' : 'No publicado' }}
+            </label>
+          </div>
+        </div>
+        
+        <!-- Campo Imágenes -->
+        <div class="row">
+          <!-- Imagen 1 -->
+          <div class="col-md-6 form-group">
+            <label class="custom-label" for="imagen1">Adjuntar Imagen 1</label>
+            <input 
+              type="file" 
+              class="form-control my-2 custom-input" 
+              id="imagen1" 
+              name="imagen1" 
+              (change)="onFileSelected($event, 1)" 
+              accept="image/*">
+            <small class="form-text text-muted">Selecciona la primera imagen del evento.</small>
+            <div *ngIf="imagen1Error" class="text alert-danger" style="font-size: 12px;">
+              Solo se permite una imagen en este campo menor a 13 mb.
+            </div>
+          </div>
+          
+          <!-- Imagen 2 -->
+          <div class="col-md-6 form-group">
+            <label class="custom-label" for="imagen2">Adjuntar Imagen 2</label>
+            <input 
+              type="file" 
+              class="form-control my-2 custom-input" 
+              id="imagen2" 
+              name="imagen2" 
+              (change)="onFileSelected($event, 2)" 
+              accept="image/*">
+            <small class="form-text text-muted">Selecciona la segunda imagen del evento.</small>
+            <div *ngIf="imagen2Error" class="text alert-danger" style="font-size: 12px;">
+              Solo se permite una imagen en este campo menor a 13 mb.
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  
-    <!-- Imagen 2 -->
-    <div class="col-md-6 form-group">
-      <label class="custom-label" for="imagen2">Adjuntar Imagen 2</label>
-      <input 
-        type="file" 
-        class="form-control my-2 custom-input" 
-        id="imagen2" 
-        name="imagen2" 
-        (change)="onFileSelected($event, 2)" 
-        accept="image/*">
-      <small class="form-text text-muted">Selecciona la segunda imagen del evento.</small>
-      <div *ngIf="imagen2Error" class="text alert-danger" style="font-size: 12px;">
-        Solo se permite una imagen en este campo menor a 13 mb.
+      
+      <!-- Sección para agregar talles de remeras -->
+      <div class="row mb-4">
+        <div class="col-md-12 form-group">
+          <label class="custom-label">Agregar talles de remeras</label>
+          <div class="d-flex mb-2">
+            <input
+              type="text"
+              class="form-control me-2"
+              placeholder="Ej: S, M, L, XL"
+              [(ngModel)]="nuevoTalle"
+              name="nuevoTalle"
+              #talleInput="ngModel"
+            />
+            <button type="button" class="btn btn-success" (click)="agregarTalle()">Agregar</button>
+          </div>
+          <ul class="list-group">
+            <li *ngFor="let talle of carrera.talles; let i = index" class="list-group-item d-flex justify-content-between">
+              {{ talle }}
+              <button type="button" class="btn btn-danger btn-sm" (click)="eliminarTalle(i)">Eliminar</button>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </div>
-  
-  
-</div>
-
- <!-- Sección para agregar talles de remeras -->
- <div class="row mb-4">
-  <div class="col-md-12 form-group">
-    <label class="custom-label">Agregar talles de remeras</label>
-    <div class="d-flex mb-2">
-      <input
-        type="text"
-        class="form-control me-2"
-        placeholder="Ej: S, M, L, XL"
-        [(ngModel)]="nuevoTalle"
-        name="nuevoTalle"
-        #talleInput="ngModel"
-      />
-      <button type="button" class="btn btn-success" (click)="agregarTalle()">Agregar</button>
-    </div>
-    <ul class="list-group">
-      <li *ngFor="let talle of carrera.talles; let i = index" class="list-group-item d-flex justify-content-between">
-        {{ talle }}
-        <button type="button" class="btn btn-danger btn-sm" (click)="eliminarTalle(i)">Eliminar</button>
-      </li>
-    </ul>
-  </div>
-</div>
-
+      
+      <!-- Sección para agregar categorías -->
+      <div class="row mb-4">
+        <div class="col-md-12 form-group">
+          <label class="custom-label">Agregar Categorías</label>
+          <div class="d-flex mb-2">
+            <input
+              type="text"
+              class="form-control me-2"
+              placeholder="Género (ej: Femenino-Masculino-Mixto)"
+              [(ngModel)]="nuevoGenero"
+              name="nuevoGenero"
+            />
+            <input
+              type="text"
+              class="form-control me-2"
+              placeholder="Equipo (ej: 1-2-3)"
+              [(ngModel)]="nuevoEquipo"
+              name="nuevoEquipo"
+            />
+            <input
+              type="text"
+              class="form-control me-2"
+              placeholder="Embarcación (ej: Kayak-Canoa)"
+              [(ngModel)]="nuevaEmbarcacion"
+              name="nuevaEmbarcacion"
+            />
+            <button type="button" class="btn btn-success" (click)="agregarCategoria()">Agregar</button>
+          </div>
+          <ul class="list-group">
+            <li *ngFor="let categoria of carrera.categorias; let i = index" class="list-group-item d-flex justify-content-between">
+              {{ categoria.genero }} - {{ categoria.equipo }} - {{ categoria.embarcacion }}
+              <button type="button" class="btn btn-danger btn-sm" (click)="eliminarCategoria(i)">Eliminar</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
       <!-- Botones -->
       <div class="text-center">
         <button [disabled]="!carreraForm.form.valid" type="submit" class="btn btn-primary my-2 mx-3" style="font-size: 12px;">
           {{ (carrera.id ?? 0) > 0 ? 'Editar' : 'Crear' }}
         </button>
-        
         <button type="button" class="btn btn-success my-2 mx-3" (click)="clean()" style="font-size: 12px;">Limpiar</button>
       </div>
     </div>

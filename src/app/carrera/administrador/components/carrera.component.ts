@@ -237,9 +237,11 @@ updateCarrera(carrera: Carrera): void {
       horario: '',
       estado: false,
       organizadorId: 0,
-      talles: []
+      talles: [],
+      categorias: []  // Agregado para cumplir con el tipo Carrera
     };
   }
+  
 
   private resetCarreraSelected(): void {
     this.carreraSelected = this.createEmptyCarrera();

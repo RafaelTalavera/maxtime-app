@@ -4,22 +4,18 @@
     <i class="loading-spinner"></i>
   </div>
   <div *ngIf="!loadingService.isLoading" class="publications-container">
-   
     <div class="row justify-content-center">
       <div *ngFor="let carrera of carreras" class="col-12">
         <div class="card mb-2">
           <h2 style="font-size: 24px;"><strong>{{ carrera.nombre }}</strong></h2>
-
           <div 
             *ngIf="carrera.imagenes && carrera.imagenes.length > 0"
-            [ngClass]="{'d-flex justify-content-center align-items-center': carrera.imagenes.length === 1, 'd-flex flex-row align-items-center justify-content-start': carrera.imagenes.length > 1}"
-          >
+            [ngClass]="{'d-flex justify-content-center align-items-center': carrera.imagenes.length === 1, 'd-flex flex-row align-items-center justify-content-start': carrera.imagenes.length > 1}">
             <ng-container *ngFor="let media of carrera.imagenes">
               <ng-container *ngIf="isVideo(media); else showImage">
                 <video 
                   [ngClass]="{'fixed-dimension-img': carrera.imagenes.length > 1, 'd-flex flex-row align-items-center justify-content-start': carrera.imagenes.length === 1}" 
-                  controls
-                >
+                  controls>
                   <source [src]="media" type="video/mp4">
                   Tu navegador no soporta la reproducción de video.
                 </video>
@@ -28,8 +24,7 @@
                 <img 
                   [src]="media" 
                   [ngClass]="{'fixed-dimension-img': carrera.imagenes.length > 1, 'centered-media': carrera.imagenes.length === 1}" 
-                  alt="{{ carrera.nombre }}"
-                >
+                  alt="{{ carrera.nombre }}">
               </ng-template>
             </ng-container>
           </div>
@@ -69,7 +64,6 @@
                   {{ carrera.localidad }} - {{ carrera.provincia }}
                 </p>
               </div>
-             
               <div class="col-md-4">
                 <p class="card-text">
                   <span class="text-blue">
@@ -78,7 +72,6 @@
                   {{ carrera.detalles }}
                 </p>
               </div>
-
               <div class="col-md-4">
                 <p class="card-text">
                   <span class="text-blue">
@@ -90,14 +83,12 @@
                 </p>
               </div>
             </div>
-            
             <div *ngIf="carrera.pausa === true" class="alert alert-warning">
               Las inscripciones están suspendidas.
             </div>
             <div *ngIf="carrera.cierre === true" class="alert alert-danger">
               Inscripciones cerradas.
             </div>
-            
             <div *ngFor="let distancia of carrera.distancias || []" class="mt-2">
               <p class="card-text">
                 <span class="text-blue">
@@ -105,17 +96,25 @@
                 </span>
                 {{ distancia.tipo }} - <strong style="color: rgb(35, 32, 32);">
                   <i class="fa-solid fa-money-bill"></i> Inscripción:
-                </strong> $ {{ distancia.valor }}
+                </strong> {{ distancia.pagos && distancia.pagos[0].metodoPago === 'Pix' ? 'R$' : '$' }} {{ distancia.valor }}
               </p>
               <div *ngFor="let pago of distancia.pagos || []" class="d-inline-block me-2">
                 <button 
-                *ngIf="pago.linkDePago" 
-                (click)="inscripcion(carrera.id, distancia.id, distancia.tipo, distancia.valor, pago.linkDePago)"
-                class="btn btn-sm btn-primary custom-button"
-                [disabled]="carrera.pausa || carrera.cierre">
-                Pago con {{ pago.metodoPago }}
-              </button>
-              
+                  *ngIf="pago.linkDePago" 
+                  (click)="inscripcion(carrera.id, distancia.id, distancia.tipo, distancia.valor, pago.linkDePago)"
+                  [ngClass]="{
+                    'btn btn-sm custom-button': true,
+                    'btn-primary': pago.metodoPago !== 'Pix',
+                    'btn-pix': pago.metodoPago === 'Pix'
+                  }"
+                  [disabled]="carrera.pausa || carrera.cierre">
+                  <ng-container *ngIf="pago.metodoPago === 'Pix'; else otrosPagos">
+                    <i class="fa-brands fa-pix"></i> Pago con PIX
+                  </ng-container>
+                  <ng-template #otrosPagos>
+                    Pago con {{ pago.metodoPago }}
+                  </ng-template>
+                </button>
               </div>
             </div>
           </div>

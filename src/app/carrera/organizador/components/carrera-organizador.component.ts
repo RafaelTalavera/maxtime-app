@@ -3,11 +3,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { FormCarreraComponent } from './form-carrera/form-carrera.component';
-import { Carrera } from '../../models/carrera';
+
 import { LoadingService } from '../../../servicios/loading.service';
 import { CarreasService } from '../../services/carreras.service';
 import { Observable, of } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
+import { Carrera } from '../../models/carrera';
 
 @Component({
   selector: 'app-carrera-organizador',
@@ -239,7 +240,9 @@ export class CarreraOrganizadorComponent implements OnInit {
       estado: false,
       organizadorId: 0,
       talles: [],
-      portadaId: 0
+      portadaId: 0,
+      categorias: [] 
+      
     };
   }
 

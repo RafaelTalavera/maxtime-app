@@ -1,206 +1,188 @@
-<div class="watermark"></div>
-
-<!-- Modal de pago -->
-<app-payment-modal
-  *ngIf="showPaymentModal"
-  [linkDePago]="linkDePago"
-  (close)="showPaymentModal = false">
-</app-payment-modal>
-
-<div class="container-fluid mt-4 d-flex justify-content-center">
+<div class="container-fluid mt-4">
     <form class="card card-custom" (ngSubmit)="onSubmit(corredorForm)" #corredorForm="ngForm">
-        <div class="card-header">
-            <h5 class="custom-h5">Inscripción al evento - {{ tipo }} - Valor: ${{ valor }}</h5>
+      <div class="card-header">
+        <h5 class="custom-h5">Inscripción al evento - {{ tipo }} - Valor: ${{ valor }}</h5>
+      </div>
+      <div class="card-body">
+        <!-- Grupo 1: Datos personales -->
+        <div class="row">
+          <!-- Nombre -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="custom-label" for="nombre">Nombre</label>
+              <input type="text" class="form-control my-2 custom-input" id="nombre" name="nombre" [(ngModel)]="corredor.nombre" #nombre="ngModel" required>
+              <div *ngIf="nombre.invalid && corredorForm.submitted" class="text alert-danger">
+                Su nombre es requerido.
+              </div>
+            </div>
+          </div>
+          <!-- Apellido -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="custom-label" for="apellido">Apellido</label>
+              <input type="text" class="form-control my-2 custom-input" id="apellido" name="apellido" [(ngModel)]="corredor.apellido" #apellido="ngModel" required>
+              <div *ngIf="apellido.invalid && corredorForm.submitted" class="text alert-danger">
+                El apellido es obligatorio.
+              </div>
+            </div>
+          </div>
+          <!-- DNI -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="custom-label" for="dni">DNI</label>
+              <input type="text" class="form-control my-2 custom-input" id="dni" name="dni" [(ngModel)]="corredor.dni" #dni="ngModel" required>
+              <div *ngIf="dni.invalid && corredorForm.submitted" class="text alert-danger">
+                El DNI es obligatorio.
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="card-body">
-            <div class="row">
-                <!-- Nombre -->
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="custom-label" for="nombre">Nombre</label>
-                        <input type="text" class="form-control my-2 custom-input" id="nombre" name="nombre"
-                            [(ngModel)]="corredor.nombre" #nombre="ngModel" required
-                            [ngClass]="{'input-error': nombre.invalid && corredorForm.submitted}">
-                        <div *ngIf="nombre.invalid && corredorForm.submitted" class="text alert-danger">
-                            Su nombre es requerido.
-                        </div>
-                    </div>
-                </div>
-                <!-- Apellido -->
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="custom-label" for="apellido">Apellido</label>
-                        <input type="text" class="form-control my-2 custom-input" id="apellido" name="apellido"
-                            [(ngModel)]="corredor.apellido" #apellido="ngModel" required
-                            [ngClass]="{'input-error': apellido.invalid && corredorForm.submitted}">
-                        <div *ngIf="apellido.invalid && corredorForm.submitted" class="text alert-danger">
-                            El apellido es obligatorio.
-                        </div>
-                    </div>
-                </div>
-                <!-- DNI -->
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="custom-label" for="dni">Documento de identidad</label>
-                        <input type="text" class="form-control my-2 custom-input" id="dni" name="dni"
-                            [(ngModel)]="corredor.dni" #dni="ngModel" required pattern="[0-9]*"
-                            (keypress)="($event.charCode >= 48 && $event.charCode <= 57) ? null : $event.preventDefault()"
-                            [ngClass]="{'input-error': dni.invalid && corredorForm.submitted}">
-                        <div *ngIf="dni.invalid && corredorForm.submitted" class="text alert-danger">
-                            El DNI es obligatorio.
-                        </div>
-                    </div>
-                </div>
+        
+        <!-- Grupo 2: Fecha de nacimiento, Edad, Género y Nacionalidad -->
+        <div class="row">
+          <!-- Fecha de nacimiento -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="custom-label" for="fechaNacimiento">Fecha de Nacimiento</label>
+              <input type="date" class="form-control my-2 custom-input" id="fechaNacimiento" name="fechaNacimiento"
+                [(ngModel)]="corredor.fechaNacimiento" #fechaNacimiento="ngModel" required (ngModelChange)="calculateAge()">
+              <div *ngIf="fechaNacimiento.invalid && corredorForm.submitted" class="text alert-danger">
+                La fecha de nacimiento es requerida.
+              </div>
             </div>
-            <div class="row">
-                <!-- Fecha de nacimiento -->
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="custom-label" for="fechaNacimiento">Fecha de Nacimiento</label>
-                        <input type="date" class="form-control my-2 custom-input" id="fechaNacimiento"
-                            name="fechaNacimiento" [(ngModel)]="corredor.fechaNacimiento" #fechaNacimiento="ngModel"
-                            required max="2008-12-31" (ngModelChange)="calculateAge()"
-                            [ngClass]="{'input-error': fechaNacimiento.invalid && corredorForm.submitted}">
-                        <div *ngIf="fechaNacimiento.invalid && corredorForm.submitted" class="text alert-danger">
-                            <div *ngIf="fechaNacimiento.errors?.['required']">La fecha de nacimiento no puede estar
-                                vacía.</div>
-                            <div *ngIf="fechaNacimiento.errors?.['max']">Debe ser menor o igual a 31/12/2008.</div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- Edad -->
-                <div class="col-md-1">
-                    <div class="form-group">
-                        <label class="custom-label" for="edad">Edad</label>
-                        <input type="text" class="form-control my-2 custom-input" id="edad" name="edad" [value]="edad"
-                            readonly disabled [ngClass]="{'input-error': !edad && corredorForm.submitted}">
-                        <div *ngIf="!edad && corredorForm.submitted" class="text alert-danger">
-                            Elija la fecha de nacimiento para calcular la edad.
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- genero -->
-                <div class="col-md-3">
-                    <label class="custom-label" for="genero">Género</label>
-                    <select class="form-control my-2 custom-input" id="genero" name="genero"
-                        [(ngModel)]="corredor.genero" #genero="ngModel" required
-                        [ngClass]="{'input-error': genero.invalid && corredorForm.submitted}">
-                        <option value="" disabled selected>* Selecciona género</option>
-                        <option value="Masculino">Masculino</option>
-                        <option value="Femenino">Femenino</option>
-                    </select>
-                    <div *ngIf="genero.invalid && corredorForm.submitted" class="text alert-danger">
-                        El género es obligatorio.
-                    </div>
-                </div>
-
-                <!-- Nacionalidad -->
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="custom-label" for="nacionalidad">Nacionalidad</label>
-                        <input type="text" class="form-control my-2 custom-input" id="nacionalidad" name="nacionalidad"
-                            [(ngModel)]="corredor.nacionalidad" #nacionalidad="ngModel">
-                    </div>
-                </div>
+          </div>
+          <!-- Edad -->
+          <div class="col-md-1">
+            <div class="form-group">
+              <label class="custom-label" for="edad">Edad</label>
+              <input type="text" class="form-control my-2 custom-input" id="edad" name="edad" [value]="edad" readonly disabled>
+              <div *ngIf="!edad && corredorForm.submitted" class="text alert-danger">
+                Elija la fecha de nacimiento para calcular la edad.
+              </div>
             </div>
-            <div class="row">
-
-                <!-- Provincia -->
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="custom-label" for="provincia">Provincia</label>
-                        <input type="text" class="form-control my-2 custom-input" id="provincia" name="provincia"
-                            [(ngModel)]="corredor.provincia" #provincia="ngModel">
-                    </div>
-                </div>
-
-                <!-- Localidad -->
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="custom-label" for="localidad">Localidad</label>
-                        <input type="text" class="form-control my-2 custom-input" id="localidad" name="localidad"
-                            [(ngModel)]="corredor.localidad" #localidad="ngModel">
-                    </div>
-                </div>
-
-                <!-- Team -->
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="custom-label" for="team">Team</label>
-                        <input type="text" class="form-control my-2 custom-input" id="team" name="team"
-                            [(ngModel)]="corredor.team" #team="ngModel">
-                    </div>
-                </div>
-
+          </div>
+          <!-- Género -->
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="custom-label" for="genero">Género</label>
+              <select class="form-control my-2 custom-input" id="genero" name="genero" [(ngModel)]="corredor.genero" #genero="ngModel" required>
+                <option value="" disabled selected>* Selecciona género</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+              </select>
+              <div *ngIf="genero.invalid && corredorForm.submitted" class="text alert-danger">
+                El género es obligatorio.
+              </div>
             </div>
-            <div class="row">
-
-                <!-- Talle -->
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label class="custom-label" for="talle">Talle</label>
-                        <select class="form-control my-2 custom-input" id="talle" name="talle" [(ngModel)]="corredor.talle" #talle="ngModel" required>
-                            <option value="" disabled selected>* Selecciona talle</option>
-                            <option *ngFor="let talle of talles" [value]="talle">{{ talle }}</option>
-                          </select>
-                          <div *ngIf="talle.invalid && corredorForm.submitted" class="text alert-danger">
-                            El talle es obligatorio.
-                          </div>
-                          
-                    </div>
-                </div>
-                
-                <!-- Teléfono -->
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label class="custom-label" for="telefono">Teléfono</label>
-                        <input type="text" class="form-control my-2 custom-input" id="telefono" name="telefono"
-                            [(ngModel)]="corredor.telefono" #telefono="ngModel">
-                    </div>
-                </div>
-
-                <!-- Email -->
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="custom-label" for="email">Email</label>
-                        <input type="email" class="form-control my-2 custom-input" id="email" name="email"
-                            [(ngModel)]="corredor.email" #email="ngModel">
-                    </div>
-                </div>
-                <!-- Grupo Sanguíneo -->
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label class="custom-label" for="grupoSanguinio">Grupo Sanguíneo</label>
-                        <input type="text" class="form-control my-2 custom-input" id="grupoSanguinio"
-                            name="grupoSanguinio" [(ngModel)]="corredor.grupoSanguinio" #grupoSanguinio="ngModel">
-                    </div>
-                </div>
-
+          </div>
+          <!-- Nacionalidad -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="custom-label" for="nacionalidad">Nacionalidad</label>
+              <input type="text" class="form-control my-2 custom-input" id="nacionalidad" name="nacionalidad" [(ngModel)]="corredor.nacionalidad">
             </div>
-            
-            <div class="card-body">
-                <!-- Código de descuento -->
-                <div class="form-group d-flex justify-content-center mt-3">
-                    <input type="text" class="form-control me-2" style="width: 200px;"
-                        [(ngModel)]="codigoDescuento" name="codigoDescuento"
-                        [disabled]="codigoAplicado" placeholder="Código de descuento">
-                    <button type="button" class="btn btn-primary me-2" (click)="validarCodigo()" [disabled]="codigoAplicado">
-                        Aplicar
-                    </button>
-                </div>
-                
-                <!-- Botón de inscripción -->
-                <div class="form-group d-flex justify-content-center mt-3">
-                    <button type="submit" class="btn btn-success">
-                        {{ corredor.id > 0 ? 'Editar' : 'Enviar inscripción y pagar' }}
-                    </button>
-                </div>
-                
-            </div>
+          </div>
         </div>
+        
+        <!-- Grupo 3: Provincia, Localidad y Team -->
+        <div class="row">
+          <!-- Provincia -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="custom-label" for="provincia">Provincia</label>
+              <input type="text" class="form-control my-2 custom-input" id="provincia" name="provincia" [(ngModel)]="corredor.provincia">
+            </div>
+          </div>
+          <!-- Localidad -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="custom-label" for="localidad">Localidad</label>
+              <input type="text" class="form-control my-2 custom-input" id="localidad" name="localidad" [(ngModel)]="corredor.localidad">
+            </div>
+          </div>
+          <!-- Team -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="custom-label" for="team">Team</label>
+              <input type="text" class="form-control my-2 custom-input" id="team" name="team" [(ngModel)]="corredor.team">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Grupo 4: Talle y Categoría -->
+        <div class="row">
+          <!-- Talle -->
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="custom-label" for="talle">Talle</label>
+              <select class="form-control my-2 custom-input" id="talle" name="talle" [(ngModel)]="corredor.talle" required>
+                <option value="" disabled selected>* Selecciona talle</option>
+                <option *ngFor="let t of talles" [value]="t">{{ t }}</option>
+              </select>
+              <div *ngIf="!corredor.talle && corredorForm.submitted" class="text alert-danger">
+                El talle es obligatorio.
+              </div>
+            </div>
+          </div>
+          <!-- Categoría: Se muestra solo si existen categorías -->
+          <div class="col-md-4" *ngIf="categorias && categorias.length > 0">
+            <div class="form-group">
+              <label class="custom-label" for="categoria">Categoría</label>
+              <select class="form-control my-2 custom-input" id="categoria" name="categoria" [(ngModel)]="corredor.categoria">
+                <option value="" disabled selected>* Selecciona categoría</option>
+                <option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Grupo 5: Teléfono, Email y Grupo Sanguíneo -->
+        <div class="row">
+          <!-- Teléfono -->
+          <div class="col-md-2">
+            <div class="form-group">
+              <label class="custom-label" for="telefono">Teléfono</label>
+              <input type="text" class="form-control my-2 custom-input" id="telefono" name="telefono" [(ngModel)]="corredor.telefono">
+            </div>
+          </div>
+          <!-- Email -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="custom-label" for="email">Email</label>
+              <input type="email" class="form-control my-2 custom-input" id="email" name="email" [(ngModel)]="corredor.email">
+            </div>
+          </div>
+          <!-- Grupo Sanguíneo -->
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="custom-label" for="grupoSanguinio">Grupo Sanguíneo</label>
+              <input type="text" class="form-control my-2 custom-input" id="grupoSanguinio" name="grupoSanguinio" [(ngModel)]="corredor.grupoSanguinio">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Grupo 6: Código de descuento -->
+        <div class="row">
+          <div class="form-group d-flex justify-content-center mt-3">
+            <input type="text" class="form-control me-2" style="width: 200px;" [(ngModel)]="codigoDescuento" name="codigoDescuento" [disabled]="codigoAplicado" placeholder="Código de descuento">
+            <button type="button" class="btn btn-primary me-2" (click)="validarCodigo()" [disabled]="codigoAplicado">Aplicar</button>
+          </div>
+        </div>
+        
+        <!-- Grupo 7: Botón de envío -->
+        <div class="form-group d-flex justify-content-center mt-3">
+          <button type="submit" class="btn btn-success">
+            {{ corredor.id > 0 ? 'Editar' : 'Enviar inscripción y pagar' }}
+          </button>
+        </div>
+      </div>
     </form>
-</div>
+  </div>
+  
+  <!-- Modal de pago -->
+  <app-payment-modal
+    *ngIf="showPaymentModal"
+    [linkDePago]="linkDePago"
+    (close)="showPaymentModal = false">
+  </app-payment-modal>
+  

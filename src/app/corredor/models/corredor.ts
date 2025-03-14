@@ -9,6 +9,8 @@ export class Corredor {
     provincia!: string;
     localidad!: string;
     talle!: string;
+    // Campo opcional para almacenar la combinación de categorías seleccionada
+    categoria?: string;
     telefono!: string;
     email!: string;
     team!: string;
@@ -16,13 +18,13 @@ export class Corredor {
     codigoDescuento!: string;
     confirmado!: boolean;
     carreraId!: number;
-    distanciaId!: number; 
+    distanciaId!: number;
+    // Relaciones
     carrera!: Carrera;
-    distancia!: Distancia; 
+    distancia!: Distancia;
+  }
 
-}
-
-export class Carrera {
+  export class Carrera {
     id!: number;
     nombre!: string;
     fecha!: string;
@@ -37,7 +39,10 @@ export class Carrera {
     estado!: boolean;
     organizador!: any;
     distancias!: any;
-}
+    // Agregamos propiedades para talles y categorías disponibles en la carrera
+    talles!: string[];
+    categorias!: string[];
+  }
 
 export class Distancia {
     id!: number;

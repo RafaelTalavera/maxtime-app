@@ -1,18 +1,18 @@
-
 <div class="watermark"></div>
 
 <div class="container my-6 content-container">
+  <!-- Formulario de inscripción -->
   <app-form-corredor
-  [corredor]="corredorSelected"
-  [tipo]="tipo"
-  [valor]="valor"
-  [carreraId]="carreraId"
-  [distanciaId]="distanciaId"
-  [linkDePago]="linkDePago"
-  [metodoPago]="metodoPago">
-</app-form-corredor>
-
-
+    [corredor]="corredorSelected"
+    [tipo]="tipo"
+    [valor]="valor"
+    [carreraId]="carreraId"
+    [distanciaId]="distanciaId"
+    [linkDePago]="linkDePago"
+    [metodoPago]="metodoPago">
+  </app-form-corredor>
+  
+  <!-- Buscador por DNI -->
   <div class="container mt-5">
     <div class="row justify-content-center">
       <div class="col-md-6 custom-input-container">
@@ -26,6 +26,7 @@
     </div>
   </div>
   
+  <!-- Listado de corredores -->
   <div class="container mt-5">
     <div class="border rounded p-3 content-background">
       <h2 class="text-center" style="font-size: 18px;">Listado de carreras</h2>
@@ -49,16 +50,16 @@
             </thead>
             <tbody>
               <tr *ngFor="let corredor of corredores; trackBy: trackByIndex">
-                <td class="custom-td">{{corredor.nombre}}</td>
-                <td class="custom-td">{{corredor.apellido}}</td>
-                <td class="custom-td">{{corredor.dni}}</td>
-                <td class="custom-td">{{corredor.fechaNacimiento}}</td>
-                <td class="custom-td">{{corredor.genero}}</td>
-                <td class="custom-td">{{corredor.nacionalidad}}</td>
-                <td class="custom-td">{{corredor.provincia}}</td>
-                <td class="custom-td">{{corredor.team}}</td>
-                <td class="custom-td">{{corredor.carrera.nombre}}</td>
-                <td class="custom-td">{{corredor.distancia.tipo}}</td>
+                <td class="custom-td">{{ corredor.nombre }}</td>
+                <td class="custom-td">{{ corredor.apellido }}</td>
+                <td class="custom-td">{{ corredor.dni }}</td>
+                <td class="custom-td">{{ corredor.fechaNacimiento }}</td>
+                <td class="custom-td">{{ corredor.genero }}</td>
+                <td class="custom-td">{{ corredor.nacionalidad }}</td>
+                <td class="custom-td">{{ corredor.provincia }}</td>
+                <td class="custom-td">{{ corredor.team }}</td>
+                <td class="custom-td">{{ corredor.carrera.nombre }}</td>
+                <td class="custom-td">{{ corredor.distancia.tipo }}</td>
                 <td class="custom-td">
                   <button class="btn btn-success" (click)="pagarCorredor(corredor)">Pagar</button>
                 </td>
@@ -74,4 +75,11 @@
       </ng-template>
     </div>
   </div>
+
+  <!-- Modal de pago -->
+  <app-payment-modal
+    *ngIf="showPaymentModal"
+    [linkDePago]="linkDePago"
+    (close)="closePaymentModal()">
+  </app-payment-modal>
 </div>

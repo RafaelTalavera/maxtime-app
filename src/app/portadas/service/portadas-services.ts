@@ -11,7 +11,7 @@ import { LocalStorageService } from '../../servicios/local-Storage-Service';
 export class PortadasService {
   private apiUrl = `${environment.apiUrl}/api/portadas`;
 
-  constructor(private http: HttpClient, private localStorageService: LocalStorageService) {}
+  constructor(private http: HttpClient, private localStorageService: LocalStorageService) { }
 
   // 🔹 Obtener portadas del usuario autenticado con el mismo método que ControlService
   getPortadasByUsuario(): Observable<Portada[]> {
@@ -43,6 +43,7 @@ export class PortadasService {
     );
   }
 
+
   updatePortada(id: number, portada: any, file: File): Observable<Portada> {
     const url = `${this.apiUrl}/${id}`;
     const formData = new FormData();
@@ -50,7 +51,7 @@ export class PortadasService {
     if (file) {
       formData.append('file', file);
     }
-    return this.http.put<Portada>(url, formData, { headers: this.getHeaders() }).pipe(
+    return this.http.post<Portada>(url, formData, { headers: this.getHeaders() }).pipe(
       map(data => new Portada(data))
     );
   }

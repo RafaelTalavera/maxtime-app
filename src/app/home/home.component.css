@@ -165,17 +165,50 @@ h2 {
   overflow: visible; /* Asegura que no se recorte el contenido si es mayor */
 }
 
+/* Ajuste de cuadro2 para contener la tabla correctamente */
 #cuadro2 {
-  background-color: rgba(75, 59, 165, 0.267); /* Fondo blanco más transparente */
-  padding: 1px; /* Espaciado interno para separar el contenido del borde */
-  text-align: center; /* Centrar el texto dentro del div */
+  background-color: rgba(75, 59, 165, 0.267); 
+  padding: 10px; /* Espaciado interno */
+  text-align: center; 
   border-radius: 20px;
   border: 3px solid white;
   font-weight: 450;
-  overflow: visible; /* Asegura que no se recorte el contenido si es mayor */
   height: 60vh;
-  
+  overflow: auto; /* Permite scroll si el contenido es muy grande */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
+/* Contenedor interno de la tabla para que no desborde */
+.table-responsive {
+  max-width: 100%;
+  overflow-x: auto; /* Permite desplazamiento horizontal */
+  white-space: nowrap; /* Evita saltos de línea en celdas */
+}
+
+/* Ajuste para que la tabla se mantenga dentro del contenedor */
+.table {
+  table-layout: fixed; /* Ajusta el tamaño de las celdas */
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Asegurar que el texto en las celdas no expanda la tabla */
+.custom-td, .custom-tr {
+  word-wrap: break-word; /* Permite que el texto se divida */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Agrega "..." si el texto es muy largo */
+}
+
+/* Ajustar el contenedor del componente para que la tabla no sobresalga */
+app-publicacion-tiempos {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 
 @keyframes neon-flicker {
   0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {

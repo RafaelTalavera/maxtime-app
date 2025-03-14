@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-
 import { CarreraService } from '../service/carrera-services';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormCorredorComponent } from '../../corredor/componente/form-corredor.component';
@@ -33,15 +32,15 @@ export class PublicacionCarreraComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadingService.startIconChange();
-    // Suscribirse a los queryParams para obtener el portadaId
+    
     this.querySub = this.activatedRoute.queryParams.subscribe(params => {
       const portadaId = +params['portadaId'] || 0;
       if (portadaId !== 0) {
-        // Llamar al endpoint que filtra carreras por portadaId
         this.carreraService.getCarrerasByPortada(portadaId).subscribe({
           next: data => {
             console.log('Datos obtenidos por portada:', data);
-            this.carreras = data.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+            this.carreras = data
+              .sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime()); // 🔹 Orden ascendente
             this.loadingService.stopIconChange();
           },
           error: error => {
@@ -50,11 +49,11 @@ export class PublicacionCarreraComponent implements OnInit, OnDestroy {
           }
         });
       } else {
-        // Si no se recibe portadaId válido, opcionalmente podrías mostrar un mensaje o cargar todas las carreras
         this.carreraService.getCarreras().subscribe({
           next: data => {
             console.log('Datos obtenidos:', data);
-            this.carreras = data.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+            this.carreras = data
+              .sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime()); // 🔹 Orden ascendente
             this.loadingService.stopIconChange();
           },
           error: error => {
@@ -74,14 +73,14 @@ export class PublicacionCarreraComponent implements OnInit, OnDestroy {
   }
 
   inscripcion(carreraId: number, distanciaId: number, tipo: string, valor: number, linkDePago: string): void {
-    console.log('Valor enviado a la inscripción:', valor); // ✅ Depuración
+    console.log('Valor enviado a la inscripción:', valor);
   
     this.router.navigate(['/inscripcion'], { 
       queryParams: { 
         carreraId: carreraId,
         distanciaId: distanciaId,
         tipo: tipo,
-        valor: valor, // ✅ Ahora sí pasará el valor correcto
+        valor: valor,
         linkDePago: linkDePago
       }
     });

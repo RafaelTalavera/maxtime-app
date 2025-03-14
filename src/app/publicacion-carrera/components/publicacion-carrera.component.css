@@ -78,3 +78,19 @@ h2 {
 .custom-button {
   margin-bottom: 10px;
 }
+
+/* Utilizando el código hexadecimal */
+.color-pix {
+  color: #77B6A8;
+}
+
+/* Utilizando valores RGB */
+.color-pix {
+  color: rgb(119, 182, 168);
+}
+
+.btn-pix {
+  background-color: rgb(119, 182, 168);
+  border-color: rgb(119, 182, 168);
+  color: #fff; /* Define un color de texto contrastante */
+}
