@@ -8,157 +8,112 @@
       <div class="row">
         <div class="col-md-5 form-group">
           <label class="custom-label" for="nombre">Nombre del evento</label>
-          <input type="text" class="form-control my-2 custom-input" id="nombre" name="nombre" [(ngModel)]="carrera.nombre" #nombre="ngModel" required style="font-size: 12px;">
-          <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="text alert-danger" style="font-size: 12px;">
-            <div *ngIf="nombre.errors?.['required']">El nombre de la carrera es requerido</div>
+          <input type="text" class="form-control my-2 custom-input" id="nombre" name="nombre" [(ngModel)]="carrera.nombre" #nombre="ngModel" required>
+          <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="text alert-danger">
+            <div *ngIf="nombre.errors?.['required']">El nombre del evento es requerido</div>
           </div>
         </div>
         <div class="col-md-2 form-group">
           <label class="custom-label" for="fecha">Fecha del evento</label>
-          <input type="date" class="form-control my-2 custom-input" id="fecha" name="fecha" [(ngModel)]="carrera.fecha" #fecha="ngModel" required style="font-size: 12px;">
-          <div *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)" class="text alert-danger" style="font-size: 12px;">
-            <div *ngIf="fecha.errors?.['required']">La fecha de la carrera es requerida</div>
+          <input type="date" class="form-control my-2 custom-input" id="fecha" name="fecha" [(ngModel)]="carrera.fecha" #fecha="ngModel" required>
+          <div *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)" class="text alert-danger">
+            <div *ngIf="fecha.errors?.['required']">La fecha es requerida</div>
           </div>
         </div>
         <div class="col-md-2 form-group">
           <label class="custom-label" for="fechaDeCierreDeInscripcion">Cierre inscripción</label>
-          <input type="date" class="form-control my-2 custom-input" id="fechaDeCierreDeInscripcion" name="fechaDeCierreDeInscripcion" [(ngModel)]="carrera.fechaDeCierreDeInscripcion" #fechaDeCierreDeInscripcion="ngModel" required style="font-size: 12px;">
-          <div *ngIf="fechaDeCierreDeInscripcion.invalid && (fechaDeCierreDeInscripcion.dirty || fechaDeCierreDeInscripcion.touched)" class="text alert-danger" style="font-size: 12px;">
-            <div *ngIf="fechaDeCierreDeInscripcion.errors?.['required']">La fecha de cierre de inscripción es requerida</div>
+          <input type="date" class="form-control my-2 custom-input" id="fechaDeCierreDeInscripcion" name="fechaDeCierreDeInscripcion" [(ngModel)]="carrera.fechaDeCierreDeInscripcion" #fechaDeCierreDeInscripcion="ngModel" required>
+          <div *ngIf="fechaDeCierreDeInscripcion.invalid && (fechaDeCierreDeInscripcion.dirty || fechaDeCierreDeInscripcion.touched)" class="text alert-danger">
+            <div *ngIf="fechaDeCierreDeInscripcion.errors?.['required']">La fecha de cierre es requerida</div>
           </div>
         </div>
         <div class="col-md-3 form-group">
-          <label class="custom-label" for="localidad">Localidad donde se realiza</label>
-          <input type="text" class="form-control my-2 custom-input" id="localidad" name="localidad" [(ngModel)]="carrera.localidad" #localidad="ngModel" required style="font-size: 12px;">
-          <div *ngIf="localidad.invalid && (localidad.dirty || localidad.touched)" class="text alert-danger" style="font-size: 12px;">
-            <div *ngIf="localidad.errors?.['required']">La localidad de la carrera es requerida</div>
+          <label class="custom-label" for="localidad">Localidad</label>
+          <input type="text" class="form-control my-2 custom-input" id="localidad" name="localidad" [(ngModel)]="carrera.localidad" #localidad="ngModel" required>
+          <div *ngIf="localidad.invalid && (localidad.dirty || localidad.touched)" class="text alert-danger">
+            <div *ngIf="localidad.errors?.['required']">La localidad es requerida</div>
           </div>
         </div>
       </div>
-      
+
       <!-- Segunda fila de inputs -->
       <div class="row">
         <div class="col-md-3 form-group">
-          <label class="custom-label" for="provincia">Provincia donde se realiza</label>
-          <input type="text" class="form-control my-2 custom-input" id="provincia" name="provincia" [(ngModel)]="carrera.provincia" #provincia="ngModel" required style="font-size: 12px;">
-          <div *ngIf="provincia.invalid && (provincia.dirty || provincia.touched)" class="text alert-danger" style="font-size: 12px;">
-            <div *ngIf="provincia.errors?.['required']">La provincia de la carrera es requerida</div>
+          <label class="custom-label" for="provincia">Provincia</label>
+          <input type="text" class="form-control my-2 custom-input" id="provincia" name="provincia" [(ngModel)]="carrera.provincia" #provincia="ngModel" required>
+          <div *ngIf="provincia.invalid && (provincia.dirty || provincia.touched)" class="text alert-danger">
+            <div *ngIf="provincia.errors?.['required']">La provincia es requerida</div>
           </div>
         </div>
         <div class="col-md-3 form-group">
-          <label class="custom-label" for="pais">País donde se realiza</label>
-          <input type="text" class="form-control my-2 custom-input" id="pais" name="pais" [(ngModel)]="carrera.pais" #pais="ngModel" required style="font-size: 12px;">
-          <div *ngIf="pais.invalid && (pais.dirty || pais.touched)" class="text alert-danger" style="font-size: 12px;">
-            <div *ngIf="pais.errors?.['required']">El país de la carrera es requerido</div>
+          <label class="custom-label" for="pais">País</label>
+          <input type="text" class="form-control my-2 custom-input" id="pais" name="pais" [(ngModel)]="carrera.pais" #pais="ngModel" required>
+          <div *ngIf="pais.invalid && (pais.dirty || pais.touched)" class="text alert-danger">
+            <div *ngIf="pais.errors?.['required']">El país es requerido</div>
           </div>
         </div>
         <div class="col-md-4 form-group">
-          <label class="custom-label" for="contacto">Número de Whatsapp para contacto</label>
-          <input type="text" class="form-control my-2 custom-input" id="contacto" name="contacto" [(ngModel)]="carrera.contacto" #contacto="ngModel" required style="font-size: 12px;">
-          <div *ngIf="contacto.invalid && (contacto.dirty || contacto.touched)" class="text alert-danger" style="font-size: 12px;">
-            <div *ngIf="contacto.errors?.['required']">El contacto de la carrera es requerido</div>
+          <label class="custom-label" for="contacto">Contacto (Whatsapp)</label>
+          <input type="text" class="form-control my-2 custom-input" id="contacto" name="contacto" [(ngModel)]="carrera.contacto" #contacto="ngModel" required>
+          <div *ngIf="contacto.invalid && (contacto.dirty || contacto.touched)" class="text alert-danger">
+            <div *ngIf="contacto.errors?.['required']">El contacto es requerido</div>
           </div>
         </div>
         <div class="col-md-2 form-group">
-          <label class="custom-label" for="horario">Horario del evento</label>
-          <input type="time" class="form-control my-2 custom-input" id="horario" name="horario" [(ngModel)]="carrera.horario" #horario="ngModel" required style="font-size: 12px;">
-          <div *ngIf="horario.invalid && (horario.dirty || horario.touched)" class="text alert-danger" style="font-size: 12px;">
-            <div *ngIf="horario.errors?.['required']">El horario de la carrera es requerido</div>
+          <label class="custom-label" for="horario">Horario</label>
+          <input type="time" class="form-control my-2 custom-input" id="horario" name="horario" [(ngModel)]="carrera.horario" #horario="ngModel" required>
+          <div *ngIf="horario.invalid && (horario.dirty || horario.touched)" class="text alert-danger">
+            <div *ngIf="horario.errors?.['required']">El horario es requerido</div>
           </div>
         </div>
       </div>
-      
-      <!-- Campo detalles -->
+
+      <!-- Detalles -->
       <div class="row">
         <div class="col-md-12 form-group">
-          <label class="custom-label" for="detalles">Detalles importantes del evento</label>
-          <textarea
-            class="form-control my-2 custom-input"
-            id="detalles"
-            name="detalles"
-            [(ngModel)]="carrera.detalles"
-            #detalles="ngModel"
-            required
-            style="font-size: 12px; resize: none; overflow: hidden;"
-            (input)="adjustTextArea($event)"
-          ></textarea>
-          <div *ngIf="detalles.invalid && (detalles.dirty || detalles.touched)" class="text alert-danger" style="font-size: 12px;">
-            <div *ngIf="detalles.errors?.['required']">Los detalles de la carrera son requeridos</div>
+          <label class="custom-label" for="detalles">Detalles del evento</label>
+          <textarea class="form-control my-2 custom-input" id="detalles" name="detalles" [(ngModel)]="carrera.detalles" #detalles="ngModel" required (input)="adjustTextArea($event)"></textarea>
+          <div *ngIf="detalles.invalid && (detalles.dirty || detalles.touched)" class="text alert-danger">
+            <div *ngIf="detalles.errors?.['required']">Los detalles son requeridos</div>
           </div>
         </div>
       </div>
-      
-      <!-- Campo Estado y Carga de imágenes -->
+
+      <!-- Estado e imágenes -->
       <div class="row">
-        <!-- Campo Estado -->
         <div class="col-md-5 form-group d-flex align-items-center mb-4">
           <label class="custom-label me-2" for="estado">¿Publicar el evento?</label>
           <div class="form-check form-switch">
-            <input 
-              class="form-check-input" 
-              type="checkbox" 
-              id="estado" 
-              name="estado" 
-              [(ngModel)]="carrera.estado" 
-              #estado="ngModel">
-            <label 
-              class="form-check-label ms-2" 
-              for="estado" 
-              [ngClass]="{'text-success': carrera.estado, 'text-danger': !carrera.estado}">
+            <input class="form-check-input" type="checkbox" id="estado" name="estado" [(ngModel)]="carrera.estado" #estado="ngModel">
+            <label class="form-check-label ms-2" for="estado">
               {{ carrera.estado ? 'Publicado' : 'No publicado' }}
             </label>
           </div>
         </div>
-        
-        <!-- Campo Imágenes -->
         <div class="row">
           <!-- Imagen 1 -->
           <div class="col-md-6 form-group">
             <label class="custom-label" for="imagen1">Adjuntar Imagen 1</label>
-            <input 
-              type="file" 
-              class="form-control my-2 custom-input" 
-              id="imagen1" 
-              name="imagen1" 
-              (change)="onFileSelected($event, 1)" 
-              accept="image/*">
+            <input type="file" class="form-control my-2 custom-input" id="imagen1" name="imagen1" (change)="onFileSelected($event, 1)" accept="image/*">
             <small class="form-text text-muted">Selecciona la primera imagen del evento.</small>
-            <div *ngIf="imagen1Error" class="text alert-danger" style="font-size: 12px;">
-              Solo se permite una imagen en este campo menor a 13 mb.
-            </div>
+            <div *ngIf="imagen1Error" class="text alert-danger">Solo se permite una imagen en este campo menor a 13 mb.</div>
           </div>
-          
           <!-- Imagen 2 -->
           <div class="col-md-6 form-group">
             <label class="custom-label" for="imagen2">Adjuntar Imagen 2</label>
-            <input 
-              type="file" 
-              class="form-control my-2 custom-input" 
-              id="imagen2" 
-              name="imagen2" 
-              (change)="onFileSelected($event, 2)" 
-              accept="image/*">
+            <input type="file" class="form-control my-2 custom-input" id="imagen2" name="imagen2" (change)="onFileSelected($event, 2)" accept="image/*">
             <small class="form-text text-muted">Selecciona la segunda imagen del evento.</small>
-            <div *ngIf="imagen2Error" class="text alert-danger" style="font-size: 12px;">
-              Solo se permite una imagen en este campo menor a 13 mb.
-            </div>
+            <div *ngIf="imagen2Error" class="text alert-danger">Solo se permite una imagen en este campo menor a 13 mb.</div>
           </div>
         </div>
       </div>
-      
-      <!-- Sección para agregar talles de remeras -->
+
+      <!-- Talles -->
       <div class="row mb-4">
         <div class="col-md-12 form-group">
           <label class="custom-label">Agregar talles de remeras</label>
           <div class="d-flex mb-2">
-            <input
-              type="text"
-              class="form-control me-2"
-              placeholder="Ej: S, M, L, XL"
-              [(ngModel)]="nuevoTalle"
-              name="nuevoTalle"
-              #talleInput="ngModel"
-            />
+            <input type="text" class="form-control me-2" placeholder="Ej: S, M, L, XL" [(ngModel)]="nuevoTalle" name="nuevoTalle" #talleInput="ngModel">
             <button type="button" class="btn btn-success" (click)="agregarTalle()">Agregar</button>
           </div>
           <ul class="list-group">
@@ -169,50 +124,46 @@
           </ul>
         </div>
       </div>
-      
-      <!-- Sección para agregar categorías -->
+
+      <!-- Categorías: Sección para agregar una categoría (ya sin "Agregar Campo") -->
       <div class="row mb-4">
         <div class="col-md-12 form-group">
-          <label class="custom-label">Agregar Categorías</label>
+          <label class="custom-label">Agregar categoría</label>
           <div class="d-flex mb-2">
-            <input
-              type="text"
-              class="form-control me-2"
-              placeholder="Género (ej: Femenino-Masculino-Mixto)"
-              [(ngModel)]="nuevoGenero"
-              name="nuevoGenero"
-            />
-            <input
-              type="text"
-              class="form-control me-2"
-              placeholder="Equipo (ej: 1-2-3)"
-              [(ngModel)]="nuevoEquipo"
-              name="nuevoEquipo"
-            />
-            <input
-              type="text"
-              class="form-control me-2"
-              placeholder="Embarcación (ej: Kayak-Canoa)"
-              [(ngModel)]="nuevaEmbarcacion"
-              name="nuevaEmbarcacion"
-            />
-            <button type="button" class="btn btn-success" (click)="agregarCategoria()">Agregar</button>
+            <input type="text" class="form-control me-2" placeholder="Nombre del campo (ej: Género)" [(ngModel)]="nuevoCampoNombre" name="nuevoCampoNombre">
+            <input type="text" class="form-control me-2" placeholder="Valor (ej: Masculino)" [(ngModel)]="nuevoCampoValor" name="nuevoCampoValor">
+            <div class="form-check form-switch align-self-center me-2">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="nuevoCampoActivo" name="nuevoCampoActivo" id="activoSwitch">
+              <label class="form-check-label" for="activoSwitch">Activo</label>
+            </div>
+            <button type="button" class="btn btn-primary" (click)="agregarCategoria()">Agregar Categoría</button>
           </div>
+        </div>
+      </div>
+
+      <!-- Lista de categorías agregadas -->
+      <div class="row mb-4" *ngIf="carrera.categorias && carrera.categorias.length > 0">
+        <div class="col-md-12 form-group">
+          <label class="custom-label">Categorías agregadas</label>
           <ul class="list-group">
-            <li *ngFor="let categoria of carrera.categorias; let i = index" class="list-group-item d-flex justify-content-between">
-              {{ categoria.genero }} - {{ categoria.equipo }} - {{ categoria.embarcacion }}
+            <li *ngFor="let categoria of carrera.categorias; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <div *ngFor="let campo of categoria.campos">
+                  {{ campo.nombre }}: {{ campo.valor }} <span *ngIf="campo.activo">(Activo)</span><span *ngIf="!campo.activo">(Inactivo)</span>
+                </div>
+              </div>
               <button type="button" class="btn btn-danger btn-sm" (click)="eliminarCategoria(i)">Eliminar</button>
             </li>
           </ul>
         </div>
       </div>
-      
-      <!-- Botones -->
+
+      <!-- Botones de enviar y limpiar -->
       <div class="text-center">
-        <button [disabled]="!carreraForm.form.valid" type="submit" class="btn btn-primary my-2 mx-3" style="font-size: 12px;">
+        <button [disabled]="!carreraForm.form.valid" type="submit" class="btn btn-primary my-2 mx-3">
           {{ (carrera.id ?? 0) > 0 ? 'Editar' : 'Crear' }}
         </button>
-        <button type="button" class="btn btn-success my-2 mx-3" (click)="clean()" style="font-size: 12px;">Limpiar</button>
+        <button type="button" class="btn btn-success my-2 mx-3" (click)="clean()">Limpiar</button>
       </div>
     </div>
   </div>

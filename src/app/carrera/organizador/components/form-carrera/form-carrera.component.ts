@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
 import { CarreasService } from '../../../services/carreras.service';
 import Swal from 'sweetalert2';
 import { Carrera } from '../../../models/carrera';
@@ -20,10 +19,12 @@ export class FormCarreraComponent {
   imagenesError: boolean = false;
   nuevoTalle: string = '';
 
-  // Propiedades para categorías
-  nuevoGenero: string = '';
-  nuevoEquipo: string = '';
-  nuevaEmbarcacion: string = '';
+  // Propiedades para construir una categoría (ya no se agregan campos de forma individual)
+  nuevoCampoNombre: string = '';
+  nuevoCampoValor: string = '';
+  nuevoCampoActivo: boolean = true;
+  
+  // Se eliminan los métodos y el array de nuevosCampos
 
   imagen1Error: boolean = false;
   imagen2Error: boolean = false;
@@ -42,22 +43,27 @@ export class FormCarreraComponent {
     this.carrera.talles.splice(index, 1);
   }
 
-  // Métodos para categorías
+  // Método para agregar una categoría usando los inputs directos
   agregarCategoria(): void {
-    if (this.nuevoGenero.trim() && this.nuevoEquipo.trim() && this.nuevaEmbarcacion.trim()) {
-      const categoria = {
-        genero: this.nuevoGenero.trim(),
-        equipo: this.nuevoEquipo.trim(),
-        embarcacion: this.nuevaEmbarcacion.trim()
-      };
-      if (!this.carrera.categorias) {
-        this.carrera.categorias = [];
-      }
-      this.carrera.categorias.push(categoria);
-      this.nuevoGenero = '';
-      this.nuevoEquipo = '';
-      this.nuevaEmbarcacion = '';
+    if (!this.nuevoCampoNombre.trim() || !this.nuevoCampoValor.trim()) {
+      Swal.fire('Error', 'Debe ingresar nombre y valor para la categoría.', 'error');
+      return;
     }
+    const categoria = {
+      campos: [{
+        nombre: this.nuevoCampoNombre.trim(),
+        valor: this.nuevoCampoValor.trim(),
+        activo: this.nuevoCampoActivo
+      }]
+    };
+    if (!this.carrera.categorias) {
+      this.carrera.categorias = [];
+    }
+    this.carrera.categorias.push(categoria);
+    // Limpiar los inputs de la categoría
+    this.nuevoCampoNombre = '';
+    this.nuevoCampoValor = '';
+    this.nuevoCampoActivo = true;
   }
 
   eliminarCategoria(index: number): void {
@@ -97,7 +103,9 @@ export class FormCarreraComponent {
         showConfirmButton: false,
         didOpen: () => { Swal.showLoading(); }
       });
-  
+
+      console.log('JSON enviado al backend:', JSON.stringify(this.carrera));
+
       if (this.carrera.id && this.carrera.id > 0) {
         // Edición de carrera
         this.service.updateCarrera(
@@ -167,6 +175,9 @@ export class FormCarreraComponent {
   clean(): void {
     this.carrera = this.createEmptyCarrera();
     this.selectedFiles = [];
+    this.nuevoCampoNombre = '';
+    this.nuevoCampoValor = '';
+    this.nuevoCampoActivo = true;
   }
  
   private createEmptyCarrera(): Carrera {
@@ -185,7 +196,7 @@ export class FormCarreraComponent {
       organizadorId: 0,
       talles: [],
       portadaId: 0,
-      categorias: []  // Se agrega para cumplir con el tipo Carrera
+      categorias: [] // Categorías basadas en campos dinámicos
     };
   }
   

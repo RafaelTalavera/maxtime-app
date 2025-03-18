@@ -26,7 +26,17 @@ export class FormCorredorComponent implements OnInit, AfterViewInit {
   @Input() metodoPago!: string;
 
   talles: string[] = [];
-  categorias: string[] = []; // Arreglo para las combinaciones de categorías
+  // Categorías recibidas del backend en formato string, por ejemplo:
+  // [
+  //   "Prueba Maxi:1, 2, 3",
+  //   "Genero:Masculino, Femenino"
+  // ]
+  categorias: string[] = [];
+  // Array de objetos { nombre, opciones } luego de parsear las cadenas recibidas
+  parsedCategorias: { nombre: string, opciones: string[] }[] = [];
+  // Objeto para almacenar la selección del usuario para cada categoría
+  selectedCategorias: { [key: string]: string } = {};
+
   edad: number | null = null;
   showPaymentModal: boolean = false;
 
@@ -45,7 +55,6 @@ export class FormCorredorComponent implements OnInit, AfterViewInit {
     // Inicializa los IDs en el corredor
     this.corredor.carreraId = this.carreraId;
     this.corredor.distanciaId = this.distanciaId;
-
     console.log('Datos recibidos:', {
       tipo: this.tipo,
       valor: this.valor,
@@ -56,25 +65,38 @@ export class FormCorredorComponent implements OnInit, AfterViewInit {
     // Obtener talles (se espera que el endpoint retorne un array con un string separado por comas)
     this.carreraService.getTallesByCarreraId(this.carreraId).subscribe({
       next: (tallesData) => {
+        console.log('Talles recibidos:', tallesData);
         if (tallesData && tallesData.length > 0 && typeof tallesData[0] === 'string') {
           this.talles = tallesData[0].split(',').map(t => t.trim());
         } else {
           this.talles = [];
         }
       },
-      error: (err) => {
-        console.error('Error al obtener talles:', err);
-      }
+      error: (err) => console.error('Error al obtener talles:', err)
     });
 
-    // Obtener categorías disponibles (endpoint creado en el back)
+    // Obtener y parsear las categorías dinámicas (nuevo formato JSON)
     this.carreraService.getCategoriasByCarreraId(this.carreraId).subscribe({
-      next: (cats) => {
-        this.categorias = cats || [];
+      next: (cats: string[]) => {
+        if (cats && cats.length > 0) {
+          const parsedCategorias: { nombre: string, opciones: string[] }[] = [];
+          cats.forEach(cat => {
+            if (cat.includes(':')) {
+              const [nombre, opcionesStr] = cat.split(':', 2);
+              const opciones = opcionesStr.split(',').map(opt => opt.trim());
+              parsedCategorias.push({ nombre: nombre.trim(), opciones });
+            } else {
+              console.error('Formato incorrecto para categoría:', cat);
+            }
+          });
+          this.parsedCategorias = parsedCategorias;
+          console.log('Categorías parseadas:', this.parsedCategorias);
+        }
       },
       error: (err) => {
         console.error('Error al obtener categorías:', err);
         this.categorias = [];
+        this.parsedCategorias = [];
       }
     });
 
@@ -84,7 +106,7 @@ export class FormCorredorComponent implements OnInit, AfterViewInit {
     this.corredor.distanciaId = this.distanciaId;
   }
 
-  ngAfterViewInit(): void { }
+  ngAfterViewInit(): void {}
 
   validarCodigo(): void {
     if (!this.codigoDescuento.trim()) {
@@ -114,6 +136,16 @@ export class FormCorredorComponent implements OnInit, AfterViewInit {
     if (this.codigoAplicado && this.codigoDescuento.trim()) {
       this.corredor.codigoDescuento = this.codigoDescuento;
     }
+    // Construir la cadena de categorías dinámicas a partir de las selecciones del usuario
+    if (this.parsedCategorias && this.parsedCategorias.length > 0) {
+      const dynamicCat = this.parsedCategorias.map(cat => {
+        const seleccion = this.selectedCategorias[cat.nombre] || '';
+        return `${cat.nombre}:${seleccion}`;
+      }).join(', ');
+      this.corredor.categoria = dynamicCat;
+      console.log('Categoría dinámica construida:', this.corredor.categoria);
+    }
+    console.log("Enviando inscripción con corredor:", this.corredor);
     this.corredorService.create(this.corredor).subscribe(
       (corredorNew) => {
         Swal.fire({
@@ -148,7 +180,7 @@ export class FormCorredorComponent implements OnInit, AfterViewInit {
                       this.copyToClipboard();
                     });
                   }
-                },
+                }
               }).then(innerResult => {
                 if (innerResult.isConfirmed) {
                   window.location.href = this.linkDePago;
@@ -176,7 +208,7 @@ export class FormCorredorComponent implements OnInit, AfterViewInit {
     navigator.clipboard.writeText(this.linkDePago).then(() => {
       Swal.fire({
         icon: 'success',
-        title: '¡Link copiado!',
+        title: 'Link copiado',
         text: 'El enlace de pago ha sido copiado al portapapeles.',
         timer: 2000,
         showConfirmButton: false

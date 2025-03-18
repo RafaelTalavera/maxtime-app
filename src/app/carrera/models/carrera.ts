@@ -1,4 +1,4 @@
-import { Categoria } from './categoria'; // Ajustá la ruta según corresponda
+import { Categoria } from "./categoria";
 
 export class Carrera {
   id?: number;
@@ -17,5 +17,5 @@ export class Carrera {
   cierre?: boolean = false;
   talles: string[] = [];
   portadaId?: number;
-  categorias: Categoria[] = [];  // Agregado para almacenar las categorías
+  categorias: Categoria[] = []; // Lista de categorías con campos dinámicos
 }

@@ -1,6 +1,9 @@
 export interface Categoria {
-    genero: string;
-    equipo: string;
-    embarcacion: string;
-  }
-  
+  campos: CampoCategoria[];
+}
+
+export interface CampoCategoria {
+  nombre: string;
+  valor: string;
+  activo: boolean;
+}
