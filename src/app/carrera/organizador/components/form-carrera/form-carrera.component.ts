@@ -16,16 +16,16 @@ export class FormCarreraComponent {
   @Input() carrera: Carrera = this.createEmptyCarrera();
   @Output() newCarreraEvent = new EventEmitter<Carrera>();
   selectedFiles: File[] = []; 
+  // Usamos un arreglo de objetos para adjuntos con nombre personalizado
+  selectedAdjuntos: { file: File, nombre: string }[] = [];
   imagenesError: boolean = false;
   nuevoTalle: string = '';
 
-  // Propiedades para construir una categoría (ya no se agregan campos de forma individual)
+  // Propiedades para categorías
   nuevoCampoNombre: string = '';
   nuevoCampoValor: string = '';
   nuevoCampoActivo: boolean = true;
   
-  // Se eliminan los métodos y el array de nuevosCampos
-
   imagen1Error: boolean = false;
   imagen2Error: boolean = false;
  
@@ -43,7 +43,7 @@ export class FormCarreraComponent {
     this.carrera.talles.splice(index, 1);
   }
 
-  // Método para agregar una categoría usando los inputs directos
+  // Método para agregar una categoría
   agregarCategoria(): void {
     if (!this.nuevoCampoNombre.trim() || !this.nuevoCampoValor.trim()) {
       Swal.fire('Error', 'Debe ingresar nombre y valor para la categoría.', 'error');
@@ -60,7 +60,6 @@ export class FormCarreraComponent {
       this.carrera.categorias = [];
     }
     this.carrera.categorias.push(categoria);
-    // Limpiar los inputs de la categoría
     this.nuevoCampoNombre = '';
     this.nuevoCampoValor = '';
     this.nuevoCampoActivo = true;
@@ -74,23 +73,29 @@ export class FormCarreraComponent {
   
   onFileSelected(event: Event, field: number): void {
     const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 1) {
-      if (field === 1) this.imagen1Error = true;
-      if (field === 2) this.imagen2Error = true;
-      input.value = '';
-    } else {
-      if (field === 1) this.imagen1Error = false;
-      if (field === 2) this.imagen2Error = false;
-      if (input.files && input.files[0]) {
-        const file = input.files[0];
-        if (field === 1) {
-          this.selectedFiles[0] = file;
-        } else if (field === 2) {
-          this.selectedFiles[1] = file;
-        }
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      if (field === 1) {
+        this.selectedFiles[0] = file;
+      } else if (field === 2) {
+        this.selectedFiles[1] = file;
       }
     }
-    console.log('Archivos seleccionados:', this.selectedFiles);
+    console.log('Archivos de imagen seleccionados:', this.selectedFiles);
+  }
+  
+  onAdjuntosSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      // Al seleccionar, se crea un objeto con el File y se asigna inicialmente el nombre original.
+      this.selectedAdjuntos = Array.from(input.files).map(file => ({ file, nombre: file.name }));
+    }
+    console.log('Adjuntos seleccionados:', this.selectedAdjuntos);
+  }
+
+  // Permite actualizar el nombre del adjunto
+  actualizarNombreAdjunto(index: number, nuevoNombre: string): void {
+    this.selectedAdjuntos[index].nombre = nuevoNombre;
   }
   
   onSubmit(carreraForm: NgForm): void {
@@ -103,14 +108,12 @@ export class FormCarreraComponent {
         showConfirmButton: false,
         didOpen: () => { Swal.showLoading(); }
       });
-
       console.log('JSON enviado al backend:', JSON.stringify(this.carrera));
-
       if (this.carrera.id && this.carrera.id > 0) {
-        // Edición de carrera
         this.service.updateCarrera(
           this.carrera,
-          this.selectedFiles.length > 0 ? this.selectedFiles : undefined
+          this.selectedFiles.length > 0 ? this.selectedFiles : undefined,
+          this.transformAdjuntosToFiles()
         ).subscribe(
           response => {
             Swal.close();
@@ -134,8 +137,11 @@ export class FormCarreraComponent {
           }
         );
       } else {
-        // Creación de carrera
-        this.service.createCarreraOrganizador(this.carrera, this.selectedFiles).subscribe(
+        this.service.createCarreraOrganizador(
+          this.carrera,
+          this.selectedFiles,
+          this.transformAdjuntosToFiles()
+        ).subscribe(
           response => {
             Swal.close();
             console.log('Carrera creada con éxito:', response);
@@ -166,8 +172,14 @@ export class FormCarreraComponent {
     }
   }
   
+  // Transforma cada adjunto en un File con el nombre actualizado
+  private transformAdjuntosToFiles(): File[] {
+    return this.selectedAdjuntos.map(adj => new File([adj.file], adj.nombre, { type: adj.file.type }));
+  }
+  
   private resetFormState(carreraForm: NgForm): void {
     this.selectedFiles = [];
+    this.selectedAdjuntos = [];
     this.clean();
     carreraForm.resetForm();
   }
@@ -175,6 +187,7 @@ export class FormCarreraComponent {
   clean(): void {
     this.carrera = this.createEmptyCarrera();
     this.selectedFiles = [];
+    this.selectedAdjuntos = [];
     this.nuevoCampoNombre = '';
     this.nuevoCampoValor = '';
     this.nuevoCampoActivo = true;
@@ -196,7 +209,7 @@ export class FormCarreraComponent {
       organizadorId: 0,
       talles: [],
       portadaId: 0,
-      categorias: [] // Categorías basadas en campos dinámicos
+      categorias: []
     };
   }
   

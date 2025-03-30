@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { forkJoin, of } from 'rxjs';
 import { Carrera } from '../../../models/carrera';
 import { CarreasService } from '../../../services/carreras.service';
 import { LoadingService } from '../../../../servicios/loading.service';
@@ -20,7 +21,7 @@ export class ListadoCarrerasComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params => {
+    this.activatedRoute.params.subscribe((params: any) => {
       this.organizadorId = +params['organizadorId']; // Extraer ID del organizador
       this.loadCarreras();
     });
@@ -29,15 +30,38 @@ export class ListadoCarrerasComponent implements OnInit {
   loadCarreras(): void {
     this.loadingService.startIconChange(); // Inicia el spinner
 
-    this.service.findCarrerasByUsuarioId(this.organizadorId).subscribe({
-      next: (data) => {
+    // Usamos findAll para obtener las carreras por organizador
+    this.service.findAll(this.organizadorId).subscribe({
+      next: (data: Carrera[]) => {
         this.carreras = data;
-        console.log('Carreras cargadas:', this.carreras);
-        this.loadingService.stopIconChange(); // Detiene el spinner
+        console.log('Carreras cargadas inicialmente:', this.carreras);
+        if (this.carreras.length > 0) {
+          // Para cada carrera, llamamos al endpoint de talles (se espera una cadena separada por comas)
+          forkJoin(
+            this.carreras.map((carrera: Carrera) => this.service.getTallesByCarreraId(carrera.id!))
+          ).subscribe({
+            next: (tallesResponses: string[]) => {
+              this.carreras.forEach((carrera, index) => {
+                if (tallesResponses[index]) {
+                  // Se actualiza la propiedad talles a partir de la cadena recibida
+                  carrera.talles = tallesResponses[index].split(',').map((t: string) => t.trim());
+                }
+              });
+              console.log('Carreras con talles actualizados:', this.carreras);
+              this.loadingService.stopIconChange();
+            },
+            error: (error: any) => {
+              console.error('Error al cargar talles:', error);
+              this.loadingService.stopIconChange();
+            }
+          });
+        } else {
+          this.loadingService.stopIconChange(); // Detiene el spinner si no hay carreras
+        }
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error('Error al cargar carreras:', error);
-        this.loadingService.stopIconChange(); // Detiene el spinner en caso de error
+        this.loadingService.stopIconChange();
       }
     });
   }

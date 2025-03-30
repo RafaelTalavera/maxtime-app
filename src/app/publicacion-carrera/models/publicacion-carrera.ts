@@ -1,6 +1,5 @@
 import { Categoria } from "../../carrera/models/categoria";
 
-
 export class Carrera {
   id!: number;
   nombre!: string;
@@ -26,10 +25,12 @@ export class Carrera {
     }[];
   }[] = [];
   categorias: Categoria[] = []; // Relación agregada
+  adjuntos: string[] = [];      // Propiedad agregada para los adjuntos
 
   constructor(data: any) {
     Object.assign(this, data);
     this.distancias = this.distancias || []; // Asegura que sea un array
     this.categorias = this.categorias || []; // Asegura que sea un array
+    this.adjuntos = this.adjuntos || [];     // Asegura que sea un array
   }
 }

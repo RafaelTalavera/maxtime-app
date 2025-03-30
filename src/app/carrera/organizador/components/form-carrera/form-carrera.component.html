@@ -108,6 +108,15 @@
         </div>
       </div>
 
+      <!-- Adjuntos -->
+      <div class="row mb-4">
+        <div class="col-md-12 form-group">
+          <label class="custom-label" for="adjuntos">Adjuntar archivos</label>
+          <input type="file" class="form-control my-2 custom-input" id="adjuntos" name="adjuntos" (change)="onAdjuntosSelected($event)" multiple>
+          <small class="form-text text-muted">Selecciona uno o más archivos adjuntos.</small>
+        </div>
+      </div>
+
       <!-- Talles -->
       <div class="row mb-4">
         <div class="col-md-12 form-group">
@@ -125,7 +134,7 @@
         </div>
       </div>
 
-      <!-- Categorías: Sección para agregar una categoría (ya sin "Agregar Campo") -->
+      <!-- Categorías -->
       <div class="row mb-4">
         <div class="col-md-12 form-group">
           <label class="custom-label">Agregar categoría</label>

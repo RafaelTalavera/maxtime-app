@@ -150,13 +150,13 @@ export class FormCorredorComponent implements OnInit, AfterViewInit {
       (corredorNew) => {
         Swal.fire({
           icon: 'success',
-          title: 'Felicitaciones, usted se inscribió con éxito.',
+          title: 'Felicitaciones, usted se pre inscribió con éxito.',
           text: 'Recuerde siempre enviar el comprobante de pago para confirmación.',
           showCancelButton: true,
-          confirmButtonText: 'Pagar ahora',
-          cancelButtonText: 'Más tarde'
+          confirmButtonText: 'Ver información de pago',
+          cancelButtonText: 'Seguir cargando'
         }).then(result => {
-          if (result.isConfirmed) {
+          if (result.isConfirmed) {2
             if (!this.metodoPago || this.metodoPago === 'MercadoPago') {
               Swal.fire({
                 icon: 'info',

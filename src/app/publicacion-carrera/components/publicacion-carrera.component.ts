@@ -39,8 +39,7 @@ export class PublicacionCarreraComponent implements OnInit, OnDestroy {
         this.carreraService.getCarrerasByPortada(portadaId).subscribe({
           next: data => {
             console.log('Datos obtenidos por portada:', data);
-            this.carreras = data
-              .sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime()); // 🔹 Orden ascendente
+            this.carreras = data.sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime());
             this.loadingService.stopIconChange();
           },
           error: error => {
@@ -52,8 +51,7 @@ export class PublicacionCarreraComponent implements OnInit, OnDestroy {
         this.carreraService.getCarreras().subscribe({
           next: data => {
             console.log('Datos obtenidos:', data);
-            this.carreras = data
-              .sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime()); // 🔹 Orden ascendente
+            this.carreras = data.sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime());
             this.loadingService.stopIconChange();
           },
           error: error => {
@@ -74,7 +72,6 @@ export class PublicacionCarreraComponent implements OnInit, OnDestroy {
 
   inscripcion(carreraId: number, distanciaId: number, tipo: string, valor: number, linkDePago: string): void {
     console.log('Valor enviado a la inscripción:', valor);
-  
     this.router.navigate(['/inscripcion'], { 
       queryParams: { 
         carreraId: carreraId,
@@ -86,7 +83,6 @@ export class PublicacionCarreraComponent implements OnInit, OnDestroy {
     });
   }
   
-
   formatHora(horario: string): string {
     const hora = parseInt(horario.substring(0, 2), 10);
     const minutos = parseInt(horario.substring(3, 5), 10);
@@ -103,6 +99,27 @@ export class PublicacionCarreraComponent implements OnInit, OnDestroy {
       window.open(`https://wa.me/${telefono}`, '_blank');
     } else {
       console.error('Número de contacto inválido.');
+    }
+  }
+  
+  // Extrae el nombre del botón a partir del string (antes del primer ':')
+  getAdjuntoName(adjunto: string): string {
+    const separatorIndex = adjunto.indexOf(':');
+    if (separatorIndex !== -1) {
+      const nombreArchivo = adjunto.substring(0, separatorIndex);
+      return nombreArchivo.split('.')[0];
+    }
+    return 'Adjunto';
+  }
+
+  // Abre el enlace del adjunto en una nueva pestaña para iniciar la descarga o visualizarlo
+  downloadAdjunto(adjunto: string): void {
+    const separatorIndex = adjunto.indexOf(':');
+    if (separatorIndex !== -1) {
+      const url = adjunto.substring(separatorIndex + 1);
+      window.open(url, '_blank');
+    } else {
+      console.error('Formato de adjunto incorrecto.');
     }
   }
 }

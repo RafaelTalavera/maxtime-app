@@ -109,13 +109,19 @@
                   }"
                   [disabled]="carrera.pausa || carrera.cierre">
                   <ng-container *ngIf="pago.metodoPago === 'Pix'; else otrosPagos">
-                    <i class="fa-brands fa-pix"></i> Pago con PIX
+                    <i class="fa-brands fa-pix"></i> Pre inscripción con PIX
                   </ng-container>
                   <ng-template #otrosPagos>
-                    Pago con {{ pago.metodoPago }}
+                    Pre inscripción con {{ pago.metodoPago }}
                   </ng-template>
                 </button>
               </div>
+            </div>
+            <!-- Bloque para mostrar adjuntos con botones separados y con ícono de descarga -->
+            <div *ngIf="carrera.adjuntos && carrera.adjuntos.length > 0" class="mt-3 d-flex flex-wrap gap-2 justify-content-center">
+              <button *ngFor="let adjunto of carrera.adjuntos" class="btn btn-secondary btn-sm" (click)="downloadAdjunto(adjunto)">
+                <i class="fa-solid fa-download me-1"></i>{{ getAdjuntoName(adjunto) }}
+              </button>
             </div>
           </div>
         </div>

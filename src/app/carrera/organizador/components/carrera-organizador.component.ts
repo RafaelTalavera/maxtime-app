@@ -3,11 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { FormCarreraComponent } from './form-carrera/form-carrera.component';
-
 import { LoadingService } from '../../../servicios/loading.service';
 import { CarreasService } from '../../services/carreras.service';
 import { Observable, of } from 'rxjs';
-import { map, tap, catchError } from 'rxjs/operators';
 import { Carrera } from '../../models/carrera';
 
 @Component({
@@ -19,13 +17,12 @@ import { Carrera } from '../../models/carrera';
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class CarreraOrganizadorComponent implements OnInit {
-
   organizadorId!: number;
   carreras: Carrera[] = [];
-  // Usamos portadaId como número en el modelo
   carreraSelected: Carrera = this.createEmptyCarrera();
   noCarreras: boolean = false;
-  selectedFiles: File[] = []; // Archivos seleccionados
+  selectedFiles: File[] = [];       // Archivos de imagen
+  selectedAdjuntos: File[] = [];      // Archivos adjuntos (ya transformados)
 
   constructor(
     private service: CarreasService,
@@ -35,7 +32,6 @@ export class CarreraOrganizadorComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Recibe el parámetro de ruta organizadorId
     this.activatedRoute.params.subscribe(params => {
       this.organizadorId = +params['organizadorId'] || 0;
       this.carreraSelected.organizadorId = this.organizadorId;
@@ -43,15 +39,12 @@ export class CarreraOrganizadorComponent implements OnInit {
       this.loadCarreras();
     });
 
-    // Recibe el query parameter para portadaId
     this.activatedRoute.queryParams.subscribe(query => {
       const portadaId = query['portadaId'];
       console.log('Query param portadaId:', portadaId);
       if (portadaId && +portadaId !== 0) {
-        // Asigna el id de la portada como número
         this.carreraSelected.portadaId = +portadaId;
         console.log('Carrera actualizada con portadaId:', this.carreraSelected.portadaId);
-        // Vuelve a cargar las carreras usando el endpoint filtrado
         this.loadCarreras();
       } else {
         console.warn('No se recibió un portadaId válido; se mantiene el id actual:', this.carreraSelected.portadaId);
@@ -61,17 +54,12 @@ export class CarreraOrganizadorComponent implements OnInit {
 
   loadCarreras(): void {
     this.loadingService.startIconChange();
-  
     let load$: Observable<Carrera[]>;
-  
     if (this.carreraSelected.portadaId && this.carreraSelected.portadaId !== 0) {
-      // Usa el endpoint: GET /api/carreras/portada/{portadaId}
       load$ = this.service.getCarrerasByPortada(this.carreraSelected.portadaId);
     } else {
-      // Si no hay un portadaId válido, retornamos un observable vacío
       load$ = of([]);
     }
-  
     load$.subscribe({
       next: carreras => {
         this.carreras = (carreras ?? []).map(carrera => ({
@@ -94,7 +82,7 @@ export class CarreraOrganizadorComponent implements OnInit {
       }
     });
   }
-  
+
   addCarrera(carrera: Carrera): void {
     if (carrera.id && carrera.id > 0) {
       this.updateCarrera(carrera);
@@ -105,43 +93,34 @@ export class CarreraOrganizadorComponent implements OnInit {
   }
 
   createCarrera(carrera: Carrera): void {
-    try {
-      Swal.fire({
-        title: 'Por favor espere',
-        html: '<strong>Creando carrera...</strong>',
-        icon: 'info',
-        allowOutsideClick: false,
-        showConfirmButton: false,
-        didOpen: () => { Swal.showLoading(); }
-      });
-      this.service.createCarreraOrganizador(carrera, this.selectedFiles).subscribe({
-        next: carreraNew => {
-          Swal.close();
-          this.carreras.push(carreraNew);
-          Swal.fire({
-            icon: 'success',
-            title: 'Carrera creada',
-            text: 'La carrera se ha creado con éxito.'
-          });
-          this.loadCarreras();
-        },
-        error: () => {
-          Swal.close();
-          Swal.fire({
-            icon: 'error',
-            title: 'Error al crear carrera',
-            text: 'Hubo un error al crear la carrera. Por favor, intente nuevamente.'
-          });
-        }
-      });
-    } catch (error) {
-      console.error('Error inesperado:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error inesperado',
-        text: 'Hubo un problema inesperado al intentar crear la carrera.'
-      });
-    }
+    Swal.fire({
+      title: 'Por favor espere',
+      html: '<strong>Creando carrera...</strong>',
+      icon: 'info',
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      didOpen: () => { Swal.showLoading(); }
+    });
+    this.service.createCarreraOrganizador(carrera, this.selectedFiles, this.selectedAdjuntos).subscribe({
+      next: carreraNew => {
+        Swal.close();
+        this.carreras.push(carreraNew);
+        Swal.fire({
+          icon: 'success',
+          title: 'Carrera creada',
+          text: 'La carrera se ha creado con éxito.'
+        });
+        this.loadCarreras();
+      },
+      error: () => {
+        Swal.close();
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al crear carrera',
+          text: 'Hubo un error al crear la carrera. Por favor, intente nuevamente.'
+        });
+      }
+    });
   }
 
   updateCarrera(carrera: Carrera): void {
@@ -153,7 +132,7 @@ export class CarreraOrganizadorComponent implements OnInit {
       showConfirmButton: false,
       didOpen: () => { Swal.showLoading(); }
     });
-    this.service.updateCarrera(carrera, this.selectedFiles.length > 0 ? this.selectedFiles : undefined).subscribe({
+    this.service.updateCarrera(carrera, this.selectedFiles, this.selectedAdjuntos.length > 0 ? this.selectedAdjuntos : undefined).subscribe({
       next: carreraUpdated => {
         this.carreras = this.carreras.map(carr => carr.id === carrera.id ? carreraUpdated : carr);
         Swal.fire({
@@ -191,12 +170,27 @@ export class CarreraOrganizadorComponent implements OnInit {
     return `${year}-${month}-${day}`;
   }
 
-  onFileSelected(event: any): void {
+  onFileSelected(event: any, field: number): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      if (field === 1) {
+        this.selectedFiles[0] = file;
+      } else if (field === 2) {
+        this.selectedFiles[1] = file;
+      }
+    }
+    console.log('Archivos de imagen seleccionados:', this.selectedFiles);
+  }
+
+  // Método para seleccionar adjuntos
+  onAdjuntosSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files) {
-      this.selectedFiles = Array.from(input.files);
-      console.log('Archivos seleccionados:', this.selectedFiles);
+      // Aquí, se asume que se crea un arreglo de Files cuyos nombres se podrán modificar en el formulario
+      this.selectedAdjuntos = Array.from(input.files);
     }
+    console.log('Adjuntos seleccionados:', this.selectedAdjuntos);
   }
 
   onRemoveCarrera(id: number): void {
@@ -241,8 +235,7 @@ export class CarreraOrganizadorComponent implements OnInit {
       organizadorId: 0,
       talles: [],
       portadaId: 0,
-      categorias: [] 
-      
+      categorias: []
     };
   }
 
@@ -253,5 +246,7 @@ export class CarreraOrganizadorComponent implements OnInit {
     if (portadaId !== 0) {
       this.carreraSelected.portadaId = portadaId;
     }
+    this.selectedFiles = [];
+    this.selectedAdjuntos = [];
   }
 }
