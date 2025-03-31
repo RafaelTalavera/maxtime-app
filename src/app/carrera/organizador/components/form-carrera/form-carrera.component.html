@@ -151,6 +151,7 @@
           <div class="d-flex mb-2">
             <input type="text" class="form-control me-2" placeholder="Nombre del campo (ej: Género)" [(ngModel)]="nuevoCampoNombre" name="nuevoCampoNombre">
             <input type="text" class="form-control me-2" placeholder="Valor (ej: Masculino)" [(ngModel)]="nuevoCampoValor" name="nuevoCampoValor">
+            <input type="number" class="form-control me-2" placeholder="Orden (ej: 1)" [(ngModel)]="nuevoCampoOrden" name="nuevoCampoOrden">
             <div class="form-check form-switch align-self-center me-2">
               <input class="form-check-input" type="checkbox" [(ngModel)]="nuevoCampoActivo" name="nuevoCampoActivo" id="activoSwitch">
               <label class="form-check-label" for="activoSwitch">Activo</label>
@@ -170,6 +171,7 @@
                 <div *ngFor="let campo of categoria.campos">
                   <input type="text" class="form-control mb-1" placeholder="Nombre" [(ngModel)]="ec.nombre" [ngModelOptions]="{standalone: true}">
                   <input type="text" class="form-control mb-1" placeholder="Valor" [(ngModel)]="ec.valor" [ngModelOptions]="{standalone: true}">
+                  <input type="number" class="form-control mb-1" placeholder="Orden" [(ngModel)]="ec.orden" [ngModelOptions]="{standalone: true}">
                   <div class="form-check form-switch mb-1">
                     <input class="form-check-input" type="checkbox" [(ngModel)]="ec.activo" [ngModelOptions]="{standalone: true}">
                     <label class="form-check-label">Activo</label>
@@ -180,7 +182,7 @@
               </div>
               <div *ngIf="editingCategoriaIndex !== i">
                 <div *ngFor="let campo of categoria.campos">
-                  {{ campo.nombre }}: {{ campo.valor }} <span *ngIf="campo.activo">(Activo)</span><span *ngIf="!campo.activo">(Inactivo)</span>
+                  {{ campo.nombre }}: {{ campo.valor }} (Orden: {{ campo.orden }}) <span *ngIf="campo.activo">(Activo)</span><span *ngIf="!campo.activo">(Inactivo)</span>
                 </div>
                 <button type="button" class="btn btn-secondary btn-sm me-2" (click)="editarCategoria(i)">Editar</button>
                 <button type="button" class="btn btn-danger btn-sm" (click)="eliminarCategoria(i)">Eliminar</button>

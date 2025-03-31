@@ -5,5 +5,6 @@ export interface Categoria {
 export interface CampoCategoria {
   nombre: string;
   valor: string;
+  orden:string;
   activo: boolean;
 }

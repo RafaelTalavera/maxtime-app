@@ -24,7 +24,8 @@ export class FormCarreraComponent {
   nuevoCampoNombre: string = '';
   nuevoCampoValor: string = '';
   nuevoCampoActivo: boolean = true;
-  
+  nuevoCampoOrden: number | null = null;  // Nuevo campo para el orden
+
   imagen1Error: boolean = false;
   imagen2Error: boolean = false;
  
@@ -33,7 +34,8 @@ export class FormCarreraComponent {
   editedTalleValue: string = '';
 
   // Propiedades para edición de categorías
-  editedCategoriaCampo: { nombre: string, valor: string, activo: boolean } | null = null;
+  // Se añade la propiedad 'orden' al objeto de edición
+  editedCategoriaCampo: { nombre: string, valor: string, activo: boolean, orden: number | string } | null = null;
   editingCategoriaIndex: number | null = null;
 
   constructor(private service: CarreasService) {}
@@ -70,15 +72,16 @@ export class FormCarreraComponent {
 
   // Métodos para categorías
   agregarCategoria(): void {
-    if (!this.nuevoCampoNombre.trim() || !this.nuevoCampoValor.trim()) {
-      Swal.fire('Error', 'Debe ingresar nombre y valor para la categoría.', 'error');
+    if (!this.nuevoCampoNombre.trim() || !this.nuevoCampoValor.trim() || this.nuevoCampoOrden === null) {
+      Swal.fire('Error', 'Debe ingresar nombre, valor y orden para la categoría.', 'error');
       return;
     }
     const categoria = {
       campos: [{
         nombre: this.nuevoCampoNombre.trim(),
         valor: this.nuevoCampoValor.trim(),
-        activo: this.nuevoCampoActivo
+        activo: this.nuevoCampoActivo,
+        orden: this.nuevoCampoOrden.toString()
       }]
     };
     if (!this.carrera.categorias) {
@@ -88,6 +91,7 @@ export class FormCarreraComponent {
     this.nuevoCampoNombre = '';
     this.nuevoCampoValor = '';
     this.nuevoCampoActivo = true;
+    this.nuevoCampoOrden = null;
   }
 
   eliminarCategoria(index: number): void {
@@ -103,16 +107,17 @@ export class FormCarreraComponent {
   }
 
   guardarCategoria(index: number): void {
-    if (this.editedCategoriaCampo && this.editedCategoriaCampo.nombre.trim() && this.editedCategoriaCampo.valor.trim()) {
+    if (this.editedCategoriaCampo && this.editedCategoriaCampo.nombre.trim() && this.editedCategoriaCampo.valor.trim() && this.editedCategoriaCampo.orden !== null) {
       this.carrera.categorias[index].campos[0] = {
         nombre: this.editedCategoriaCampo.nombre.trim(),
         valor: this.editedCategoriaCampo.valor.trim(),
-        activo: this.editedCategoriaCampo.activo
+        activo: this.editedCategoriaCampo.activo,
+        orden: this.editedCategoriaCampo.orden.toString()
       };
       this.editingCategoriaIndex = null;
       this.editedCategoriaCampo = null;
     } else {
-      Swal.fire('Error', 'Debe ingresar nombre y valor para la categoría.', 'error');
+      Swal.fire('Error', 'Debe ingresar nombre, valor y orden para la categoría.', 'error');
     }
   }
 
@@ -238,6 +243,7 @@ export class FormCarreraComponent {
     this.nuevoCampoNombre = '';
     this.nuevoCampoValor = '';
     this.nuevoCampoActivo = true;
+    this.nuevoCampoOrden = null;
   }
 
   private createEmptyCarrera(): Carrera {

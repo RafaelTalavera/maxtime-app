@@ -26,14 +26,10 @@ export class FormCorredorComponent implements OnInit, AfterViewInit {
   @Input() metodoPago!: string;
 
   talles: string[] = [];
-  // Categorías recibidas del backend en formato string, por ejemplo:
-  // [
-  //   "Prueba Maxi:1, 2, 3",
-  //   "Genero:Masculino, Femenino"
-  // ]
+  // Categorías recibidas del backend (ejemplo: "Género:Masculino, Femenino:2")
   categorias: string[] = [];
-  // Array de objetos { nombre, opciones } luego de parsear las cadenas recibidas
-  parsedCategorias: { nombre: string, opciones: string[] }[] = [];
+  // Se actualiza para incluir 'orden'
+  parsedCategorias: { nombre: string, opciones: string[], orden: number }[] = [];
   // Objeto para almacenar la selección del usuario para cada categoría
   selectedCategorias: { [key: string]: string } = {};
 
@@ -62,7 +58,7 @@ export class FormCorredorComponent implements OnInit, AfterViewInit {
       distanciaId: this.distanciaId
     });
 
-    // Obtener talles (se espera que el endpoint retorne un array con un string separado por comas)
+    // Obtener talles
     this.carreraService.getTallesByCarreraId(this.carreraId).subscribe({
       next: (tallesData) => {
         console.log('Talles recibidos:', tallesData);
@@ -75,22 +71,29 @@ export class FormCorredorComponent implements OnInit, AfterViewInit {
       error: (err) => console.error('Error al obtener talles:', err)
     });
 
-    // Obtener y parsear las categorías dinámicas (nuevo formato JSON)
+    // Obtener y parsear las categorías dinámicas (incluyendo el campo 'orden')
     this.carreraService.getCategoriasByCarreraId(this.carreraId).subscribe({
       next: (cats: string[]) => {
         if (cats && cats.length > 0) {
-          const parsedCategorias: { nombre: string, opciones: string[] }[] = [];
+          const parsedCategorias: { nombre: string, opciones: string[], orden: number }[] = [];
           cats.forEach(cat => {
-            if (cat.includes(':')) {
-              const [nombre, opcionesStr] = cat.split(':', 2);
+            // Se espera el formato: "Nombre:opción1, opción2:orden"
+            const parts = cat.split(':');
+            if (parts.length >= 3) {
+              const nombre = parts[0].trim();
+              const orden = parseInt(parts[parts.length - 1].trim(), 10);
+              // Si hay más de 3 partes, unir las opciones que queden en el medio
+              const opcionesStr = parts.slice(1, parts.length - 1).join(':').trim();
               const opciones = opcionesStr.split(',').map(opt => opt.trim());
-              parsedCategorias.push({ nombre: nombre.trim(), opciones });
+              parsedCategorias.push({ nombre, opciones, orden });
             } else {
               console.error('Formato incorrecto para categoría:', cat);
             }
           });
+          // Ordena las categorías por el campo 'orden'
+          parsedCategorias.sort((a, b) => a.orden - b.orden);
           this.parsedCategorias = parsedCategorias;
-          console.log('Categorías parseadas:', this.parsedCategorias);
+          console.log('Categorías parseadas y ordenadas:', this.parsedCategorias);
         }
       },
       error: (err) => {
@@ -136,7 +139,7 @@ export class FormCorredorComponent implements OnInit, AfterViewInit {
     if (this.codigoAplicado && this.codigoDescuento.trim()) {
       this.corredor.codigoDescuento = this.codigoDescuento;
     }
-    // Construir la cadena de categorías dinámicas a partir de las selecciones del usuario
+    // Construir la cadena de categorías dinámicas a partir de la selección del usuario
     if (this.parsedCategorias && this.parsedCategorias.length > 0) {
       const dynamicCat = this.parsedCategorias.map(cat => {
         const seleccion = this.selectedCategorias[cat.nombre] || '';
@@ -156,7 +159,7 @@ export class FormCorredorComponent implements OnInit, AfterViewInit {
           confirmButtonText: 'Ver información de pago',
           cancelButtonText: 'Seguir cargando'
         }).then(result => {
-          if (result.isConfirmed) {2
+          if (result.isConfirmed) {
             if (!this.metodoPago || this.metodoPago === 'MercadoPago') {
               Swal.fire({
                 icon: 'info',
