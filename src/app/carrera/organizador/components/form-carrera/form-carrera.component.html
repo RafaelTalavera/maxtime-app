@@ -126,9 +126,19 @@
             <button type="button" class="btn btn-success" (click)="agregarTalle()">Agregar</button>
           </div>
           <ul class="list-group">
-            <li *ngFor="let talle of carrera.talles; let i = index" class="list-group-item d-flex justify-content-between">
-              {{ talle }}
-              <button type="button" class="btn btn-danger btn-sm" (click)="eliminarTalle(i)">Eliminar</button>
+            <li *ngFor="let talle of carrera.talles; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
+              <div *ngIf="editingTalleIndex === i">
+                <input type="text" class="form-control" [(ngModel)]="editedTalleValue">
+              </div>
+              <div *ngIf="editingTalleIndex !== i">
+                {{ talle }}
+              </div>
+              <div>
+                <button *ngIf="editingTalleIndex !== i" type="button" class="btn btn-secondary btn-sm me-2" (click)="editarTalle(i)">Editar</button>
+                <button *ngIf="editingTalleIndex !== i" type="button" class="btn btn-danger btn-sm" (click)="eliminarTalle(i)">Eliminar</button>
+                <button *ngIf="editingTalleIndex === i" type="button" class="btn btn-primary btn-sm me-2" (click)="guardarTalle(i)">Guardar</button>
+                <button *ngIf="editingTalleIndex === i" type="button" class="btn btn-warning btn-sm" (click)="cancelarEdicionTalle()">Cancelar</button>
+              </div>
             </li>
           </ul>
         </div>
@@ -156,12 +166,25 @@
           <label class="custom-label">Categorías agregadas</label>
           <ul class="list-group">
             <li *ngFor="let categoria of carrera.categorias; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
-              <div>
+              <div *ngIf="editingCategoriaIndex === i && editedCategoriaCampo as ec">
+                <div *ngFor="let campo of categoria.campos">
+                  <input type="text" class="form-control mb-1" placeholder="Nombre" [(ngModel)]="ec.nombre" [ngModelOptions]="{standalone: true}">
+                  <input type="text" class="form-control mb-1" placeholder="Valor" [(ngModel)]="ec.valor" [ngModelOptions]="{standalone: true}">
+                  <div class="form-check form-switch mb-1">
+                    <input class="form-check-input" type="checkbox" [(ngModel)]="ec.activo" [ngModelOptions]="{standalone: true}">
+                    <label class="form-check-label">Activo</label>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-primary btn-sm me-2" (click)="guardarCategoria(i)">Guardar</button>
+                <button type="button" class="btn btn-warning btn-sm" (click)="cancelarEdicionCategoria()">Cancelar</button>
+              </div>
+              <div *ngIf="editingCategoriaIndex !== i">
                 <div *ngFor="let campo of categoria.campos">
                   {{ campo.nombre }}: {{ campo.valor }} <span *ngIf="campo.activo">(Activo)</span><span *ngIf="!campo.activo">(Inactivo)</span>
                 </div>
+                <button type="button" class="btn btn-secondary btn-sm me-2" (click)="editarCategoria(i)">Editar</button>
+                <button type="button" class="btn btn-danger btn-sm" (click)="eliminarCategoria(i)">Eliminar</button>
               </div>
-              <button type="button" class="btn btn-danger btn-sm" (click)="eliminarCategoria(i)">Eliminar</button>
             </li>
           </ul>
         </div>

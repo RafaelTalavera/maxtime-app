@@ -15,8 +15,7 @@ import { Carrera } from '../../../models/carrera';
 export class FormCarreraComponent {
   @Input() carrera: Carrera = this.createEmptyCarrera();
   @Output() newCarreraEvent = new EventEmitter<Carrera>();
-  selectedFiles: File[] = []; 
-  // Usamos un arreglo de objetos para adjuntos con nombre personalizado
+  selectedFiles: File[] = [];
   selectedAdjuntos: { file: File, nombre: string }[] = [];
   imagenesError: boolean = false;
   nuevoTalle: string = '';
@@ -29,6 +28,14 @@ export class FormCarreraComponent {
   imagen1Error: boolean = false;
   imagen2Error: boolean = false;
  
+  // Propiedades para edición de talles
+  editingTalleIndex: number | null = null;
+  editedTalleValue: string = '';
+
+  // Propiedades para edición de categorías
+  editedCategoriaCampo: { nombre: string, valor: string, activo: boolean } | null = null;
+  editingCategoriaIndex: number | null = null;
+
   constructor(private service: CarreasService) {}
 
   // Métodos para talles
@@ -43,7 +50,25 @@ export class FormCarreraComponent {
     this.carrera.talles.splice(index, 1);
   }
 
-  // Método para agregar una categoría
+  editarTalle(index: number): void {
+    this.editingTalleIndex = index;
+    this.editedTalleValue = this.carrera.talles[index];
+  }
+
+  guardarTalle(index: number): void {
+    if (this.editedTalleValue.trim()) {
+      this.carrera.talles[index] = this.editedTalleValue.trim();
+      this.editingTalleIndex = null;
+      this.editedTalleValue = '';
+    }
+  }
+
+  cancelarEdicionTalle(): void {
+    this.editingTalleIndex = null;
+    this.editedTalleValue = '';
+  }
+
+  // Métodos para categorías
   agregarCategoria(): void {
     if (!this.nuevoCampoNombre.trim() || !this.nuevoCampoValor.trim()) {
       Swal.fire('Error', 'Debe ingresar nombre y valor para la categoría.', 'error');
@@ -70,7 +95,32 @@ export class FormCarreraComponent {
       this.carrera.categorias.splice(index, 1);
     }
   }
-  
+
+  editarCategoria(index: number): void {
+    this.editingCategoriaIndex = index;
+    // Se asume que cada categoría tiene un solo campo en su arreglo 'campos'
+    this.editedCategoriaCampo = { ...this.carrera.categorias[index].campos[0] };
+  }
+
+  guardarCategoria(index: number): void {
+    if (this.editedCategoriaCampo && this.editedCategoriaCampo.nombre.trim() && this.editedCategoriaCampo.valor.trim()) {
+      this.carrera.categorias[index].campos[0] = {
+        nombre: this.editedCategoriaCampo.nombre.trim(),
+        valor: this.editedCategoriaCampo.valor.trim(),
+        activo: this.editedCategoriaCampo.activo
+      };
+      this.editingCategoriaIndex = null;
+      this.editedCategoriaCampo = null;
+    } else {
+      Swal.fire('Error', 'Debe ingresar nombre y valor para la categoría.', 'error');
+    }
+  }
+
+  cancelarEdicionCategoria(): void {
+    this.editingCategoriaIndex = null;
+    this.editedCategoriaCampo = null;
+  }
+
   onFileSelected(event: Event, field: number): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
@@ -83,21 +133,19 @@ export class FormCarreraComponent {
     }
     console.log('Archivos de imagen seleccionados:', this.selectedFiles);
   }
-  
+
   onAdjuntosSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files) {
-      // Al seleccionar, se crea un objeto con el File y se asigna inicialmente el nombre original.
       this.selectedAdjuntos = Array.from(input.files).map(file => ({ file, nombre: file.name }));
     }
     console.log('Adjuntos seleccionados:', this.selectedAdjuntos);
   }
 
-  // Permite actualizar el nombre del adjunto
   actualizarNombreAdjunto(index: number, nuevoNombre: string): void {
     this.selectedAdjuntos[index].nombre = nuevoNombre;
   }
-  
+
   onSubmit(carreraForm: NgForm): void {
     if (carreraForm.valid) {
       Swal.fire({
@@ -171,19 +219,18 @@ export class FormCarreraComponent {
       });
     }
   }
-  
-  // Transforma cada adjunto en un File con el nombre actualizado
+
   private transformAdjuntosToFiles(): File[] {
     return this.selectedAdjuntos.map(adj => new File([adj.file], adj.nombre, { type: adj.file.type }));
   }
-  
+
   private resetFormState(carreraForm: NgForm): void {
     this.selectedFiles = [];
     this.selectedAdjuntos = [];
     this.clean();
     carreraForm.resetForm();
   }
- 
+
   clean(): void {
     this.carrera = this.createEmptyCarrera();
     this.selectedFiles = [];
@@ -192,7 +239,7 @@ export class FormCarreraComponent {
     this.nuevoCampoValor = '';
     this.nuevoCampoActivo = true;
   }
- 
+
   private createEmptyCarrera(): Carrera {
     return {
       id: 0,
@@ -212,7 +259,7 @@ export class FormCarreraComponent {
       categorias: []
     };
   }
-  
+
   adjustTextArea(event: Event): void {
     const textarea = event.target as HTMLTextAreaElement;
     textarea.style.height = 'auto';
