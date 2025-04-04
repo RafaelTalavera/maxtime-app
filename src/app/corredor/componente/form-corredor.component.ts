@@ -164,23 +164,59 @@ export class FormCorredorComponent implements OnInit, AfterViewInit {
               Swal.fire({
                 icon: 'info',
                 title: 'Información para hacer el pago',
-                html: `<p>${this.linkDePago}</p>
-                       <button id="copy-button" style="
-                           background-color: #3085d6;
-                           color: white;
-                           border: none;
-                           padding: 10px 20px;
-                           font-size: 14px;
-                           border-radius: 5px;
-                           cursor: pointer;
-                           margin-top: 10px;
-                       ">Copiar link</button>`,
+                html: `
+                  <p>${this.linkDePago}</p>
+                  <button id="copy-button" style="
+                      background-color: #3085d6;
+                      color: white;
+                      border: none;
+                      padding: 10px 20px;
+                      font-size: 14px;
+                      border-radius: 5px;
+                      cursor: pointer;
+                      margin-top: 10px;
+                  ">Copiar link</button>
+                  <button id="contact-button" style="
+                      background-color: #28a745;
+                      color: white;
+                      border: none;
+                      padding: 10px 20px;
+                      font-size: 14px;
+                      border-radius: 5px;
+                      cursor: pointer;
+                      margin-top: 10px;
+                      margin-left: 10px;
+                  ">Enviar información del pago</button>
+                `,
                 confirmButtonText: 'Cerrar',
                 didOpen: () => {
                   const copyButton = document.getElementById('copy-button');
                   if (copyButton) {
                     copyButton.addEventListener('click', () => {
                       this.copyToClipboard();
+                    });
+                  }
+                  const contactButton = document.getElementById('contact-button');
+                  if (contactButton) {
+                    contactButton.addEventListener('click', () => {
+                      // Llamada al servicio para obtener el contacto asociado a la carrera
+                      this.carreraService.getContactoByCarreraId(this.carreraId).subscribe({
+                        next: (contacto) => {
+                          Swal.fire({
+                            icon: 'info',
+                            title: 'Contacto de la carrera',
+                            html: `<p>Teléfono: ${contacto.telefono}<br>Email: ${contacto.email}</p>`,
+                            confirmButtonText: 'Cerrar'
+                          });
+                        },
+                        error: (err) => {
+                          Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'No se pudo obtener la información de contacto.'
+                          });
+                        }
+                      });
                     });
                   }
                 }

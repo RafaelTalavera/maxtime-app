@@ -61,5 +61,19 @@ body {
   text-align: center; /* Centrar el título */
 }
 
+.content-container {
+  margin-top: 90px;
+  margin-bottom: 300px;
+  width: 100%;
+  max-width: 100%; /* Permite ocupar todo el ancho disponible */
+  padding: 0 15px; /* Espaciado interno para evitar que el contenido toque los bordes */
+}
+
+.sticky-header th {
+  position: sticky;
+  top: 0;
+  background-color: #fff; /* O el color que se adapte a tu diseño */
+  z-index: 2; /* Para asegurarse de que se mantenga por encima del contenido */
+}
 
   

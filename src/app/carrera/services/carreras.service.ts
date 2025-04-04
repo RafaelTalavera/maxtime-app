@@ -153,4 +153,19 @@ export class CarreasService {
       })
     );
   }
+
+  // GET: Obtener contacto de una carrera
+getContactoByCarreraId(carreraId: number): Observable<{ telefono: string, email: string }> {
+  const url = `${this.BASE_URL}/${carreraId}/contacto`;
+  console.log('Solicitando contacto para carrera con ID:', carreraId);
+  return this.http.get<{ telefono: string, email: string }>(url).pipe(
+    tap((response) => console.log('Respuesta del servicio (contacto):', response)),
+    catchError((error) => {
+      console.error('Error al obtener contacto de la carrera:', error);
+      // Retornamos un objeto vacío o lo que se ajuste a tu manejo de errores
+      return of({ telefono: '', email: '' });
+    })
+  );
+}
+
 }
